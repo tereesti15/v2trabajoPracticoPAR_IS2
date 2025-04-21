@@ -11,5 +11,5 @@ class Departamento extends Model
     public $incrementing = true;
     protected $keyType = 'int';
 
-    protected $fillable = ['nombre_departamento', 'ubicacion',];
+    protected $fillable = ['nombre_departamento', 'ubicacion'];
 }
