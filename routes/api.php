@@ -1,17 +1,16 @@
 <?php
-/*
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ProductoController;
 
-Route::middleware('api')->group(function () {
-    Route::get('/productos', [ProductoController::class, 'index']);
-    Route::post('/productos', [ProductoController::class, 'store']);
-});
-*/
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PersonasController;
+use App\Http\Controllers\API\DepartamentoController;
 
-Route::get('/personas', [PersonasController::class, 'index']);
-Route::post('/personas', [PersonasController::class, 'store']);
+Route::get('/personas', [PersonasController::class, 'index']); //listar
+Route::post('/personas', [PersonasController::class, 'store']); // agregar
 
+// routes/api.php
+
+
+Route::get('/departamentos', [DepartamentoController::class, 'index']); // listar
+Route::post('/departamentos', [DepartamentoController::class, 'store']); // agregar
+Route::delete('/departamentos/{id}', [DepartamentoController::class, 'destroy']); // Borrar
+Route::put('/departamentos/{id}', [DepartamentoController::class, 'update']); //actualizar
