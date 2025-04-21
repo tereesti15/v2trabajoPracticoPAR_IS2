@@ -1,0 +1,123 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Departamentos",
+        "description": "Documentación de la API de departamentos",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/departamentos": {
+            "get": {
+                "summary": "Obtener todos los departamentos",
+                "operationId": "3fa69291e5a72b800ac8857c285e01ff",
+                "responses": {
+                    "200": {
+                        "description": "Lista de departamentos en formato JSON"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Crear un nuevo departamento",
+                "operationId": "81c4e083c3d8ba6ef993c9fb371e43b5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre_departamento",
+                                    "ubicacion"
+                                ],
+                                "properties": {
+                                    "nombre_departamento": {
+                                        "type": "string",
+                                        "example": "Finanzas"
+                                    },
+                                    "ubicacion": {
+                                        "type": "string",
+                                        "example": "Piso 3"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Departamento creado correctamente"
+                    }
+                }
+            }
+        },
+        "/api/v1/departamentos/{id}": {
+            "put": {
+                "summary": "Actualizar un departamento existente",
+                "operationId": "f20199500376a9052e0ca34f7bcad124",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del departamento a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre_departamento",
+                                    "ubicacion"
+                                ],
+                                "properties": {
+                                    "nombre_departamento": {
+                                        "type": "string",
+                                        "example": "Sistemas"
+                                    },
+                                    "ubicacion": {
+                                        "type": "string",
+                                        "example": "Planta baja"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Departamento actualizado"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Eliminar un departamento",
+                "operationId": "59330d01d86d27214e36ea729690c763",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del departamento a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Departamento eliminado correctamente"
+                    },
+                    "404": {
+                        "description": "Departamento no encontrado"
+                    }
+                }
+            }
+        }
+    }
+}
