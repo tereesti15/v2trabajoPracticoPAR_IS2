@@ -1,16 +1,30 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\PersonasController;
-use App\Http\Controllers\API\DepartamentoController;
+use App\Http\Controllers\Api\v1\PersonasController as PersonasControllerV1;
+use App\Http\Controllers\API\v1\DepartamentoController as DepartamentoControllerV1;
 
-Route::get('/personas', [PersonasController::class, 'index']); //listar
-Route::post('/personas', [PersonasController::class, 'store']); // agregar
+Route::prefix('v1')->group(function () {
+    Route::get('/personas', [PersonasControllerV1::class, 'index']); //listar
+    Route::post('/personas', [PersonasControllerV1::class, 'store']); // agregar
+});
 
-// routes/api.php
+Route::prefix('v1')->group(function () {
+    Route::get('/departamentos', [DepartamentoControllerV1::class, 'index']); // listar
+    Route::post('/departamentos', [DepartamentoControllerV1::class, 'store']); // agregar
+    Route::delete('/departamentos/{id}', [DepartamentoControllerV1::class, 'destroy']); // Borrar
+    Route::put('/departamentos/{id}', [DepartamentoControllerV1::class, 'update']); //actualizar
+});
 
+/* Queda como ejemplo para v2
 
-Route::get('/departamentos', [DepartamentoController::class, 'index']); // listar
-Route::post('/departamentos', [DepartamentoController::class, 'store']); // agregar
-Route::delete('/departamentos/{id}', [DepartamentoController::class, 'destroy']); // Borrar
-Route::put('/departamentos/{id}', [DepartamentoController::class, 'update']); //actualizar
+use App\Http\Controllers\API\V1\UserController as UserControllerV1;
+use App\Http\Controllers\API\V2\UserController as UserControllerV2;
+
+Route::prefix('v1')->group(function () {
+    Route::get('/users', [UserControllerV1::class, 'index']);
+});
+
+Route::prefix('v2')->group(function () {
+    Route::get('/users', [UserControllerV2::class, 'index']);
+}); */
