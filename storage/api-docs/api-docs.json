@@ -44,7 +44,7 @@
                     }
                 },
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "Departamento creado correctamente"
                     }
                 }
@@ -115,6 +115,155 @@
                     },
                     "404": {
                         "description": "Departamento no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/v1/personas": {
+            "get": {
+                "summary": "Obtener todos las personas",
+                "operationId": "d288837ae87f279903e41d95dba89538",
+                "responses": {
+                    "200": {
+                        "description": "Lista de personas en formato JSON"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Crear una nueva persona",
+                "operationId": "fe57085a3bd6eced0969e75ac8f0c26d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "apellido",
+                                    "documento",
+                                    "direccion"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Juan"
+                                    },
+                                    "apellido": {
+                                        "type": "string",
+                                        "example": "Perez"
+                                    },
+                                    "documento": {
+                                        "type": "string",
+                                        "example": "4444444"
+                                    },
+                                    "direccion": {
+                                        "type": "string",
+                                        "example": "calle 1"
+                                    },
+                                    "telefono": {
+                                        "type": "string",
+                                        "example": "0981111111"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "Perez@gmail.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Persona creada correctamente"
+                    }
+                }
+            }
+        },
+        "/api/v1/personas/{id}": {
+            "put": {
+                "summary": "Actualizar una persona existente",
+                "operationId": "20e32cd55ea6dce9cce4b11b206f9b86",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la persona a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "apellido",
+                                    "documento",
+                                    "direccion"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Juan"
+                                    },
+                                    "apellido": {
+                                        "type": "string",
+                                        "example": "Perez"
+                                    },
+                                    "documento": {
+                                        "type": "string",
+                                        "example": "1231231"
+                                    },
+                                    "direccion": {
+                                        "type": "string",
+                                        "example": "calle 1"
+                                    },
+                                    "telefono": {
+                                        "type": "string",
+                                        "example": "0981111111"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "Perez@gmail.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Persona actualizada"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Eliminar una persona",
+                "operationId": "e1c917bba1600212855fe4d24d3140af",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la persona a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Persona eliminada correctamente"
+                    },
+                    "404": {
+                        "description": "Persona no encontrada"
                     }
                 }
             }

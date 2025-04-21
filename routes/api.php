@@ -7,6 +7,8 @@ use App\Http\Controllers\API\v1\DepartamentoController as DepartamentoController
 Route::prefix('v1')->group(function () {
     Route::get('/personas', [PersonasControllerV1::class, 'index']); //listar
     Route::post('/personas', [PersonasControllerV1::class, 'store']); // agregar
+    Route::delete('/personas/{id}', [PersonasControllerV1::class, 'destroy']); // Borrar
+    Route::put('/personas/{id}', [PersonasControllerV1::class, 'update']); //actualizar
 });
 
 Route::prefix('v1')->group(function () {

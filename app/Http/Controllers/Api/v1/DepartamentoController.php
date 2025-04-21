@@ -31,13 +31,13 @@ class DepartamentoController extends Controller
      */
 
     // Obtener todos los departamentos
-     public function index()
-     {
-         $departamentos = Departamento::all();
-         return response()->json($departamentos);
-     }
- 
-     /**
+    public function index()
+    {
+        $departamentos = Departamento::all();
+        return response()->json($departamentos);
+    }
+
+    /**
      * @OA\Post(
      *     path="/api/v1/departamentos",
      *     summary="Crear un nuevo departamento",
