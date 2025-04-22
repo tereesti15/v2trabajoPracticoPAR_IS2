@@ -7,11 +7,19 @@ use Illuminate\Http\Request;
 use App\Models\Personas;
 use App\Http\Controllers\Controller;
 
+/**
+ * @OA\Tag(
+ *     name="Personas",
+ *     description="Operaciones relacionadas con las personas"
+ * )
+ */
+
 final class PersonasController extends Controller
 {
     /**
      * @OA\Get(
      *     path="/api/v1/personas",
+     *     tags={"Personas"},
      *     summary="Obtener todos las personas",
      *     @OA\Response(
      *         response=200,
@@ -28,6 +36,7 @@ final class PersonasController extends Controller
     /**
      * @OA\Post(
      *     path="/api/v1/personas",
+     *     tags={"Personas"},
      *     summary="Crear una nueva persona",
      *     @OA\RequestBody(
      *         required=true,
@@ -59,6 +68,7 @@ final class PersonasController extends Controller
     /**
      * @OA\Delete(
      *     path="/api/v1/personas/{id}",
+     *     tags={"Personas"},
      *     summary="Eliminar una persona",
      *     @OA\Parameter(
      *         name="id",
@@ -89,6 +99,7 @@ final class PersonasController extends Controller
     /**
      * @OA\Put(
      *     path="/api/v1/personas/{id}",
+     *     tags={"Personas"},
      *     summary="Actualizar una persona existente",
      *     @OA\Parameter(
      *         name="id",

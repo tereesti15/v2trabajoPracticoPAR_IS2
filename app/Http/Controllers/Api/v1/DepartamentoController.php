@@ -8,20 +8,21 @@ use Illuminate\Http\Request;
 use App\Models\Departamento;
 
 
-
 /**
- * @OA\Info(
- *     version="1.0.0",
- *     title="API Departamentos",
- *     description="Documentación de la API de departamentos"
+ * @OA\Tag(
+ *     name="Departamentos",
+ *     description="Operaciones relacionadas con los departamentos"
  * )
  */
 
 class DepartamentoController extends Controller
 {
-   /**
+       
+
+     /**
      * @OA\Get(
      *     path="/api/v1/departamentos",
+     *     tags={"Departamentos"},
      *     summary="Obtener todos los departamentos",
      *     @OA\Response(
      *         response=200,
@@ -40,6 +41,7 @@ class DepartamentoController extends Controller
     /**
      * @OA\Post(
      *     path="/api/v1/departamentos",
+     *     tags={"Departamentos"},
      *     summary="Crear un nuevo departamento",
      *     @OA\RequestBody(
      *         required=true,
@@ -66,6 +68,7 @@ class DepartamentoController extends Controller
     /**
      * @OA\Delete(
      *     path="/api/v1/departamentos/{id}",
+     *     tags={"Departamentos"},
      *     summary="Eliminar un departamento",
      *     @OA\Parameter(
      *         name="id",
@@ -96,6 +99,7 @@ class DepartamentoController extends Controller
     /**
      * @OA\Put(
      *     path="/api/v1/departamentos/{id}",
+     *     tags={"Departamentos"},
      *     summary="Actualizar un departamento existente",
      *     @OA\Parameter(
      *         name="id",

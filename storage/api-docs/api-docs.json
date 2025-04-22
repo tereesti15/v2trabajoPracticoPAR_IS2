@@ -1,13 +1,20 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "API Departamentos",
-        "description": "Documentación de la API de departamentos",
+        "title": "Documentación de la API de Pago de Nómina",
+        "description": "Documentación generada con Swagger",
+        "contact": {
+            "name": "Soporte",
+            "email": "tere_esti@fpuna.edu.py"
+        },
         "version": "1.0.0"
     },
     "paths": {
         "/api/v1/departamentos": {
             "get": {
+                "tags": [
+                    "Departamentos"
+                ],
                 "summary": "Obtener todos los departamentos",
                 "operationId": "3fa69291e5a72b800ac8857c285e01ff",
                 "responses": {
@@ -17,6 +24,9 @@
                 }
             },
             "post": {
+                "tags": [
+                    "Departamentos"
+                ],
                 "summary": "Crear un nuevo departamento",
                 "operationId": "81c4e083c3d8ba6ef993c9fb371e43b5",
                 "requestBody": {
@@ -52,6 +62,9 @@
         },
         "/api/v1/departamentos/{id}": {
             "put": {
+                "tags": [
+                    "Departamentos"
+                ],
                 "summary": "Actualizar un departamento existente",
                 "operationId": "f20199500376a9052e0ca34f7bcad124",
                 "parameters": [
@@ -96,6 +109,9 @@
                 }
             },
             "delete": {
+                "tags": [
+                    "Departamentos"
+                ],
                 "summary": "Eliminar un departamento",
                 "operationId": "59330d01d86d27214e36ea729690c763",
                 "parameters": [
@@ -121,6 +137,9 @@
         },
         "/api/v1/personas": {
             "get": {
+                "tags": [
+                    "Personas"
+                ],
                 "summary": "Obtener todos las personas",
                 "operationId": "d288837ae87f279903e41d95dba89538",
                 "responses": {
@@ -130,6 +149,9 @@
                 }
             },
             "post": {
+                "tags": [
+                    "Personas"
+                ],
                 "summary": "Crear una nueva persona",
                 "operationId": "fe57085a3bd6eced0969e75ac8f0c26d",
                 "requestBody": {
@@ -183,6 +205,9 @@
         },
         "/api/v1/personas/{id}": {
             "put": {
+                "tags": [
+                    "Personas"
+                ],
                 "summary": "Actualizar una persona existente",
                 "operationId": "20e32cd55ea6dce9cce4b11b206f9b86",
                 "parameters": [
@@ -245,6 +270,9 @@
                 }
             },
             "delete": {
+                "tags": [
+                    "Personas"
+                ],
                 "summary": "Eliminar una persona",
                 "operationId": "e1c917bba1600212855fe4d24d3140af",
                 "parameters": [
@@ -268,5 +296,15 @@
                 }
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "Departamentos",
+            "description": "Operaciones relacionadas con los departamentos"
+        },
+        {
+            "name": "Personas",
+            "description": "Operaciones relacionadas con las personas"
+        }
+    ]
 }
