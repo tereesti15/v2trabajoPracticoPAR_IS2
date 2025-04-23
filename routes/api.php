@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\PersonasController as PersonasControllerV1;
 use App\Http\Controllers\API\v1\DepartamentoController as DepartamentoControllerV1;
+use App\Http\Controllers\Api\v1\HijoController as HijoControlerV1;
 
 Route::prefix('v1')->group(function () {
     Route::get('/personas', [PersonasControllerV1::class, 'index']); //listar
@@ -17,6 +18,15 @@ Route::prefix('v1')->group(function () {
     Route::delete('/departamentos/{id}', [DepartamentoControllerV1::class, 'destroy']); // Borrar
     Route::put('/departamentos/{id}', [DepartamentoControllerV1::class, 'update']); //actualizar
 });
+
+Route::prefix('v1')->group(function () {
+    Route::get('/hijos', [HijoControlerV1::class, 'index']); // listar
+    Route::post('/hijos', [HijoControlerV1::class, 'store']); // agregar
+    Route::delete('/hijos/{id}', [HijoControlerV1::class, 'destroy']); // Borrar
+    Route::put('/hijos/{id}', [HijoControlerV1::class, 'update']); //actualizar
+});
+
+
 
 /* Queda como ejemplo para v2
 
