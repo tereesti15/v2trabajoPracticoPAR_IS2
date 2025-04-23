@@ -135,6 +135,167 @@
                 }
             }
         },
+        "/api/v1/hijos": {
+            "get": {
+                "tags": [
+                    "Hijos"
+                ],
+                "summary": "Listar hijos",
+                "operationId": "d3753269dc01116ba6a2fb867eb22aaf",
+                "responses": {
+                    "200": {
+                        "description": "Listado exitoso"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Hijos"
+                ],
+                "summary": "Crear hijo",
+                "operationId": "c7c638de1e7fa7c987d8705db920e449",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "persona_id",
+                                    "nombre",
+                                    "fecha_nacimiento",
+                                    "documento"
+                                ],
+                                "properties": {
+                                    "persona_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Juan"
+                                    },
+                                    "fecha_nacimiento": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-01-25"
+                                    },
+                                    "documento": {
+                                        "type": "string",
+                                        "example": "12345"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Creado exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/v1/hijos/{id}": {
+            "get": {
+                "tags": [
+                    "Hijos"
+                ],
+                "summary": "Mostrar hijo",
+                "operationId": "e43e9d897c520e718f45f5d5e31f0cc1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Hijo encontrado"
+                    },
+                    "404": {
+                        "description": "No encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Hijos"
+                ],
+                "summary": "Actualizar hijo",
+                "operationId": "ecae2cabee829f7ab7d6cdc9df9db487",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "persona_id": {
+                                        "type": "integer",
+                                        "example": "2"
+                                    },
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Juan"
+                                    },
+                                    "fecha_nacimiento": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-01-26"
+                                    },
+                                    "documento": {
+                                        "type": "string",
+                                        "example": "1234563"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actualizado exitosamente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Hijos"
+                ],
+                "summary": "Eliminar hijo",
+                "operationId": "63ae31df5ae1095b64d2764bee471e40",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Eliminado exitosamente"
+                    }
+                }
+            }
+        },
         "/api/v1/personas": {
             "get": {
                 "tags": [
@@ -301,6 +462,10 @@
         {
             "name": "Departamentos",
             "description": "Operaciones relacionadas con los departamentos"
+        },
+        {
+            "name": "Hijos",
+            "description": "Operaciones relacionadas con los hijos"
         },
         {
             "name": "Personas",
