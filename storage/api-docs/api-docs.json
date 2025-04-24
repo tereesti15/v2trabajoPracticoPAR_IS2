@@ -288,6 +288,129 @@
                 }
             }
         },
+        "/api/v1/empleados": {
+            "get": {
+                "tags": [
+                    "Empleados"
+                ],
+                "summary": "Listar empleados",
+                "operationId": "f642e4a52968639a7b2bedd9ab443f78",
+                "responses": {
+                    "200": {
+                        "description": "Lista de empleados"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Empleados"
+                ],
+                "summary": "Crear empleado",
+                "operationId": "755511e2d2ece5cb9879b31f37a560b9",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Empleado"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Empleado creado"
+                    }
+                }
+            }
+        },
+        "/api/v1/empleados/{id}": {
+            "get": {
+                "tags": [
+                    "Empleados"
+                ],
+                "summary": "Obtener un empleado",
+                "operationId": "96d4b280765d76e25d94a9851364e615",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Empleado encontrado"
+                    },
+                    "404": {
+                        "description": "Empleado no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Empleados"
+                ],
+                "summary": "Actualizar un empleado",
+                "operationId": "d6ba9d323d496883ef5fc4ae924c0b2f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Empleado"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Empleado actualizado"
+                    },
+                    "404": {
+                        "description": "Empleado no encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Empleados"
+                ],
+                "summary": "Eliminar un empleado",
+                "operationId": "fabd7bdc966718dd543e154984f5ebef",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Empleado eliminado"
+                    },
+                    "404": {
+                        "description": "Empleado no encontrado"
+                    }
+                }
+            }
+        },
         "/api/v1/hijos": {
             "get": {
                 "tags": [
@@ -611,6 +734,61 @@
             }
         }
     },
+    "components": {
+        "schemas": {
+            "Empleado": {
+                "title": "Empleado",
+                "description": "Modelo del empleado",
+                "required": [
+                    "id_persona",
+                    "id_cargo",
+                    "id_departamento",
+                    "fecha_ingreso",
+                    "salario_base",
+                    "estado_empleado"
+                ],
+                "properties": {
+                    "id_empleados": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "id_persona": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "id_cargo": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "id_departamento": {
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "fecha_ingreso": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2023-05-10"
+                    },
+                    "salario_base": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 2500.75
+                    },
+                    "estado_empleado": {
+                        "type": "string",
+                        "example": "Activo"
+                    },
+                    "fecha_egreso": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2024-12-31",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
     "tags": [
         {
             "name": "Cargos",
@@ -619,6 +797,10 @@
         {
             "name": "Departamentos",
             "description": "Operaciones relacionadas con los departamentos"
+        },
+        {
+            "name": "Empleados",
+            "description": "Operaciones relacionadas con los empleados"
         },
         {
             "name": "Hijos",

@@ -5,6 +5,16 @@ use App\Http\Controllers\Api\v1\PersonasController as PersonasControllerV1;
 use App\Http\Controllers\API\v1\DepartamentoController as DepartamentoControllerV1;
 use App\Http\Controllers\Api\v1\HijoController as HijoControlerV1;
 use App\Http\Controllers\Api\v1\CargoController as CargoControllerV1;
+use App\Http\Controllers\Api\v1\EmpleadoController as EmpleadoControllerV1;
+
+
+Route::prefix('v1')->group(function () {
+    Route::get('/empleados', [EmpleadoControllerV1::class, 'index']); //listar
+    Route::post('/empleados', [EmpleadoControllerV1::class, 'store']); // agregar
+    Route::get('/empleados/{id}', [EmpleadoControllerV1::class, 'show']); // listar
+    Route::delete('/empleados/{id}', [EmpleadoControllerV1::class, 'destroy']); // Borrar
+    Route::put('/empleados/{id}', [EmpleadoControllerV1::class, 'update']); //actualizar
+});
 
 Route::prefix('v1')->group(function () {
     Route::get('/personas', [PersonasControllerV1::class, 'index']); //listar
