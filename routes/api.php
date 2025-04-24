@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\PersonasController as PersonasControllerV1;
 use App\Http\Controllers\API\v1\DepartamentoController as DepartamentoControllerV1;
 use App\Http\Controllers\Api\v1\HijoController as HijoControlerV1;
+use App\Http\Controllers\Api\v1\CargoController as CargoControllerV1;
 
 Route::prefix('v1')->group(function () {
     Route::get('/personas', [PersonasControllerV1::class, 'index']); //listar
@@ -26,6 +27,13 @@ Route::prefix('v1')->group(function () {
     Route::put('/hijos/{id}', [HijoControlerV1::class, 'update']); //actualizar
 });
 
+Route::prefix('v1')->group(function () {
+    Route::get('/cargos', [CargoControllerV1::class, 'index']); // listar
+    Route::get('/cargos/{id}', [CargoControllerV1::class, 'show']); // listar
+    Route::post('/cargos', [CargoControllerV1::class, 'store']); // agregar
+    Route::delete('/cargos/{id}', [CargoControllerV1::class, 'destroy']); // Borrar
+    Route::put('/cargos/{id}', [CargoControllerV1::class, 'update']); //actualizar
+});
 
 
 /* Queda como ejemplo para v2
