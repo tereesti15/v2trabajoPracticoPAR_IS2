@@ -10,6 +10,159 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/v1/cargos": {
+            "get": {
+                "tags": [
+                    "Cargos"
+                ],
+                "summary": "Obtener todos los cargos",
+                "operationId": "3185d56d30cba5312c270c6560516893",
+                "responses": {
+                    "200": {
+                        "description": "Lista de cargos en JSON"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Cargos"
+                ],
+                "summary": "Crear un nuevo cargo",
+                "operationId": "8fa700292bef15615ace6df2ffa1a651",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre_cargo",
+                                    "descripcion_cargo",
+                                    "salario_base"
+                                ],
+                                "properties": {
+                                    "nombre_cargo": {
+                                        "type": "string"
+                                    },
+                                    "descripcion_cargo": {
+                                        "type": "string"
+                                    },
+                                    "salario_base": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Cargo creado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/v1/cargos/{id}": {
+            "get": {
+                "tags": [
+                    "Cargos"
+                ],
+                "summary": "Obtener un cargo específico",
+                "operationId": "a7f95f0bc57965a5d6b5d63a846fc1f8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cargo encontrado"
+                    },
+                    "404": {
+                        "description": "Cargo no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Cargos"
+                ],
+                "summary": "Actualizar un cargo",
+                "operationId": "2dd788581d76e88e2716b68758a59043",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nombre_cargo": {
+                                        "type": "string"
+                                    },
+                                    "descripcion_cargo": {
+                                        "type": "string"
+                                    },
+                                    "salario_base": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Cargo actualizado"
+                    },
+                    "404": {
+                        "description": "Cargo no encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Cargos"
+                ],
+                "summary": "Eliminar un cargo",
+                "operationId": "1320c436736a8ad77ca52890165934b6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cargo eliminado"
+                    },
+                    "404": {
+                        "description": "Cargo no encontrado"
+                    }
+                }
+            }
+        },
         "/api/v1/departamentos": {
             "get": {
                 "tags": [
@@ -459,6 +612,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Cargos",
+            "description": "Operaciones relacionadas con los cargos"
+        },
         {
             "name": "Departamentos",
             "description": "Operaciones relacionadas con los departamentos"
