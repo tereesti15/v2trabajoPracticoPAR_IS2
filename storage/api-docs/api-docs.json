@@ -572,6 +572,129 @@
                 }
             }
         },
+        "/api/v1/nomina": {
+            "get": {
+                "tags": [
+                    "Nominas"
+                ],
+                "summary": "Listar todas las nóminas",
+                "operationId": "1afd0b3158660cd130ca4f67fd38213a",
+                "responses": {
+                    "200": {
+                        "description": "Lista de nóminas"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Nominas"
+                ],
+                "summary": "Crear una nueva nómina",
+                "operationId": "7ddbfa3284e5daa3e8d08a00a848a4d4",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Nomina"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Nómina creada"
+                    }
+                }
+            }
+        },
+        "/api/v1/nomina/{id}": {
+            "get": {
+                "tags": [
+                    "Nominas"
+                ],
+                "summary": "Obtener una nómina específica",
+                "operationId": "e14c0df544cf4181bb1dc02b707aa054",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Nómina encontrada"
+                    },
+                    "404": {
+                        "description": "Nómina no encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Nominas"
+                ],
+                "summary": "Actualizar una nómina",
+                "operationId": "ebac59e5a5da135ff1cbc94d0f2b6023",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Nomina"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Nómina actualizada"
+                    },
+                    "404": {
+                        "description": "Nómina no encontrada"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Nominas"
+                ],
+                "summary": "Eliminar una nómina",
+                "operationId": "cffc683c56a4e20eb1a0c55306be049a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Nómina eliminada"
+                    },
+                    "404": {
+                        "description": "Nómina no encontrada"
+                    }
+                }
+            }
+        },
         "/api/v1/personas": {
             "get": {
                 "tags": [
@@ -786,6 +909,34 @@
                     }
                 },
                 "type": "object"
+            },
+            "Nomina": {
+                "required": [
+                    "periodo",
+                    "fecha_proceso_liquidacion",
+                    "estado_nomina"
+                ],
+                "properties": {
+                    "periodo": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-04-01"
+                    },
+                    "fecha_proceso_liquidacion": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-04-20"
+                    },
+                    "estado_nomina": {
+                        "type": "string",
+                        "enum": [
+                            "Modificable",
+                            "Confirmada"
+                        ],
+                        "example": "Modificable"
+                    }
+                },
+                "type": "object"
             }
         }
     },
@@ -805,6 +956,10 @@
         {
             "name": "Hijos",
             "description": "Operaciones relacionadas con los hijos"
+        },
+        {
+            "name": "Nominas",
+            "description": "Operaciones relacionadas con la nómina"
         },
         {
             "name": "Personas",
