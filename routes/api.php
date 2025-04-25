@@ -6,7 +6,16 @@ use App\Http\Controllers\API\v1\DepartamentoController as DepartamentoController
 use App\Http\Controllers\Api\v1\HijoController as HijoControlerV1;
 use App\Http\Controllers\Api\v1\CargoController as CargoControllerV1;
 use App\Http\Controllers\Api\v1\EmpleadoController as EmpleadoControllerV1;
+use App\Http\Controllers\Api\v1\NominaController as NominaControllerV1;
 
+
+Route::prefix('v1')->group(function () {
+    Route::get('/nomina', [NominaControllerV1::class, 'index']); //listar
+    Route::post('/nomina', [NominaControllerV1::class, 'store']); // agregar
+    Route::get('/nomina/{id}', [NominaControllerV1::class, 'show']); // listar
+    Route::delete('/nomina/{id}', [NominaControllerV1::class, 'destroy']); // Borrar
+    Route::put('/nomina/{id}', [NominaControllerV1::class, 'update']); //actualizar
+});
 
 Route::prefix('v1')->group(function () {
     Route::get('/empleados', [EmpleadoControllerV1::class, 'index']); //listar
