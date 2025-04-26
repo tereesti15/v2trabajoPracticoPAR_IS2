@@ -7,7 +7,15 @@ use App\Http\Controllers\Api\v1\HijoController as HijoControlerV1;
 use App\Http\Controllers\Api\v1\CargoController as CargoControllerV1;
 use App\Http\Controllers\Api\v1\EmpleadoController as EmpleadoControllerV1;
 use App\Http\Controllers\Api\v1\NominaController as NominaControllerV1;
+use App\Http\Controllers\Api\v1\ConceptoSalarioController as ConceptoSalarioControllerV1;
 
+Route::prefix('v1')->group(function () {
+    Route::get('/conceptos-salario', [ConceptoSalarioControllerV1::class, 'index']); //listar
+    Route::post('/conceptos-salario', [ConceptoSalarioControllerV1::class, 'store']); // agregar
+    Route::get('/conceptos-salario/{id}', [ConceptoSalarioControllerV1::class, 'show']); // listar
+    Route::delete('/conceptos-salario/{id}', [ConceptoSalarioControllerV1::class, 'destroy']); // Borrar
+    Route::put('/conceptos-salario/{id}', [ConceptoSalarioControllerV1::class, 'update']); //actualizar
+});
 
 Route::prefix('v1')->group(function () {
     Route::get('/nomina', [NominaControllerV1::class, 'index']); //listar

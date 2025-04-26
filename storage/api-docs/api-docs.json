@@ -163,6 +163,100 @@
                 }
             }
         },
+        "/api/v1/conceptos-salario": {
+            "get": {
+                "tags": [
+                    "Conceptos Salariales"
+                ],
+                "summary": "Listar todos los conceptos salariales",
+                "operationId": "baa31cb0213acf55df0ee99679b4643b",
+                "responses": {
+                    "200": {
+                        "description": "Listado de conceptos salariales"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Conceptos Salariales"
+                ],
+                "summary": "Crear un nuevo concepto salarial",
+                "operationId": "1cfe043d5a87a3588ae4cf5e8ccb3d63",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConceptoSalarioRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Concepto creado"
+                    }
+                }
+            }
+        },
+        "/api/v1/conceptos-salario/{id}": {
+            "put": {
+                "tags": [
+                    "Conceptos Salariales"
+                ],
+                "summary": "Actualizar un concepto salarial",
+                "operationId": "c8f0c81c81922c4cac306d569af1de06",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del concepto salarial",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConceptoSalarioRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Concepto actualizado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Conceptos Salariales"
+                ],
+                "summary": "Eliminar un concepto salarial",
+                "operationId": "e7f7406bc4b2263b793874f0533392d8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del concepto salarial",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Concepto eliminado"
+                    }
+                }
+            }
+        },
         "/api/v1/departamentos": {
             "get": {
                 "tags": [
@@ -859,6 +953,27 @@
     },
     "components": {
         "schemas": {
+            "ConceptoSalarioRequest": {
+                "required": [
+                    "nombre",
+                    "tipo"
+                ],
+                "properties": {
+                    "nombre": {
+                        "type": "string",
+                        "example": "Bono de transporte"
+                    },
+                    "tipo": {
+                        "description": "Tipo de concepto (acreditacion o descuento)",
+                        "type": "string",
+                        "enum": [
+                            "acreditacion",
+                            "descuento"
+                        ]
+                    }
+                },
+                "type": "object"
+            },
             "Empleado": {
                 "title": "Empleado",
                 "description": "Modelo del empleado",
@@ -944,6 +1059,10 @@
         {
             "name": "Cargos",
             "description": "Operaciones relacionadas con los cargos"
+        },
+        {
+            "name": "Conceptos Salariales",
+            "description": "Operaciones relacionadas con la nomina"
         },
         {
             "name": "Departamentos",
