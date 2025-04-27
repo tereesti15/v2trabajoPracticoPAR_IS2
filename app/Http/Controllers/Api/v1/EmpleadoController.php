@@ -6,6 +6,7 @@ use OpenApi\Annotations as OA;
 use App\Http\Controllers\Controller;
 use App\Models\Empleados;
 use Illuminate\Http\Request;
+use App\Services\EmpleadoService;
 
 /**
  *
@@ -101,7 +102,6 @@ final class EmpleadoController extends Controller
             'fecha_ingreso' => 'required|date',
             'salario_base' => 'required|numeric',
             'estado_empleado' => 'required|string',
-            'fecha_egreso' => 'nullable|date',
         ]);
 
         try {

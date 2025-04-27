@@ -9,6 +9,16 @@ use App\Http\Controllers\Api\v1\EmpleadoController as EmpleadoControllerV1;
 use App\Http\Controllers\Api\v1\NominaController as NominaControllerV1;
 use App\Http\Controllers\Api\v1\ConceptoSalarioController as ConceptoSalarioControllerV1;
 use App\Http\Controllers\Api\v1\DetalleNominaController as DetalleNominaControlleV1;
+use App\Http\Controllers\Api\v1\ProcesoNominaController as ProcesoNominaControllerV1;
+
+Route::prefix('v1')->group(function () {
+    //Route::get('/proceso-nomina', [ConceptoSalarioControllerV1::class, 'index']); //listar
+    Route::post('/proceso-nomina', [ProcesoNominaControllerV1::class, 'store']); // agregar
+    //Route::get('/proceso-nomina/{id}', [ConceptoSalarioControllerV1::class, 'show']); // listar
+    //Route::delete('/proceso-nomina/{id}', [ConceptoSalarioControllerV1::class, 'destroy']); // Borrar
+    //Route::put('/proceso-nomina/{id}', [ConceptoSalarioControllerV1::class, 'update']); //actualizar
+});
+
 
 Route::prefix('v1')->group(function () {
     Route::get('/conceptos-salario', [ConceptoSalarioControllerV1::class, 'index']); //listar

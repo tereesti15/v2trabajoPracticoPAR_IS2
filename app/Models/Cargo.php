@@ -18,4 +18,9 @@ class Cargo extends Model
         'descripcion_cargo',
         'salario_base',
     ];
+
+    public function empleados()
+    {
+        return $this->hasMany(Empleados::class, 'id_cargo', 'id_cargo');
+    }
 }
