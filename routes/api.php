@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\v1\CargoController as CargoControllerV1;
 use App\Http\Controllers\Api\v1\EmpleadoController as EmpleadoControllerV1;
 use App\Http\Controllers\Api\v1\NominaController as NominaControllerV1;
 use App\Http\Controllers\Api\v1\ConceptoSalarioController as ConceptoSalarioControllerV1;
+use App\Http\Controllers\Api\v1\DetalleNominaController as DetalleNominaControlleV1;
 
 Route::prefix('v1')->group(function () {
     Route::get('/conceptos-salario', [ConceptoSalarioControllerV1::class, 'index']); //listar
@@ -61,6 +62,17 @@ Route::prefix('v1')->group(function () {
     Route::delete('/cargos/{id}', [CargoControllerV1::class, 'destroy']); // Borrar
     Route::put('/cargos/{id}', [CargoControllerV1::class, 'update']); //actualizar
 });
+
+Route::prefix('v1')->group(function () {
+    Route::get('/detalle-nomina', [DetalleNominaControlleV1::class, 'index']); // listar
+    Route::get('/detalle-nomina/{id}', [DetalleNominaControlleV1::class, 'show']); // listar
+    Route::post('/detalle-nomina', [DetalleNominaControlleV1::class, 'store']); // agregar
+    Route::delete('/detalle-nomina/{id}', [DetalleNominaControlleV1::class, 'destroy']); // Borrar
+    Route::put('/detalle-nomina/{id}', [DetalleNominaControlleV1::class, 'update']); //actualizar
+});
+
+
+
 
 
 /* Queda como ejemplo para v2

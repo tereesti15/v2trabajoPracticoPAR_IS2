@@ -56,6 +56,7 @@ class ConceptoSalarioController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
+        /*
         $data = $request->validate([
             'nombre' => 'required|string|max:255',
             'tipo'   => 'required|in:acreditacion,descuento',
@@ -63,6 +64,14 @@ class ConceptoSalarioController extends Controller
 
         $concepto = ConceptoSalario::create($data);
         return response()->json($concepto, 201);
+*/
+        try {
+            $concepto = ConceptoSalario::create($request->all());
+            return response()->json($concepto, 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+
     }
 
     /**
@@ -83,7 +92,7 @@ class ConceptoSalarioController extends Controller
     public function update(Request $request, $id): JsonResponse
     {
         $data = $request->validate([
-            'nombre' => 'required|string|max:255',
+            'nombre_concepto' => 'required|string|max:255',
             'tipo'   => 'required|in:acreditacion,descuento',
         ]);
 
