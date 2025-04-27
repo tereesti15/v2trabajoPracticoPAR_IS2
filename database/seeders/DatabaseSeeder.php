@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             DepartamentoSeeder::class,
             CargoSeeder::class,
             ParametricasSeeder::class,
+            ConceptoSalarioSeeder::class,
         ]);
     }
 }

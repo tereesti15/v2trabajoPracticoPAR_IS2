@@ -4,8 +4,11 @@ namespace App\Services;
 
 use App\Models\Personas;
 use App\Models\Empleados;
+use App\Models\Nomina;
+use App\Models\DetalleNomina;
 use Illuminate\Database\Eloquent\Collection;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 final class NominaService
 {
@@ -28,17 +31,75 @@ final class NominaService
     }
 
     public function procesarPlanilla(int $mes, int$anho) {
-        $allEmployees = Empleados::all();
-        foreach ($allEmployees as $empleado) {
-            // Aquí puedes acceder a las propiedades del modelo $empleado
-            //echo $empleado->nombre;  // Suponiendo que 'nombre' es un campo de tu tabla de empleados
-            //echo $empleado->apellido;  // Suponiendo que 'apellido' es otro campo
-            $this->calculoSalarioBase($empleado);
+
+        $ultimoDiaDelMes = Carbon::createFromDate($anho, $mes, 1)->endOfMonth();
+        $existeNomina = Nomina::where('periodo', $ultimoDiaDelMes)->exists();
+
+        if ($existeNomina) {
+            throw new \Exception('Ya existe una nómina para este periodo.');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            // 1. Crear Nomina con el último día del mes
+            // El primer paso es generar la fecha con el día 1
+            $periodo = Carbon::createFromDate($anho, $mes, 1);
+
+            $ultimoDiaDelMes = $periodo->endOfMonth(); // Esto nos da el último día del mes, considerando bisiestos
+
+            // Fecha de proceso
+            $fechaProceso = now();
+
+            // Crear el registro en la tabla "nomina"
+            $nomina = Nomina::create([
+                'periodo' => $ultimoDiaDelMes,  // Guardamos el último día del mes
+                'fecha_proceso_liquidacion' => $fechaProceso,
+                'estado_nomina' => \App\EstadoNomina::Modificable->value,
+            ]);
+
+            // 2. Recuperar empleados
+            $allEmployees = Empleados::with('cargo')->get();
+
+            foreach ($allEmployees as $empleado) {
+
+                // 3. Crear un detalle de nómina por empleado
+                $this->calculoSalarioBase($empleado, $nomina);
+            }
+
+            DB::commit();
+
+            return $nomina; // Retornar la nómina creada
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
     }
 
-    private function calculoSalarioBase(Empleados $data) {
-        $datoSalario = $data->getSalarioBase();
+
+    /**
+     * Método que guarda los detalles de la nómina de un empleado.
+     *
+     * @param Empleados $empleado
+     * @param Nomina $nomina
+     */
+    private function calculoSalarioBase(Empleados $empleado, Nomina $nomina)
+    {
+        // Puedes agregar la lógica de cálculos adicionales aquí, como bonificaciones, descuentos, etc.
+
+        // Calcular salario base (esto es solo un ejemplo)
+        $salarioBase = $empleado->cargo->salario_base ?? 0;
+        //echo $nomina . " " . $salarioBase . "\n";
+
+        // Crear detalle de nómina
+        DetalleNomina::create([
+            'id_nomina' => $nomina->id_nomina,
+            'id_empleado' => $empleado->id_empleado,
+            'id_concepto' => 1,
+            'detalle_concepto' => 'Salario base',
+            'monto_concepto' => $salarioBase,
+        ]);
+
     }
 
     private function calculoBonificacionFamiliar(Empleados $data) {

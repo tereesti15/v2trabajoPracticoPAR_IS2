@@ -12,13 +12,13 @@ use App\Http\Controllers\Api\v1\DetalleNominaController as DetalleNominaControll
 use App\Http\Controllers\Api\v1\ProcesoNominaController as ProcesoNominaControllerV1;
 
 Route::prefix('v1')->group(function () {
-    //Route::get('/proceso-nomina', [ConceptoSalarioControllerV1::class, 'index']); //listar
+    Route::delete('/proceso-nomina/{mes}/{anho}', [ProcesoNominaControllerV1::class, 'destroy']);
+    Route::get('/proceso-nomina', [ProcesoNominaControllerV1::class, 'index']); //listar
     Route::post('/proceso-nomina', [ProcesoNominaControllerV1::class, 'store']); // agregar
-    //Route::get('/proceso-nomina/{id}', [ConceptoSalarioControllerV1::class, 'show']); // listar
+    Route::get('/proceso-nomina/{mes}/{anho}', [ProcesoNominaControllerV1::class, 'show']); // listar
     //Route::delete('/proceso-nomina/{id}', [ConceptoSalarioControllerV1::class, 'destroy']); // Borrar
     //Route::put('/proceso-nomina/{id}', [ConceptoSalarioControllerV1::class, 'update']); //actualizar
 });
-
 
 Route::prefix('v1')->group(function () {
     Route::get('/conceptos-salario', [ConceptoSalarioControllerV1::class, 'index']); //listar
