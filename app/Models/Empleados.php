@@ -41,5 +41,10 @@ class Empleados extends Model
         'estado_empleado',
         'fecha_egreso',
     ];
+
+    protected $dates = [
+        'fecha_ingreso',
+        'fecha_egreso',
+    ];
 }
 
