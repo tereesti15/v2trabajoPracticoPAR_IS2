@@ -15,7 +15,8 @@ return new class extends Migration
         Schema::create('concepto_salario', function (Blueprint $table) {
             $table->id('id_concepto');
             $table->string('nombre_concepto');
-            $table->enum('tipo', array_column(TipoConceptoNomina::cases(), 'value'));
+           // $table->enum('tipo', array_column(TipoConceptoNomina::cases(), 'value'));
+            $table->enum('tipo', array_column(TipoConceptoNomina::cases(), 'value'))->default(TipoConceptoNomina::ACREDITACION->value);
             $table->timestamps();
         });
     }

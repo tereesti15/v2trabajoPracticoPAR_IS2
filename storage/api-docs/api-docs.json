@@ -382,6 +382,129 @@
                 }
             }
         },
+        "/api/v1/detalle-nomina": {
+            "get": {
+                "tags": [
+                    "Detalle Nomina"
+                ],
+                "summary": "Listar el detalle de las nominas",
+                "operationId": "a805c5653674d2860408874d3a094ba3",
+                "responses": {
+                    "200": {
+                        "description": "Lista el detalle de las nominas"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Detalle Nomina"
+                ],
+                "summary": "Crear detalle nomina",
+                "operationId": "03549456e3d9dc57dc5e60f0cd5391e1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DetalleNomina"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Detalle de nomina creada"
+                    }
+                }
+            }
+        },
+        "/api/v1/detalle-nomina/{id}": {
+            "get": {
+                "tags": [
+                    "Detalle Nomina"
+                ],
+                "summary": "Obtener un detalle de nomina",
+                "operationId": "94ee4e5b9e6035017f18ea23e522c318",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalle de nomina encontrado"
+                    },
+                    "404": {
+                        "description": "Detalle de nomina no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Detalle Nomina"
+                ],
+                "summary": "Actualizar un detalle de nomina",
+                "operationId": "8f6ee35a4cb4a7d9ef624dace135b6e2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DetalleNomina"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Detalle de nomina actualizado"
+                    },
+                    "404": {
+                        "description": "Detalle de nomina no encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Detalle Nomina"
+                ],
+                "summary": "Eliminar un detalle de nomina",
+                "operationId": "a6b289778bd07aa57045108c8f0658e2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalle de nomina eliminado"
+                    },
+                    "404": {
+                        "description": "Detalle de nomina no encontrado"
+                    }
+                }
+            }
+        },
         "/api/v1/empleados": {
             "get": {
                 "tags": [
@@ -974,6 +1097,45 @@
                 },
                 "type": "object"
             },
+            "DetalleNomina": {
+                "title": "DetalleNomina",
+                "description": "Modelo del detalle de nomina",
+                "required": [
+                    "id_nomina",
+                    "id_empleado",
+                    "id_concepto",
+                    "detalle_concepto",
+                    "monto_concepto"
+                ],
+                "properties": {
+                    "id_detalle_nomina": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "id_nomina": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "id_empleado": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "id_concepto": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "detalle_concepto": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "monto_concepto": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 2500.75
+                    }
+                },
+                "type": "object"
+            },
             "Empleado": {
                 "title": "Empleado",
                 "description": "Modelo del empleado",
@@ -1067,6 +1229,10 @@
         {
             "name": "Departamentos",
             "description": "Operaciones relacionadas con los departamentos"
+        },
+        {
+            "name": "Detalle Nomina",
+            "description": "API Endpoints para Detalle Nomina"
         },
         {
             "name": "Empleados",

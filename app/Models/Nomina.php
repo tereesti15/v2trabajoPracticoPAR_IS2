@@ -23,8 +23,10 @@ class Nomina extends Model
     protected $primaryKey = 'id_nomina';
 
     protected $fillable = [
-        'periodo',
-        'fecha_proceso_liquidacion',
-        'estado_nomina',
+        'id_nomina',
+        'id_empleado',
+        'id_concepto',
+        'detalle_concepto',
+        'monto_concepto'
     ];
 }
