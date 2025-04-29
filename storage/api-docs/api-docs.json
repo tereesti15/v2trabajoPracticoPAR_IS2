@@ -1072,6 +1072,74 @@
                     }
                 }
             }
+        },
+        "/api/v1/proceso-nomina": {
+            "get": {
+                "tags": [
+                    "Proceso Planilla Nomina"
+                ],
+                "summary": "Obtener todas las nóminas procesadas",
+                "operationId": "9b40643974681d9433c3629f8957f371",
+                "responses": {
+                    "200": {
+                        "description": "Lista de nóminas procesadas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Nomina"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/proceso-nomina/{mes}/{anho}": {
+            "get": {
+                "tags": [
+                    "Proceso Planilla Nomina"
+                ],
+                "summary": "Obtener una nómina específica por mes y año",
+                "operationId": "acaaee52bef539586276b1d9b64a575f",
+                "parameters": [
+                    {
+                        "name": "mes",
+                        "in": "path",
+                        "description": "Mes de la nómina",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "anho",
+                        "in": "path",
+                        "description": "Año de la nómina",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalle de la nómina para el periodo solicitado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Nomina"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Nómina no encontrada"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -1249,6 +1317,10 @@
         {
             "name": "Personas",
             "description": "Operaciones relacionadas con las personas"
+        },
+        {
+            "name": "Proceso Planilla Nomina",
+            "description": "Operaciones sobre las nóminas"
         }
     ]
 }

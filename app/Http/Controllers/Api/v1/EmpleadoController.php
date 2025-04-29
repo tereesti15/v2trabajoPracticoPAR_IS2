@@ -6,6 +6,7 @@ use OpenApi\Annotations as OA;
 use App\Http\Controllers\Controller;
 use App\Models\Empleados;
 use Illuminate\Http\Request;
+use App\Services\EmpleadoService;
 
 /**
  *
@@ -65,8 +66,16 @@ use Illuminate\Http\Request;
  */
 
 
-class EmpleadoController extends Controller
+final class EmpleadoController extends Controller
 {
+
+    protected $empleadoService;
+
+    public function __construct(EmpleadoService $empleadoService)
+    {
+        $this->empleadoService = $empleadoService;
+    }
+
     // GET /api/empleados
     public function index()
     {
@@ -93,11 +102,14 @@ class EmpleadoController extends Controller
             'fecha_ingreso' => 'required|date',
             'salario_base' => 'required|numeric',
             'estado_empleado' => 'required|string',
-            'fecha_egreso' => 'nullable|date',
         ]);
 
-        $empleado = Empleados::create($validated);
-        return response()->json($empleado, 201);
+        try {
+            $empleado = $this->empleadoService->crearEmpleado($request->all());
+            return response()->json($empleado, 201);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
     }
 
     // PUT /api/empleados/{id}
@@ -109,7 +121,7 @@ class EmpleadoController extends Controller
         }
 
         $validated = $request->validate([
-            'id_persona' => 'required|integer',
+            //'id_persona' => 'required|integer',
             'id_cargo' => 'required|integer',
             'id_departamento' => 'required|integer',
             'fecha_ingreso' => 'required|date',
@@ -118,19 +130,24 @@ class EmpleadoController extends Controller
             'fecha_egreso' => 'nullable|date',
         ]);
 
-        $empleado->update($validated);
-        return response()->json($empleado, 200);
+        //$empleado->update($validated);
+        //return response()->json($empleado, 200);
+        try {
+            $empleadoActualizado = $this->empleadoService->actualizarEmpleado($id, $validated);
+            return response()->json($empleadoActualizado, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
     }
 
     // DELETE /api/empleados/{id}
     public function destroy($id)
     {
-        $empleado = Empleados::find($id);
-        if (!$empleado) {
-            return response()->json(['error' => 'Empleado no encontrado'], 404);
+        try {
+            $this->empleadoService->borrarEmpleado($id);
+            return response()->json(['message' => 'Empleado eliminado correctamente.'], 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
         }
-
-        $empleado->delete();
-        return response()->json(['message' => 'Empleado eliminado'], 200);
     }
 }

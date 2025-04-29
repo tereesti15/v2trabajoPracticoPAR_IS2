@@ -41,5 +41,20 @@ class Empleados extends Model
         'estado_empleado',
         'fecha_egreso',
     ];
+
+    protected $dates = [
+        'fecha_ingreso',
+        'fecha_egreso',
+    ];
+
+    public function cargo()
+    {
+        return $this->belongsTo(Cargo::class, 'id_cargo', 'id_cargo');
+    }
+
+    public function getSalarioBase()
+    {
+        return $this->cargo ? $this->cargo->salario_base : null;
+    }
 }
 

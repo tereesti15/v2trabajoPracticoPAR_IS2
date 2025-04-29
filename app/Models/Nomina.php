@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * )
  */
 
-class Nomina extends Model
+final class Nomina extends Model
 {
     use HasFactory;
 
@@ -24,9 +24,16 @@ class Nomina extends Model
 
     protected $fillable = [
         'id_nomina',
+        'periodo',
+        'fecha_proceso_liquidacion',
         'id_empleado',
         'id_concepto',
         'detalle_concepto',
         'monto_concepto'
+    ];
+
+    protected $dates = [
+        'periodo',
+        'fecha_proceso_liquidacion',
     ];
 }

@@ -13,7 +13,7 @@ use OpenApi\Annotations as OA;
  *     description="Operaciones relacionadas con la nómina"
  * )
  */
-class NominaController extends Controller
+final class NominaController extends Controller
 {
     /**
      * @OA\Get(

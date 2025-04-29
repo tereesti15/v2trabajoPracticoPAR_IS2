@@ -23,8 +23,7 @@ use OpenApi\Annotations as OA;
  * )
  */
 
-
-class DetalleNomina extends Model
+final class DetalleNomina extends Model
 {
     use HasFactory;
 
