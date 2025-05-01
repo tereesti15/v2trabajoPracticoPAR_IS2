@@ -88,7 +88,7 @@ final class NominaService
         // Puedes agregar la lógica de cálculos adicionales aquí, como bonificaciones, descuentos, etc.
 
         // Calcular salario base (esto es solo un ejemplo)
-        $salarioBase = $empleado->cargo->salario_base ?? 0;
+        $salarioBase = $empleado->salario_base;
         //echo $nomina . " " . $salarioBase . "\n";
 
         // Crear detalle de nómina

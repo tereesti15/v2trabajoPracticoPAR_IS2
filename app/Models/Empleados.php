@@ -56,5 +56,11 @@ class Empleados extends Model
     {
         return $this->cargo ? $this->cargo->salario_base : null;
     }
+
+    public function getSalarioBaseAttribute()
+    {
+        return $this->attributes['salario_base'];
+    }
+
 }
 
