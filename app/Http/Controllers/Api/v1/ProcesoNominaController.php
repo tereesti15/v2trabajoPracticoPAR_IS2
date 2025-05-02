@@ -126,19 +126,13 @@ final class ProcesoNominaController extends Controller
             'mes' => 'required|integer',
             'anho' => 'required|integer',
         ]);
-        $this->nominaService->procesarPlanilla($validated['mes'], $validated['anho']);
-        return response()->json(['message' => 'Nómina procesada correctamente'], 200);
-    }
-
-    public function obtenerHijos($idPersona)
-    {
-        $hijos = $this->nominaService->obtenerHijosPorPersona($idPersona);
-
-        if (!$hijos) {
-            return response()->json(['error' => 'Persona no encontrada'], 404);
+        try {
+            $nomina = $this->nominaService->procesarPlanilla($validated['mes'], $validated['anho']);
+            return response()->json(['message' => 'Nómina procesada correctamente'], 200);
+        } catch (\Exception $e) {
+            \Log::error("CONTROLLER Error al procesar la planilla: " . $validated['mes'] . " " . $validated['anho'] . " " . $e->getMessage());
+            return response()->json(['error' => 'No se pudo procesar la planilla.'], 500);
         }
-
-        return response()->json($hijos);
     }
 
     public function destroy($mes, $anho)

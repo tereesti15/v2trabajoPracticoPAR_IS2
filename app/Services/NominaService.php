@@ -19,25 +19,9 @@ final class NominaService
     public function __construct()
     {
         // Instanciamos la clase Parametro en el constructor
+        //\Log::info('Entra constructor NominaService');
         $this->parametro = new Parametro();
-    }
-
-    /**
-     * Obtener los hijos menores de 18 años por persona
-     */
-    public function obtenerHijosPorPersona(int $idPersona): ?Collection
-    {
-        $persona = Personas::find($idPersona);
-
-        if (!$persona) {
-            return null; // Persona no encontrada
-        }
-
-        // Filtramos los hijos menores de 18 años
-        return $persona->hijos->filter(function ($hijo) {
-            $fechaNacimiento = Carbon::parse($hijo->fecha_nacimiento);
-            return $fechaNacimiento->age < 18; // Filtra a los menores de 18 años
-        });
+        //\Log::info('DATOS DE PARAMETRO EN CONSTRUCTOR ' . $this->parametro->salario_minimo);
     }
 
     public function procesarPlanilla(int $mes, int$anho) {
@@ -76,17 +60,18 @@ final class NominaService
                 // 3. Crear un detalle de nómina por empleado
                 $this->calculoSalarioBase($empleado, $nomina);
                 $this->calculoBonificacionFamiliar($empleado, $nomina);
+                $this->calculoSeguroSocialIPS($empleado, $nomina);
             }
 
             DB::commit();
 
             return $nomina; // Retornar la nómina creada
         } catch (\Exception $e) {
+            \Log::error('Error al procesar la planilla: ' . $mes . ' ' . $anho . ' ' . $e->getMessage());
             DB::rollBack();
             throw $e;
         }
     }
-
 
     /**
      * Método que guarda los detalles de la nómina de un empleado para salario base
@@ -120,13 +105,11 @@ final class NominaService
      */
     private function calculoBonificacionFamiliar(Empleados $empleado, Nomina $nomina)
     {
-        // Puedes agregar la lógica de cálculos adicionales aquí, como bonificaciones, descuentos, etc.
-
         $salarioBase = $empleado->salario_base;
         $cantHijosMenores = $empleado->getCantidadHijosMenores18Attribute();
-        $salarioMinimo = 2000000; //$this->parametro->salario_minimo;
-        $max_salario_minimo = 2; //$this->parametro->bonificacion_familiar_max_salario_minimo;
-        $porcentaje_bonificacion_familiar = 0.05; //$this->parametro->bonificacion_familiar_porcentaje;
+        $salarioMinimo = $this->parametro->salario_minimo;
+        $max_salario_minimo = $this->parametro->bonificacion_familiar_max_salario_minimo;
+        $porcentaje_bonificacion_familiar = $this->parametro->bonificacion_familiar_porcentaje;
         //echo "Empleado " . $empleado->id_persona . " SALARIO BASE " . $salarioBase . " SALARIO MINIMO " . $salarioMinimo . " HIJOS " . $cantHijosMenores . "\n";
 
         if((($salarioMinimo * $max_salario_minimo) >= $salarioBase) && ($cantHijosMenores > 0)) {
@@ -150,5 +133,30 @@ final class NominaService
                 'monto_concepto' => 0,
             ]);
         }
+    }
+
+    /**
+     * Método que guarda los detalles de la nómina de un empleado para seguro IPS.
+     *
+     * @param Empleados $empleado
+     * @param Nomina $nomina
+     */
+    private function calculoSeguroSocialIPS(Empleados $empleado, Nomina $nomina)
+    {
+        // Puedes agregar la lógica de cálculos adicionales aquí, como bonificaciones, descuentos, etc.
+        $salario_base = $empleado->salario_base;
+        $porcentaje_seguro_IPS = 0.09;
+        $seguroIPS = $salario_base * $porcentaje_seguro_IPS;
+        $seguroIPS = round($seguroIPS);
+        $concepto = "Seguro I.P.S." ;
+        //echo "Empleado " . $empleado->id_persona . " SALARIO BASE " . $salarioBase . " SALARIO MINIMO " . $salarioMinimo . " HIJOS " . $cantHijosMenores . "\n";
+        // Crear detalle de nómina
+        DetalleNomina::create([
+            'id_nomina' => $nomina->id_nomina,
+            'id_empleado' => $empleado->id_empleado,
+            'id_concepto' => 3,
+            'detalle_concepto' => $concepto,
+            'monto_concepto' => $seguroIPS,
+        ]);
     }
 }
