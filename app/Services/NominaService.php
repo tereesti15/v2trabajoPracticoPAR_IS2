@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\DB;
 
 final class NominaService
 {
+
+    private Parametro $parametro;
+
+    public function __construct()
+    {
+        // Instanciamos la clase Parametro en el constructor
+        $this->parametro = new Parametro();
+    }
+
     /**
      * Obtener los hijos menores de 18 años por persona
      */
@@ -80,7 +89,7 @@ final class NominaService
 
 
     /**
-     * Método que guarda los detalles de la nómina de un empleado.
+     * Método que guarda los detalles de la nómina de un empleado para salario base
      *
      * @param Empleados $empleado
      * @param Nomina $nomina
@@ -104,7 +113,7 @@ final class NominaService
     }
 
     /**
-     * Método que guarda los detalles de la nómina de un empleado.
+     * Método que guarda los detalles de la nómina de un empleado para bonificación familiar.
      *
      * @param Empleados $empleado
      * @param Nomina $nomina
@@ -115,14 +124,13 @@ final class NominaService
 
         $salarioBase = $empleado->salario_base;
         $cantHijosMenores = $empleado->getCantidadHijosMenores18Attribute();
-
-        $parametro = new \App\Models\Parametro();
-        $salarioMinimo = $parametro->ultimo_salario_minimo;
-
+        $salarioMinimo = 2000000; //$this->parametro->salario_minimo;
+        $max_salario_minimo = 2; //$this->parametro->bonificacion_familiar_max_salario_minimo;
+        $porcentaje_bonificacion_familiar = 0.05; //$this->parametro->bonificacion_familiar_porcentaje;
         //echo "Empleado " . $empleado->id_persona . " SALARIO BASE " . $salarioBase . " SALARIO MINIMO " . $salarioMinimo . " HIJOS " . $cantHijosMenores . "\n";
 
-        if((($salarioMinimo * 2) >= $salarioBase) && ($cantHijosMenores > 0)) {
-            $importeBonificacion = $salarioMinimo * 0.05 * $cantHijosMenores;
+        if((($salarioMinimo * $max_salario_minimo) >= $salarioBase) && ($cantHijosMenores > 0)) {
+            $importeBonificacion = $salarioMinimo * $porcentaje_bonificacion_familiar * $cantHijosMenores;
             $importeBonificacion = round($importeBonificacion);
             $concepto = "Bonificacion familiar (" . $cantHijosMenores . ")" ;
             // Crear detalle de nómina
