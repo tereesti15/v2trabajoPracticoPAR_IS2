@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use OpenApi\Annotations as OA;
+use Carbon\Carbon;
 
 /**
  * @OA\Schema(
@@ -50,6 +51,25 @@ class Empleados extends Model
     public function cargo()
     {
         return $this->belongsTo(Cargo::class, 'id_cargo', 'id_cargo');
+    }
+
+    public function persona()
+    {
+        return $this->belongsTo(Personas::class, 'id_persona');
+    }
+
+    protected $appends = ['cantidad_hijos_menores_18'];
+
+    public function getCantidadHijosMenores18Attribute(): int
+    {
+        if (!$this->relationLoaded('persona')) {
+            $this->load('persona.hijos');
+        }
+
+        return $this->persona?->hijos
+            ->filter(function ($hijo) {
+                return $hijo->discapacitado || Carbon::parse($hijo->fecha_nacimiento)->age < 18;
+            })->count() ?? 0;
     }
 
     public function getSalarioBase()

@@ -6,6 +6,7 @@ use App\Models\Personas;
 use App\Models\Empleados;
 use App\Models\Nomina;
 use App\Models\DetalleNomina;
+use App\Models\Parametro;
 use Illuminate\Database\Eloquent\Collection;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -65,6 +66,7 @@ final class NominaService
 
                 // 3. Crear un detalle de nómina por empleado
                 $this->calculoSalarioBase($empleado, $nomina);
+                $this->calculoBonificacionFamiliar($empleado, $nomina);
             }
 
             DB::commit();
@@ -87,7 +89,6 @@ final class NominaService
     {
         // Puedes agregar la lógica de cálculos adicionales aquí, como bonificaciones, descuentos, etc.
 
-        // Calcular salario base (esto es solo un ejemplo)
         $salarioBase = $empleado->salario_base;
         //echo $nomina . " " . $salarioBase . "\n";
 
@@ -102,7 +103,44 @@ final class NominaService
 
     }
 
-    private function calculoBonificacionFamiliar(Empleados $data) {
-        $datoHijos = obtenerHijosPorPersona(data->id);
-    } 
+    /**
+     * Método que guarda los detalles de la nómina de un empleado.
+     *
+     * @param Empleados $empleado
+     * @param Nomina $nomina
+     */
+    private function calculoBonificacionFamiliar(Empleados $empleado, Nomina $nomina)
+    {
+        // Puedes agregar la lógica de cálculos adicionales aquí, como bonificaciones, descuentos, etc.
+
+        $salarioBase = $empleado->salario_base;
+        $cantHijosMenores = $empleado->getCantidadHijosMenores18Attribute();
+
+        $parametro = new \App\Models\Parametro();
+        $salarioMinimo = $parametro->ultimo_salario_minimo;
+
+        //echo "Empleado " . $empleado->id_persona . " SALARIO BASE " . $salarioBase . " SALARIO MINIMO " . $salarioMinimo . " HIJOS " . $cantHijosMenores . "\n";
+
+        if((($salarioMinimo * 2) >= $salarioBase) && ($cantHijosMenores > 0)) {
+            $importeBonificacion = $salarioMinimo * 0.05 * $cantHijosMenores;
+            $importeBonificacion = round($importeBonificacion);
+            $concepto = "Bonificacion familiar (" . $cantHijosMenores . ")" ;
+            // Crear detalle de nómina
+            DetalleNomina::create([
+                'id_nomina' => $nomina->id_nomina,
+                'id_empleado' => $empleado->id_empleado,
+                'id_concepto' => 2,
+                'detalle_concepto' => $concepto,
+                'monto_concepto' => $importeBonificacion,
+            ]);
+        } else {
+            DetalleNomina::create([
+                'id_nomina' => $nomina->id_nomina,
+                'id_empleado' => $empleado->id_empleado,
+                'id_concepto' => 2,
+                'detalle_concepto' => 'Bonificacion familiar',
+                'monto_concepto' => 0,
+            ]);
+        }
+    }
 }
