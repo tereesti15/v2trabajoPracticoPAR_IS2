@@ -82,5 +82,10 @@ class Empleados extends Model
         return $this->attributes['salario_base'];
     }
 
+    public function nominaDetalleCuotas()
+    {
+        return $this->hasMany(NominaDetalleCuota::class, 'id_nomina', 'id_empleado');
+    }
+
 }
 
