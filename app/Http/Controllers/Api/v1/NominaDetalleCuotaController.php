@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\v1;
 
 use App\Models\NominaDetalleCuota;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 /**
  * @OA\Tag(
