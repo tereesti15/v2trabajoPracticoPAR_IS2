@@ -37,7 +37,7 @@
 
         {{-- Panel de contenido dinámico --}}
         <div class="w-3/4 pl-6">
-            <template x-if="activeComponent === 'empleado-crud'">
+        <template x-if="activeComponent === 'empleado-crud'">
                 <livewire:empleado-crud />
             </template>
             <template x-if="activeComponent === 'persona-crud'">
