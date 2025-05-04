@@ -6,6 +6,38 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
+/**
+ * @OA\Schema(
+ *     schema="NominaDetalleCuota",
+ *     title="NominaDetalleCuota",
+ *     description="Detalle de cuotas asociadas a conceptos de nómina",
+ *     type="object",
+ *     required={
+ *         "id_concepto",
+ *         "id_nomina",
+ *         "detalle_concepto",
+ *         "cant_cuota",
+ *         "monto_concepto",
+ *         "tipo"
+ *     },
+ *     @OA\Property(property="id", type="integer", readOnly=true, example=1),
+ *     @OA\Property(property="id_concepto", type="integer", example=5),
+ *     @OA\Property(property="id_nomina", type="integer", example=12),
+ *     @OA\Property(property="detalle_concepto", type="string", example="Préstamo personal"),
+ *     @OA\Property(property="cant_cuota", type="integer", example=12, description="Cantidad total de cuotas"),
+ *     @OA\Property(property="nro_cuota", type="integer", example=3, description="Número actual de cuota"),
+ *     @OA\Property(property="monto_concepto", type="integer", example=50000),
+ *     @OA\Property(
+ *         property="tipo",
+ *         type="string",
+ *         enum={"ACREDITACION", "DESCUENTO"},
+ *         example="DESCUENTO"
+ *     ),
+ *     @OA\Property(property="created_at", type="string", format="date-time", readOnly=true),
+ *     @OA\Property(property="updated_at", type="string", format="date-time", readOnly=true)
+ * )
+ */
+
 final class NominaDetalleCuota extends Model
 {
     use HasFactory;

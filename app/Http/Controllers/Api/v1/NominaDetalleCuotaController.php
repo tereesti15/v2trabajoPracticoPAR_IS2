@@ -5,6 +5,9 @@ namespace App\Http\Controllers\API\v1;
 use App\Models\NominaDetalleCuota;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\TipoConceptoNomina;
+use Illuminate\Validation\Rule;
+
 
 /**
  * @OA\Tag(
@@ -55,7 +58,7 @@ final class NominaDetalleCuotaController extends Controller
             'cant_cuota' => 'required|integer|min:1',
             'nro_cuota' => 'integer|min:1',
             'monto_concepto' => 'required|integer',
-            'tipo' => 'required|in:ACREDITACION,DESCUENTO',
+            'tipo' => ['required', Rule::in(array_column(TipoConceptoNomina::cases(), 'value'))],
         ]);
 
         $detalle = NominaDetalleCuota::create($validated);
@@ -111,7 +114,7 @@ final class NominaDetalleCuotaController extends Controller
             'cant_cuota' => 'sometimes|integer|min:1',
             'nro_cuota' => 'sometimes|integer|min:1',
             'monto_concepto' => 'sometimes|integer',
-            'tipo' => 'sometimes|in:ACREDITACION,DESCUENTO',
+            'tipo' => ['sometimes', Rule::in(array_column(TipoConceptoNomina::cases(), 'value'))],
         ]);
 
         $detalle->update($validated);
