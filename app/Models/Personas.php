@@ -21,10 +21,17 @@ final class Personas extends Model
         'discapacitado' => 'boolean',
         'fecha_nacimiento' => 'datetime',
     ];
+
+    protected $appends = ['nombre_completo'];
     
     public function hijos(): HasMany
     {
         return $this->hasMany(Hijo::class, 'persona_id');
+    }
+
+    public function getNombreCompletoAttribute(): string
+    {
+        return "{$this->apellido}, {$this->nombre}";
     }
 
 }

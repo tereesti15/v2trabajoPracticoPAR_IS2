@@ -8,7 +8,27 @@ use App\Models\Empleados;
 final class EmpleadoCrud extends Component
 {
     public $empleados = [];
+    public $view = 'listado';
 
+    public function mostrarFormularioCreacion()
+    {
+        $this->view = 'crear';
+    }
+
+    public function volverAlListado()
+    {
+        $this->view = 'listado';
+    }
+
+    public function mount()
+    {
+        $this->empleados = Empleados::with('persona')->get()->toArray();
+        //dd($this->empleados);
+        //echo "DATO: " . $this->empleados;
+        //\Log::debug('DATO: ' . $this->empleados);
+    }
+    
+/*
     public function mount()
     {
         $this->empleados = Empleados::with('persona')
@@ -23,7 +43,7 @@ final class EmpleadoCrud extends Component
                 ];
             })->toArray();
     }
-
+*/
     public function deleteEmpleado($id)
     {
         $empleado = Empleados::find($id);

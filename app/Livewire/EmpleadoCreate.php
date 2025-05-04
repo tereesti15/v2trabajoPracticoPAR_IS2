@@ -3,31 +3,37 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use Illuminate\Support\Facades\Http;
+use App\Models\Personas;
+use App\Models\Empleados;
 
-final class EmpleadoCreate extends Component
+class EmpleadoCreate extends Component
 {
-    public $nombre;
-    public $email;
+    public $id_persona, $salario_base, $estado_empleado, $personas;
 
-    public function guardar()
+    public function mount()
+    {
+        $this->personas = Personas::all();
+    }
+
+    public function save()
     {
         $this->validate([
-            'nombre' => 'required|string|max:255',
-            'email' => 'required|email',
+            'id_persona' => 'required|exists:personas,id',
+            'salario_base' => 'required|numeric|min:0',
+            'estado_empleado' => 'required|string'
         ]);
 
-        $response = Http::post(url('/api/v1/empleados'), [
-            'nombre' => $this->nombre,
-            'email' => $this->email,
+        Empleados::create([
+            'id_persona' => $this->id_persona,
+            'id_cargo' => 1, // temporal o ajusta según tu lógica
+            'id_departamento' => 1,
+            'fecha_ingreso' => now(),
+            'salario_base' => $this->salario_base,
+            'estado_empleado' => $this->estado_empleado
         ]);
 
-        if ($response->successful()) {
-            session()->flash('message', 'Empleado creado exitosamente.');
-            return redirect()->route('dashboard');
-        } else {
-            session()->flash('error', 'Error al crear el empleado.');
-        }
+        $this->emit('empleadoCreado');
+        $this->dispatchBrowserEvent('cerrarFormulario'); // si usas Alpine para controlar visibilidad
     }
 
     public function render()
