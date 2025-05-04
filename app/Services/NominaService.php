@@ -61,6 +61,7 @@ final class NominaService
                 $this->calculoSalarioBase($empleado, $nomina);
                 $this->calculoBonificacionFamiliar($empleado, $nomina);
                 $this->calculoSeguroSocialIPS($empleado, $nomina);
+                $this->calculoNominaDetalleCuota($empleado, $nomina);
             }
 
             DB::commit();
@@ -148,7 +149,7 @@ final class NominaService
         $porcentaje_seguro_IPS = 0.09;
         $seguroIPS = $salario_base * $porcentaje_seguro_IPS;
         $seguroIPS = round($seguroIPS);
-        $concepto = "Seguro I.P.S." ;
+        $concepto = "Seguro I.P.S.";
         //echo "Empleado " . $empleado->id_persona . " SALARIO BASE " . $salarioBase . " SALARIO MINIMO " . $salarioMinimo . " HIJOS " . $cantHijosMenores . "\n";
         // Crear detalle de nómina
         DetalleNomina::create([
@@ -157,6 +158,32 @@ final class NominaService
             'id_concepto' => 3,
             'detalle_concepto' => $concepto,
             'monto_concepto' => $seguroIPS,
+        ]);
+    }
+
+    /**
+     * Método que guarda los detalles de cuotas de un empleado.
+     *
+     * @param Empleados $empleado
+     * @param Nomina $nomina
+     */
+    private function calculoNominaDetalleCuota(Empleados $empleado, Nomina $nomina)
+    {
+        // Puedes agregar la lógica de cálculos adicionales aquí, como bonificaciones, descuentos, etc.
+        $detalle_cuota = $empleado->nominaDetalleCuotas;
+
+        $concepto = $detalle_cuota->conceptoCuotaDescripcion;
+        $importe_concepto = $detalle_cuota->importeConcepto;
+        $id_concepto = $detalle_cuota->codigoConcepto;
+
+        //echo "Empleado " . $empleado->id_persona . " SALARIO BASE " . $salarioBase . " SALARIO MINIMO " . $salarioMinimo . " HIJOS " . $cantHijosMenores . "\n";
+        // Crear detalle de nómina
+        DetalleNomina::create([
+            'id_nomina' => $nomina->id_nomina,
+            'id_empleado' => $empleado->id_empleado,
+            'id_concepto' => $id_concepto,
+            'detalle_concepto' => $concepto,
+            'monto_concepto' => $importe_concepto,
         ]);
     }
 }
