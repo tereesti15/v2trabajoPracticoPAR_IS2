@@ -9,6 +9,14 @@ Route::get('/', function () {
         : redirect()->route('login');     // Si no lo está
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
+
+    Route::resource('empleados', EmpleadoController::class);
+    Route::resource('personas', PersonaController::class);
+    Route::resource('hijos', HijoController::class);
+    Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
