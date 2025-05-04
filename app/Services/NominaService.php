@@ -169,21 +169,28 @@ final class NominaService
      */
     private function calculoNominaDetalleCuota(Empleados $empleado, Nomina $nomina)
     {
-        // Puedes agregar la lógica de cálculos adicionales aquí, como bonificaciones, descuentos, etc.
-        $detalle_cuota = $empleado->nominaDetalleCuotas;
-
-        $concepto = $detalle_cuota->conceptoCuotaDescripcion;
-        $importe_concepto = $detalle_cuota->importeConcepto;
-        $id_concepto = $detalle_cuota->codigoConcepto;
-
-        //echo "Empleado " . $empleado->id_persona . " SALARIO BASE " . $salarioBase . " SALARIO MINIMO " . $salarioMinimo . " HIJOS " . $cantHijosMenores . "\n";
-        // Crear detalle de nómina
-        DetalleNomina::create([
-            'id_nomina' => $nomina->id_nomina,
-            'id_empleado' => $empleado->id_empleado,
-            'id_concepto' => $id_concepto,
-            'detalle_concepto' => $concepto,
-            'monto_concepto' => $importe_concepto,
-        ]);
+        //$empleado->load('nominaDetalleCuotas.concepto');
+        $detalle_cuotas = $empleado->nominaDetalleCuotas;
+        //echo $detalle_cuotas;
+        //echo "0\n";
+        foreach($detalle_cuotas as $cuota) {
+            //echo "PROCESO\n" . $cuota . "\n";
+            $concepto = $cuota->conceptoCuotaDescripcion;
+            //echo "concepto " . $concepto . "\n";
+            $importe_concepto = $cuota->importeConcepto;
+            //echo "importe_concepto " . $importe_concepto . "\n";
+            $id_concepto = $cuota->codigoConcepto;
+            //echo "id_concepto " . $id_concepto . "\n";
+    
+            //echo "Empleado " . $empleado->id_persona . " SALARIO BASE " . $salarioBase . " SALARIO MINIMO " . $salarioMinimo . " HIJOS " . $cantHijosMenores . "\n";
+            // Crear detalle de nómina
+            DetalleNomina::create([
+                'id_nomina' => $nomina->id_nomina,
+                'id_empleado' => $empleado->id_empleado,
+                'id_concepto' => $id_concepto,
+                'detalle_concepto' => $concepto,
+                'monto_concepto' => $importe_concepto,
+            ]);
+        }
     }
 }

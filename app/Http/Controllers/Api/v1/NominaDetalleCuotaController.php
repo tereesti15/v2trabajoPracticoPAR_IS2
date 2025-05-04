@@ -11,7 +11,7 @@ use Illuminate\Validation\Rule;
 
 /**
  * @OA\Tag(
- *     name="NominaDetalleCuota",
+ *     name="Nomina Detalle Cuota",
  *     description="Operaciones sobre cuotas de nómina, se registran los conceptos de acreditacion o descuentos que sean por cuotas, ej: ASO, prestamos, embargo judicial, etc"
  * )
  */
@@ -22,7 +22,7 @@ final class NominaDetalleCuotaController extends Controller
     /**
      * @OA\Get(
      *     path="/api/v1/nomina-detalle-cuotas",
-     *     tags={"NominaDetalleCuota"},
+     *     tags={"Nomina Detalle Cuota"},
      *     summary="Obtener todos los registros de nomina_detalle_cuotas",
      *     @OA\Response(
      *         response=200,
@@ -39,7 +39,7 @@ final class NominaDetalleCuotaController extends Controller
     /**
      * @OA\Post(
      *     path="/api/v1/nomina-detalle-cuotas",
-     *     tags={"NominaDetalleCuota"},
+     *     tags={"Nomina Detalle Cuota"},
      *     summary="Crear un nuevo detalle de cuota",
      *     @OA\RequestBody(
      *         required=true,
@@ -53,7 +53,7 @@ final class NominaDetalleCuotaController extends Controller
     {
         $validated = $request->validate([
             'id_concepto' => 'required|exists:concepto_salario,id_concepto',
-            'id_nomina' => 'required|exists:empleados,id_empleado',
+            'id_empleado' => 'required|exists:empleados,id_empleado',
             'detalle_concepto' => 'required|string',
             'cant_cuota' => 'required|integer|min:1',
             'nro_cuota' => 'integer|min:1',
@@ -68,7 +68,7 @@ final class NominaDetalleCuotaController extends Controller
     /**
      * @OA\Get(
      *     path="/api/v1/nomina-detalle-cuotas/{id}",
-     *     tags={"NominaDetalleCuota"},
+     *     tags={"Nomina Detalle Cuota"},
      *     summary="Obtener un registros de nomina_detalle_cuotas",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\Response(
@@ -91,7 +91,7 @@ final class NominaDetalleCuotaController extends Controller
     /**
      * @OA\Put(
      *     path="/api/v1/nomina-detalle-cuotas/{id}",
-     *     tags={"NominaDetalleCuota"},
+     *     tags={"Nomina Detalle Cuota"},
      *     summary="Actualizar un detalle por ID",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\RequestBody(required=true, @OA\JsonContent(ref="#/components/schemas/NominaDetalleCuota")),
@@ -109,7 +109,7 @@ final class NominaDetalleCuotaController extends Controller
 
         $validated = $request->validate([
             'id_concepto' => 'sometimes|exists:concepto_salario,id_concepto',
-            'id_nomina' => 'sometimes|exists:empleados,id_empleado',
+            'id_empleado' => 'sometimes|exists:empleados,id_empleado',
             'detalle_concepto' => 'sometimes|string',
             'cant_cuota' => 'sometimes|integer|min:1',
             'nro_cuota' => 'sometimes|integer|min:1',
@@ -124,7 +124,7 @@ final class NominaDetalleCuotaController extends Controller
     /**
      * @OA\Delete(
      *     path="/api/v1/nomina-detalle-cuotas/{id}",
-     *     tags={"NominaDetalleCuota"},
+     *     tags={"Nomina Detalle Cuota"},
      *     summary="Eliminar un detalle por ID",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\Response(response=200, description="Detalle eliminado"),

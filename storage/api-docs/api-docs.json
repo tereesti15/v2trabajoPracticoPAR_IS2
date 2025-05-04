@@ -923,7 +923,7 @@
         "/api/v1/nomina-detalle-cuotas": {
             "get": {
                 "tags": [
-                    "NominaDetalleCuota"
+                    "Nomina Detalle Cuota"
                 ],
                 "summary": "Obtener todos los registros de nomina_detalle_cuotas",
                 "operationId": "1203b1bf19de98f39efab1c9c7c23313",
@@ -945,7 +945,7 @@
             },
             "post": {
                 "tags": [
-                    "NominaDetalleCuota"
+                    "Nomina Detalle Cuota"
                 ],
                 "summary": "Crear un nuevo detalle de cuota",
                 "operationId": "8df5029d12ff5f7010b6e0fe22be59da",
@@ -972,7 +972,7 @@
         "/api/v1/nomina-detalle-cuotas/{id}": {
             "get": {
                 "tags": [
-                    "NominaDetalleCuota"
+                    "Nomina Detalle Cuota"
                 ],
                 "summary": "Obtener un registros de nomina_detalle_cuotas",
                 "operationId": "97011a2e203be14c6601ae221e843b80",
@@ -1007,7 +1007,7 @@
             },
             "put": {
                 "tags": [
-                    "NominaDetalleCuota"
+                    "Nomina Detalle Cuota"
                 ],
                 "summary": "Actualizar un detalle por ID",
                 "operationId": "8dae724e0bea1cc616c7e11a23a13fea",
@@ -1045,7 +1045,7 @@
             },
             "delete": {
                 "tags": [
-                    "NominaDetalleCuota"
+                    "Nomina Detalle Cuota"
                 ],
                 "summary": "Eliminar un detalle por ID",
                 "operationId": "4b52b2dfe2b96bbf6cce496a0a11d4af",
@@ -1445,7 +1445,7 @@
                 "description": "Detalle de cuotas asociadas a conceptos de nómina",
                 "required": [
                     "id_concepto",
-                    "id_nomina",
+                    "id_empleado",
                     "detalle_concepto",
                     "cant_cuota",
                     "monto_concepto",
@@ -1536,7 +1536,7 @@
             "description": "Operaciones relacionadas con la nómina"
         },
         {
-            "name": "NominaDetalleCuota",
+            "name": "Nomina Detalle Cuota",
             "description": "Operaciones sobre cuotas de nómina, se registran los conceptos de acreditacion o descuentos que sean por cuotas, ej: ASO, prestamos, embargo judicial, etc"
         },
         {

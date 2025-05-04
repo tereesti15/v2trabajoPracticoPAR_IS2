@@ -84,7 +84,7 @@ class Empleados extends Model
 
     public function nominaDetalleCuotas()
     {
-        return $this->hasMany(NominaDetalleCuota::class, 'id_nomina', 'id_empleado');
+        return $this->hasMany(NominaDetalleCuota::class, 'id_empleado', 'id_empleado');
     }
 
 }

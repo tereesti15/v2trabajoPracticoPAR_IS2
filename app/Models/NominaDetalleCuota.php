@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
  *     type="object",
  *     required={
  *         "id_concepto",
- *         "id_nomina",
+ *         "id_empleado",
  *         "detalle_concepto",
  *         "cant_cuota",
  *         "monto_concepto",
@@ -46,7 +46,7 @@ final class NominaDetalleCuota extends Model
 
     protected $fillable = [
         'id_concepto',
-        'id_nomina',
+        'id_empleado',
         'detalle_concepto',
         'cant_cuota',
         'nro_cuota',
@@ -56,12 +56,13 @@ final class NominaDetalleCuota extends Model
 
     public function concepto()
     {
-        return $this->belongsTo(ConceptoSalario::class, 'id_concepto');
+        return $this->belongsTo(ConceptoSalario::class, 'id_concepto', 'id_concepto');
     }
+
 
     public function empleado()
     {
-        return $this->belongsTo(Empleado::class, 'id_nomina');
+        return $this->belongsTo(Empleado::class, 'id_empleado');
     }
 
     protected function conceptoCuotaDescripcion(): Attribute
@@ -82,14 +83,14 @@ final class NominaDetalleCuota extends Model
     protected function importeConcepto(): Attribute
     {
         return Attribute::get(function () {
-            return $this->concepto?->codigo_concepto;
+            return $this->monto_concepto;
         });
     }
 
     protected function codigoConcepto(): Attribute
     {
         return Attribute::get(function () {
-            return $this->concepto?->monto_concepto;
+            return $this->id_concepto;
         });
     }
 
