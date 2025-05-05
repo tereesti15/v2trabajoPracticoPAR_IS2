@@ -13,22 +13,15 @@ use Illuminate\Support\Facades\DB;
 
 final class NominaService
 {
-    /**
-     * Obtener los hijos menores de 18 años por persona
-     */
-    public function obtenerHijosPorPersona(int $idPersona): ?Collection
+
+    private Parametro $parametro;
+
+    public function __construct()
     {
-        $persona = Personas::find($idPersona);
-
-        if (!$persona) {
-            return null; // Persona no encontrada
-        }
-
-        // Filtramos los hijos menores de 18 años
-        return $persona->hijos->filter(function ($hijo) {
-            $fechaNacimiento = Carbon::parse($hijo->fecha_nacimiento);
-            return $fechaNacimiento->age < 18; // Filtra a los menores de 18 años
-        });
+        // Instanciamos la clase Parametro en el constructor
+        //\Log::info('Entra constructor NominaService');
+        $this->parametro = new Parametro();
+        //\Log::info('DATOS DE PARAMETRO EN CONSTRUCTOR ' . $this->parametro->salario_minimo);
     }
 
     public function procesarPlanilla(int $mes, int$anho) {
@@ -67,20 +60,21 @@ final class NominaService
                 // 3. Crear un detalle de nómina por empleado
                 $this->calculoSalarioBase($empleado, $nomina);
                 $this->calculoBonificacionFamiliar($empleado, $nomina);
+                $this->calculoSeguroSocialIPS($empleado, $nomina);
             }
 
             DB::commit();
 
             return $nomina; // Retornar la nómina creada
         } catch (\Exception $e) {
+            \Log::error('Error al procesar la planilla: ' . $mes . ' ' . $anho . ' ' . $e->getMessage());
             DB::rollBack();
             throw $e;
         }
     }
 
-
     /**
-     * Método que guarda los detalles de la nómina de un empleado.
+     * Método que guarda los detalles de la nómina de un empleado para salario base
      *
      * @param Empleados $empleado
      * @param Nomina $nomina
@@ -104,25 +98,22 @@ final class NominaService
     }
 
     /**
-     * Método que guarda los detalles de la nómina de un empleado.
+     * Método que guarda los detalles de la nómina de un empleado para bonificación familiar.
      *
      * @param Empleados $empleado
      * @param Nomina $nomina
      */
     private function calculoBonificacionFamiliar(Empleados $empleado, Nomina $nomina)
     {
-        // Puedes agregar la lógica de cálculos adicionales aquí, como bonificaciones, descuentos, etc.
-
         $salarioBase = $empleado->salario_base;
         $cantHijosMenores = $empleado->getCantidadHijosMenores18Attribute();
-
-        $parametro = new \App\Models\Parametro();
-        $salarioMinimo = $parametro->ultimo_salario_minimo;
-
+        $salarioMinimo = $this->parametro->salario_minimo;
+        $max_salario_minimo = $this->parametro->bonificacion_familiar_max_salario_minimo;
+        $porcentaje_bonificacion_familiar = $this->parametro->bonificacion_familiar_porcentaje;
         //echo "Empleado " . $empleado->id_persona . " SALARIO BASE " . $salarioBase . " SALARIO MINIMO " . $salarioMinimo . " HIJOS " . $cantHijosMenores . "\n";
 
-        if((($salarioMinimo * 2) >= $salarioBase) && ($cantHijosMenores > 0)) {
-            $importeBonificacion = $salarioMinimo * 0.05 * $cantHijosMenores;
+        if((($salarioMinimo * $max_salario_minimo) >= $salarioBase) && ($cantHijosMenores > 0)) {
+            $importeBonificacion = $salarioMinimo * $porcentaje_bonificacion_familiar * $cantHijosMenores;
             $importeBonificacion = round($importeBonificacion);
             $concepto = "Bonificacion familiar (" . $cantHijosMenores . ")" ;
             // Crear detalle de nómina
@@ -142,5 +133,30 @@ final class NominaService
                 'monto_concepto' => 0,
             ]);
         }
+    }
+
+    /**
+     * Método que guarda los detalles de la nómina de un empleado para seguro IPS.
+     *
+     * @param Empleados $empleado
+     * @param Nomina $nomina
+     */
+    private function calculoSeguroSocialIPS(Empleados $empleado, Nomina $nomina)
+    {
+        // Puedes agregar la lógica de cálculos adicionales aquí, como bonificaciones, descuentos, etc.
+        $salario_base = $empleado->salario_base;
+        $porcentaje_seguro_IPS = 0.09;
+        $seguroIPS = $salario_base * $porcentaje_seguro_IPS;
+        $seguroIPS = round($seguroIPS);
+        $concepto = "Seguro I.P.S." ;
+        //echo "Empleado " . $empleado->id_persona . " SALARIO BASE " . $salarioBase . " SALARIO MINIMO " . $salarioMinimo . " HIJOS " . $cantHijosMenores . "\n";
+        // Crear detalle de nómina
+        DetalleNomina::create([
+            'id_nomina' => $nomina->id_nomina,
+            'id_empleado' => $empleado->id_empleado,
+            'id_concepto' => 3,
+            'detalle_concepto' => $concepto,
+            'monto_concepto' => $seguroIPS,
+        ]);
     }
 }
