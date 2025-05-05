@@ -3,7 +3,10 @@
         <h2 class="font-semibold text-xl">Dashboard</h2>
     </x-slot>
 
-    <div class="flex p-6" x-data="{ activeComponent: null }">
+    <div class="flex p-6" 
+     x-data="{ activeComponent: null }" 
+     x-on:cambiar-vista.window="activeComponent = $event.detail.vista">
+
         {{-- Menú lateral --}}
         <div class="w-1/4 pr-4 border-r">
             <h3 class="font-bold mb-4">Bienvenido, {{ Auth::user()->name }}</h3>
@@ -20,10 +23,22 @@
                     <button @click="activeComponent = 'persona-crud'"
                         class="text-blue-700 hover:underline">Persona</button>
                 </div>
+                <!--
+                <div class="mb-2">
+                    <button @click="activeComponent = 'persona-create'"
+                        class="text-blue-700 hover:underline text-sm ml-4">➕ Nueva Persona</button>
+                </div>
+                -->
                 <div class="mb-2">
                     <button @click="activeComponent = 'hijos-crud'"
                         class="text-blue-700 hover:underline">Hijos</button>
                 </div>
+                <!--
+                <div class="mb-2">
+                    <button @click="activeComponent = 'hijo-create'"
+                        class="text-blue-700 hover:underline text-sm ml-4">➕ Nuevo Hijo</button>
+                </div>
+-->
             @endif
 
             {{-- Reportes --}}
@@ -52,6 +67,12 @@
             </template>
             <template x-if="activeComponent === 'reporte-panel'">
                 <livewire:reporte-panel />
+            </template>
+            <template x-if="activeComponent === 'persona-create'">
+                <livewire:persona-create />
+            </template>
+            <template x-if="activeComponent === 'hijo-create'">
+                <livewire:hijo-create />
             </template>
         </div>
     </div>
