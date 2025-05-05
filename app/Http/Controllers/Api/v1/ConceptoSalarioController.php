@@ -11,8 +11,8 @@ use OpenApi\Annotations as OA;
 /**
  * @OA\Schema(
  *     schema="ConceptoSalarioRequest",
- *     required={"nombre", "tipo"},
- *     @OA\Property(property="nombre", type="string", example="Bono de transporte"),
+ *     required={"nombre_concepto", "tipo"},
+ *     @OA\Property(property="nombre_concepto", type="string", example="Bono de transporte"),
  *     @OA\Property(
  *         property="tipo",
  *         type="string",

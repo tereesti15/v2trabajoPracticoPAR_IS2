@@ -10,6 +10,16 @@ use App\Http\Controllers\Api\v1\NominaController as NominaControllerV1;
 use App\Http\Controllers\Api\v1\ConceptoSalarioController as ConceptoSalarioControllerV1;
 use App\Http\Controllers\Api\v1\DetalleNominaController as DetalleNominaControlleV1;
 use App\Http\Controllers\Api\v1\ProcesoNominaController as ProcesoNominaControllerV1;
+use App\Http\Controllers\Api\v1\NominaDetalleCuotaController as NominaDetalleCuotaControllerV1;
+
+Route::prefix('v1')->group(function () {
+    Route::get('/nomina-detalle-cuotas', [NominaDetalleCuotaControllerV1::class, 'index']); //listar
+    Route::post('/nomina-detalle-cuotas', [NominaDetalleCuotaControllerV1::class, 'store']); // agregar
+    Route::get('/nomina-detalle-cuotas/{id}', [NominaDetalleCuotaControllerV1::class, 'show']); // listar
+    Route::delete('/nomina-detalle-cuotas/{id}', [NominaDetalleCuotaControllerV1::class, 'destroy']); // Borrar
+    Route::put('/nomina-detalle-cuotas/{id}', [NominaDetalleCuotaControllerV1::class, 'update']); //actualizar
+});
+
 
 Route::prefix('v1')->group(function () {
     Route::delete('/proceso-nomina/{mes}/{anho}', [ProcesoNominaControllerV1::class, 'destroy']);

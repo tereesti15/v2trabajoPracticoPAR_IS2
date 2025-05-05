@@ -675,6 +675,10 @@
                                     "documento": {
                                         "type": "string",
                                         "example": "12345"
+                                    },
+                                    "discapacitado": {
+                                        "type": "boolean",
+                                        "example": 0
                                     }
                                 },
                                 "type": "object"
@@ -753,6 +757,10 @@
                                     "documento": {
                                         "type": "string",
                                         "example": "1234563"
+                                    },
+                                    "discapacitado": {
+                                        "type": "boolean",
+                                        "example": 0
                                     }
                                 },
                                 "type": "object"
@@ -908,6 +916,155 @@
                     },
                     "404": {
                         "description": "Nómina no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/v1/nomina-detalle-cuotas": {
+            "get": {
+                "tags": [
+                    "Nomina Detalle Cuota"
+                ],
+                "summary": "Obtener todos los registros de nomina_detalle_cuotas",
+                "operationId": "1203b1bf19de98f39efab1c9c7c23313",
+                "responses": {
+                    "200": {
+                        "description": "Lista de registros",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/NominaDetalleCuota"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Nomina Detalle Cuota"
+                ],
+                "summary": "Crear un nuevo detalle de cuota",
+                "operationId": "8df5029d12ff5f7010b6e0fe22be59da",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NominaDetalleCuota"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Registro creado"
+                    },
+                    "422": {
+                        "description": "Datos inválidos"
+                    }
+                }
+            }
+        },
+        "/api/v1/nomina-detalle-cuotas/{id}": {
+            "get": {
+                "tags": [
+                    "Nomina Detalle Cuota"
+                ],
+                "summary": "Obtener un registros de nomina_detalle_cuotas",
+                "operationId": "97011a2e203be14c6601ae221e843b80",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registro",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/NominaDetalleCuota"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Detalle de nomina no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Nomina Detalle Cuota"
+                ],
+                "summary": "Actualizar un detalle por ID",
+                "operationId": "8dae724e0bea1cc616c7e11a23a13fea",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NominaDetalleCuota"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Detalle actualizado"
+                    },
+                    "404": {
+                        "description": "No encontrado"
+                    },
+                    "422": {
+                        "description": "Datos inválidos"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Nomina Detalle Cuota"
+                ],
+                "summary": "Eliminar un detalle por ID",
+                "operationId": "4b52b2dfe2b96bbf6cce496a0a11d4af",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalle eliminado"
+                    },
+                    "404": {
+                        "description": "No encontrado"
                     }
                 }
             }
@@ -1146,11 +1303,11 @@
         "schemas": {
             "ConceptoSalarioRequest": {
                 "required": [
-                    "nombre",
+                    "nombre_concepto",
                     "tipo"
                 ],
                 "properties": {
-                    "nombre": {
+                    "nombre_concepto": {
                         "type": "string",
                         "example": "Bono de transporte"
                     },
@@ -1282,6 +1439,70 @@
                     }
                 },
                 "type": "object"
+            },
+            "NominaDetalleCuota": {
+                "title": "NominaDetalleCuota",
+                "description": "Detalle de cuotas asociadas a conceptos de nómina",
+                "required": [
+                    "id_concepto",
+                    "id_empleado",
+                    "detalle_concepto",
+                    "cant_cuota",
+                    "monto_concepto",
+                    "tipo"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": 1
+                    },
+                    "id_concepto": {
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "id_nomina": {
+                        "type": "integer",
+                        "example": 12
+                    },
+                    "detalle_concepto": {
+                        "type": "string",
+                        "example": "Préstamo personal"
+                    },
+                    "cant_cuota": {
+                        "description": "Cantidad total de cuotas",
+                        "type": "integer",
+                        "example": 12
+                    },
+                    "nro_cuota": {
+                        "description": "Número actual de cuota",
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "monto_concepto": {
+                        "type": "integer",
+                        "example": 50000
+                    },
+                    "tipo": {
+                        "type": "string",
+                        "enum": [
+                            "ACREDITACION",
+                            "DESCUENTO"
+                        ],
+                        "example": "DESCUENTO"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
             }
         }
     },
@@ -1313,6 +1534,10 @@
         {
             "name": "Nominas",
             "description": "Operaciones relacionadas con la nómina"
+        },
+        {
+            "name": "Nomina Detalle Cuota",
+            "description": "Operaciones sobre cuotas de nómina, se registran los conceptos de acreditacion o descuentos que sean por cuotas, ej: ASO, prestamos, embargo judicial, etc"
         },
         {
             "name": "Personas",
