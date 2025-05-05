@@ -1,7 +1,7 @@
 <div>
     <div class="flex justify-between items-center mb-4">
         <h3 class="text-2xl font-bold text-blue-800">Gestión de Personas</h3>
-        <button @click="$dispatch('cambiar-vista', { vista: 'crear-persona' })"
+        <button @click="$dispatch('cambiar-vista', { vista: 'persona-create' })"
             class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">+ Nueva Persona</button>
     </div>
 
@@ -10,10 +10,6 @@
     @endif
     <div class="flex justify-between items-center mb-4">
         <h3 class="text-xl font-bold">Listado de Personas</h3>
-        <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                @click="$dispatch('set-component', { component: 'persona-create' })">
-            + Nueva Persona
-        </button>
     </div>
 
     <table class="w-full table-auto border border-gray-300">

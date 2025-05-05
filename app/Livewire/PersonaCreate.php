@@ -7,20 +7,31 @@ use App\Models\Personas;
 
 class PersonaCreate extends Component
 {
-    public $nombre, $apellido, $documento, $direccion, $telefono, $email;
-    public $personas;
+    public $nombre;
+    public $apellido;
+    public $documento;
+    public $direccion;
+    public $telefono;
+    public $email;
+    public $fecha_nacimiento;
+//    public $discapacitado = false;
     
+    public $personas = [];
+
+    protected $rules = [
+        'nombre' => 'required|string|max:255',
+        'apellido' => 'required|string|max:255',
+        'documento' => 'required|string|max:20|unique:personas,documento',
+        'direccion' => 'nullable|string|max:255',
+        'telefono' => 'nullable|string|max:20',
+        'email' => 'nullable|email|max:255',
+        'fecha_nacimiento' => 'nullable|date',
+  //      'discapacitado' => 'boolean',
+    ];
+
     public function save()
     {
-        $this->validate([
-            'nombre' => 'required',
-            'apellido' => 'required',
-            'documento' => 'required|unique:personas',
-            'direccion' => 'required',
-            'telefono' => 'required',
-            'email' => 'nullable|email',
-        ]);
-
+        $this->validate();
         Personas::create([
             'nombre' => $this->nombre,
             'apellido' => $this->apellido,
@@ -28,10 +39,12 @@ class PersonaCreate extends Component
             'direccion' => $this->direccion,
             'telefono' => $this->telefono,
             'email' => $this->email,
+            'fecha_nacimiento' => $this->fecha_nacimiento,
+    //        'discapacitado' => $this->discapacitado,
         ]);
+        session()->flash('message', 'Persona guardada correctamente.');
 
-        session()->flash('message', 'Persona creada exitosamente');
-        $this->reset();
+        $this->emitUp('goBack'); // vuelve a la vista anterior
     }
 
     public function render()
