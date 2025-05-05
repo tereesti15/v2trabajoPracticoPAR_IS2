@@ -40,7 +40,8 @@ class HijoController extends Controller
      *             @OA\Property(property="persona_id", type="integer", example="1"),
      *             @OA\Property(property="nombre", type="string", example="Juan"),
      *             @OA\Property(property="fecha_nacimiento", type="string", format="date", example="2025-01-25"),
-     *             @OA\Property(property="documento", type="string", example="12345")
+     *             @OA\Property(property="documento", type="string", example="12345"),
+     *             @OA\Property(property="discapacitado", type="boolean", example=0)
      *         )
      *     ),
      *     @OA\Response(response=201, description="Creado exitosamente")
@@ -52,7 +53,8 @@ class HijoController extends Controller
             'persona_id' => 'required|exists:personas,id',
             'nombre' => 'required|string|max:255',
             'fecha_nacimiento' => 'required|date',
-            'documento' => 'required|string|max:255'
+            'documento' => 'required|string|max:255',
+            'discapacitado' => 'boolean',
         ]);
 
         $hijo = Hijo::create($validated);
@@ -88,7 +90,8 @@ class HijoController extends Controller
      *             @OA\Property(property="persona_id", type="integer", example="2"),
      *             @OA\Property(property="nombre", type="string", example="Juan" ),
      *             @OA\Property(property="fecha_nacimiento", type="string", format="date", example="2025-01-26"),
-     *             @OA\Property(property="documento", type="string", example="1234563")
+     *             @OA\Property(property="documento", type="string", example="1234563"),
+     *             @OA\Property(property="discapacitado", type="boolean", example=0)
      *         )
      *     ),
      *     @OA\Response(response=200, description="Actualizado exitosamente")
@@ -102,7 +105,8 @@ class HijoController extends Controller
             'persona_id' => 'sometimes|exists:personas,id',
             'nombre' => 'sometimes|string|max:255',
             'fecha_nacimiento' => 'sometimes|date',
-            'documento' => 'sometimes|string|max:255'
+            'documento' => 'sometimes|string|max:255',
+            'discapacitado' => 'boolean',
         ]);
 
         $hijo->update($validated);
