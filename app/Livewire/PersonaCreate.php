@@ -25,21 +25,22 @@ class PersonaCreate extends Component
         'direccion' => 'nullable|string|max:255',
         'telefono' => 'nullable|string|max:20',
         'email' => 'nullable|email|max:255',
-        'fecha_nacimiento' => 'nullable|date',
+        //'fecha_nacimiento' => 'nullable|date',
   //      'discapacitado' => 'boolean',
     ];
 
     public function save()
     {
+        logger('Antes de validar');
         $this->validate();
-        Personas::create([
+        $persona = Personas::create([
             'nombre' => $this->nombre,
             'apellido' => $this->apellido,
             'documento' => $this->documento,
             'direccion' => $this->direccion,
             'telefono' => $this->telefono,
             'email' => $this->email,
-            'fecha_nacimiento' => $this->fecha_nacimiento,
+            //'fecha_nacimiento' => $this->fecha_nacimiento,
     //        'discapacitado' => $this->discapacitado,
         ]);
         session()->flash('message', 'Persona guardada correctamente.');
@@ -49,11 +50,13 @@ class PersonaCreate extends Component
 
     public function render()
     {
+        logger('Renderizando componente persona-create');
         return view('livewire.persona-create');
     }
 
     public function mount()
     {
+        logger('Renderizando mount componente persona-create');
         $this->personas = Personas::orderBy('apellido')->orderBy('nombre')->get();
     }
 }

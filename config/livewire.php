@@ -12,7 +12,7 @@ return [
     | finds components. It's also referenced by the file creation commands.
     |
     */
-
+    'debug' => true,
     'class_namespace' => 'App\\Livewire',
 
     /*

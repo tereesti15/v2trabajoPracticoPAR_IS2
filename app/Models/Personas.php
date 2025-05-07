@@ -8,13 +8,15 @@ use Carbon\Carbon;
 
 final class Personas extends Model
 {
+    protected $table = 'personas';
     protected $fillable = [
         'nombre',
         'apellido',
         'documento', 
         'direccion', 
         'telefono',
-        'email'
+        'email',
+        'fecha_nacimiento'
     ];
 
     protected $casts = [

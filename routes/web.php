@@ -8,6 +8,12 @@ use App\Http\Controllers\HijoController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Livewire\EmpleadoEdit;
 
+//TEMPORAL
+Route::get('/test-persona', function () {
+    return view('test-persona');
+});
+
+
 // Redirigir raíz al login o dashboard
 Route::get('/', function () {
     return auth()->check()

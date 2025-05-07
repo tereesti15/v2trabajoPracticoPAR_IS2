@@ -4,8 +4,8 @@
     </x-slot>
 
     <div class="flex p-6" 
-     x-data="{ activeComponent: null }" 
-     x-on:cambiar-vista.window="activeComponent = $event.detail.vista">
+         x-data="{ activeComponent: null }" 
+         x-on:cambiar-vista.window="activeComponent = $event.detail.vista">
 
         {{-- Menú lateral --}}
         <div class="w-1/4 pr-4 border-r">
@@ -13,67 +13,59 @@
 
             {{-- Empleado --}}
             <div class="mb-2">
-                <button @click="activeComponent = 'empleado-crud'"
-                    class="text-blue-700 hover:underline">Empleado</button>
+                <button @click="activeComponent = 'empleado-crud'" class="text-blue-700 hover:underline">
+                    Empleado
+                </button>
             </div>
 
             {{-- Persona --}}
             @if(in_array(Auth::user()->role, ['Encargado RRHH', 'Gerente', 'Administrador']))
                 <div class="mb-2">
-                    <button @click="activeComponent = 'persona-crud'"
-                        class="text-blue-700 hover:underline">Persona</button>
+                    <button @click="activeComponent = 'persona-crud'" class="text-blue-700 hover:underline">
+                        Persona
+                    </button>
                 </div>
-                <!--
                 <div class="mb-2">
-                    <button @click="activeComponent = 'persona-create'"
-                        class="text-blue-700 hover:underline text-sm ml-4">➕ Nueva Persona</button>
+                    <button @click="activeComponent = 'hijos-crud'" class="text-blue-700 hover:underline">
+                        Hijos
+                    </button>
                 </div>
-                -->
-                <div class="mb-2">
-                    <button @click="activeComponent = 'hijos-crud'"
-                        class="text-blue-700 hover:underline">Hijos</button>
-                </div>
-                <!--
-                <div class="mb-2">
-                    <button @click="activeComponent = 'hijo-create'"
-                        class="text-blue-700 hover:underline text-sm ml-4">➕ Nuevo Hijo</button>
-                </div>
--->
             @endif
 
             {{-- Reportes --}}
             @if(in_array(Auth::user()->role, ['Gerente', 'Administrador']))
                 <div class="mb-2">
-                    <button @click="activeComponent = 'reporte-panel'"
-                        class="text-blue-700 hover:underline">Reportes</button>
+                    <button @click="activeComponent = 'reporte-panel'" class="text-blue-700 hover:underline">
+                        Reportes
+                    </button>
                 </div>
             @endif
         </div>
 
         {{-- Panel de contenido dinámico --}}
         <div class="w-3/4 pl-6">
-            <template x-if="activeComponent === 'empleado-crud'">
-                <livewire:empleado-crud />
-            </template>
-            <template x-if="activeComponent === 'empleado-create'">
-                <livewire:empleado-create />
-            </template>
 
-            <template x-if="activeComponent === 'persona-crud'">
+            <div x-show="activeComponent === 'empleado-crud'" style="display: none;">
+                <livewire:empleado-crud />
+            </div>
+            <div x-show="activeComponent === 'empleado-create'" style="display: none;">
+                <livewire:empleado-create />
+            </div>
+            <div x-show="activeComponent === 'persona-crud'" style="display: none;">
                 <livewire:persona-crud />
-            </template>
-            <template x-if="activeComponent === 'hijos-crud'">
+            </div>
+            <div x-show="activeComponent === 'hijos-crud'" style="display: none;">
                 <livewire:hijos-crud />
-            </template>
-            <template x-if="activeComponent === 'reporte-panel'">
+            </div>
+            <div x-show="activeComponent === 'reporte-panel'" style="display: none;">
                 <livewire:reporte-panel />
-            </template>
-            <template x-if="activeComponent === 'persona-create'">
+            </div>
+            <div x-show="activeComponent === 'persona-create'" style="display: none;">
                 <livewire:persona-create />
-            </template>
-            <template x-if="activeComponent === 'hijo-create'">
+            </div>
+            <div x-show="activeComponent === 'hijo-create'" style="display: none;">
                 <livewire:hijo-create />
-            </template>
+            </div>
         </div>
     </div>
 </x-app-layout>
