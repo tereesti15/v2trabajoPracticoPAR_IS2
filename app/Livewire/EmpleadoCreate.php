@@ -5,14 +5,17 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Personas;
 use App\Models\Empleados;
+use App\EstadoEmpleado;
 
-class EmpleadoCreate extends Component
+final class EmpleadoCreate extends Component
 {
     public $id_persona, $salario_base, $estado_empleado, $personas;
-
+    public $estados = [];
+    
     public function mount()
     {
         $this->personas = Personas::all();
+        $this->estados = collect(EstadoEmpleado::cases())->pluck('value')->toArray();
     }
 
     public function save()
@@ -32,8 +35,12 @@ class EmpleadoCreate extends Component
             'estado_empleado' => $this->estado_empleado
         ]);
 
+        /*
         $this->emit('empleadoCreado');
         $this->dispatchBrowserEvent('cerrarFormulario'); // si usas Alpine para controlar visibilidad
+        $this->emit('empleadoCreado');
+        */
+        $this->dispatch('cambiarVista', vista: 'empleado-crud');
     }
 
     public function render()

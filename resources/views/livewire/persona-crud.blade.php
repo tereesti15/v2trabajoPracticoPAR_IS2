@@ -1,8 +1,12 @@
 <div>
     <div class="flex justify-between items-center mb-4">
         <h3 class="text-2xl font-bold text-blue-800">Gestión de Personas</h3>
-        <button @click="$dispatch('cambiar-vista', { vista: 'persona-create' })"
-            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">+ Nueva Persona</button>
+        <button wire:click="goToCreate"
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            + Nueva Persona
+        </button>
+
+
     </div>
 
     @if (session()->has('message'))

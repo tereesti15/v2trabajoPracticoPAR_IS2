@@ -23,7 +23,9 @@
                         <td class="border px-4 py-2">{{ $empleado['id_empleado'] }}</td>
                         <td class="border px-4 py-2">{{ $empleado['persona']['nombre_completo'] ?? 'N/D' }}</td>
                         <td class="border px-4 py-2">{{ $empleado['salario_base'] }}</td>
-                        <td class="border px-4 py-2">{{ $empleado['estado_empleado'] }}</td>
+                        <td class="border px-4 py-2">
+                            {{ \App\EstadoEmpleado::tryFrom($empleado['estado_empleado'])?->value ?? 'Desconocido' }}
+                        </td>
                         <td class="border px-4 py-2">
                             <a href="{{ url('/empleados/' . $empleado['id_empleado'] . '/edit') }}" class="text-blue-500">Editar</a>
                             <button wire:click="deleteEmpleado({{ $empleado['id_empleado'] }})"

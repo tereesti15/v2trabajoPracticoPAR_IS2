@@ -13,6 +13,11 @@ final class PersonaCrud extends Component
         $this->personas = Personas::all()->toArray();
     }
 
+    public function goToCreate()
+    {
+        $this->dispatch('cambiarVista', vista: 'persona-create');
+    }
+
     public function delete($id)
     {
         Personas::destroy($id);

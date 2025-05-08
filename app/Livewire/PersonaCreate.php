@@ -45,7 +45,7 @@ class PersonaCreate extends Component
         ]);
         session()->flash('message', 'Persona guardada correctamente.');
 
-        $this->emitUp('goBack'); // vuelve a la vista anterior
+        $this->dispatch('cambiarVista', vista: 'persona-crud');
     }
 
     public function render()
