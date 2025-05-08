@@ -24,6 +24,52 @@ final class NominaService
         //\Log::info('DATOS DE PARAMETRO EN CONSTRUCTOR ' . $this->parametro->salario_minimo);
     }
 
+    /* Calcula el salario prorrateado de un empleado si corresponde al primer mes de ingreso.
+    *
+    * @param Empleados $empleado
+    * @param Carbon $periodoNomina - Último día del mes de la nómina (ej: 2025-05-31)
+    * @return float
+    */
+    /**
+ * Calcula el salario prorrateado de un empleado si corresponde al primer mes de ingreso.
+ *
+ * @param Empleados $empleado
+ * @param Carbon $periodoNomina - Último día del mes de la nómina (ej: 2025-05-31)
+ * @return float
+ */
+    private function calcularSalarioProrrateado(Empleados $empleado, Carbon $periodoNomina): float
+    {
+        $salarioBaseCompleto = $empleado->salario_base;
+
+        // Truncamos la hora de la fecha de ingreso (dejamos solo fecha)
+        $fechaIngreso = Carbon::parse($empleado->fecha_ingreso)->startOfDay();
+
+        // Obtenemos el primer día del mes sin hora
+        $primerDiaDelMes = $periodoNomina->copy()->startOfMonth()->startOfDay();
+        $ultimoDiaDelMes = $periodoNomina->copy()->endOfDay(); // por claridad
+
+        if ($fechaIngreso->between($primerDiaDelMes, $ultimoDiaDelMes)) {
+            // Empleado ingresó este mes => aplicar prorrateo por días calendario
+            $diasTrabajados = $fechaIngreso->diffInDays($ultimoDiaDelMes); // +1 para incluir el día de ingreso
+            $diasDelMes = $periodoNomina->day;
+            $salarioCalculado =round(($salarioBaseCompleto / $diasDelMes) * $diasTrabajados, 0);
+            /*echo "diaas trab {$diasTrabajados} 
+                dias mes {$diasDelMes} 
+                fechaIngreso {$fechaIngreso} 
+                salarioBase {$salarioBaseCompleto}
+                salarioCalculado  {$salarioCalculado}";*/
+
+            return $salarioCalculado ;
+            //echo "diaas trab {$diasTrabajados} dias mes {$diasDelMes} fechaIngreso {$fechaIngreso} salarioBase {$salarioBaseCompleto} ";
+
+        }
+
+        // Si no ingresó este mes, salario completo
+        return $salarioBaseCompleto;
+    }
+
+    //echo "diaas trab {$diasTrabajados} dias mes {$diasDelMes} fechaIngreso {$fechaIngreso} salarioBase {$salarioBaseCompleto} ";
+
     public function procesarPlanilla(int $mes, int$anho) {
 
         $ultimoDiaDelMes = Carbon::createFromDate($anho, $mes, 1)->endOfMonth();
@@ -80,7 +126,7 @@ final class NominaService
      * @param Empleados $empleado
      * @param Nomina $nomina
      */
-    private function calculoSalarioBase(Empleados $empleado, Nomina $nomina)
+    /*private function calculoSalarioBase(Empleados $empleado, Nomina $nomina)
     {
         // Puedes agregar la lógica de cálculos adicionales aquí, como bonificaciones, descuentos, etc.
 
@@ -96,7 +142,24 @@ final class NominaService
             'monto_concepto' => $salarioBase,
         ]);
 
+    }*/
+
+    private function calculoSalarioBase(Empleados $empleado, Nomina $nomina)
+    {
+        $salarioBase = $this->calcularSalarioProrrateado($empleado, Carbon::parse($nomina->periodo));
+
+        // Guardamos el valor para que otros métodos como IPS lo usen
+        $empleado->salario_base_calculado = $salarioBase;
+
+        DetalleNomina::create([
+            'id_nomina' => $nomina->id_nomina,
+            'id_empleado' => $empleado->id_empleado,
+            'id_concepto' => 1,
+            'detalle_concepto' => 'Salario base',
+            'monto_concepto' => $salarioBase,
+        ]);
     }
+
 
     /**
      * Método que guarda los detalles de la nómina de un empleado para bonificación familiar.
@@ -142,7 +205,8 @@ final class NominaService
      * @param Empleados $empleado
      * @param Nomina $nomina
      */
-    private function calculoSeguroSocialIPS(Empleados $empleado, Nomina $nomina)
+
+    /*private function calculoSeguroSocialIPS(Empleados $empleado, Nomina $nomina)
     {
         // Puedes agregar la lógica de cálculos adicionales aquí, como bonificaciones, descuentos, etc.
         $salario_base = $empleado->salario_base;
@@ -159,7 +223,23 @@ final class NominaService
             'detalle_concepto' => $concepto,
             'monto_concepto' => $seguroIPS,
         ]);
+    }*/
+
+    private function calculoSeguroSocialIPS(Empleados $empleado, Nomina $nomina)
+    {
+        $salario_base = $empleado->salario_base_calculado ?? $empleado->salario_base;
+        $porcentaje_seguro_IPS = 0.09;
+        $seguroIPS = round($salario_base * $porcentaje_seguro_IPS);
+
+        DetalleNomina::create([
+            'id_nomina' => $nomina->id_nomina,
+            'id_empleado' => $empleado->id_empleado,
+            'id_concepto' => 3,
+            'detalle_concepto' => 'Seguro I.P.S.',
+            'monto_concepto' => $seguroIPS,
+        ]);
     }
+
 
     /**
      * Método que guarda los detalles de cuotas de un empleado.
