@@ -42,7 +42,7 @@ final class Parametro extends Model
         \Log::info('DATOS DE PARAMETRO EN getBonificacionFamiliarPorcentajeAttribute ' . $parametro->bonificacion_familiar_porcentaje);
         return $parametro ? $parametro->bonificacion_familiar_porcentaje : null;
     }
-        */
+        /*/
     public function getSalarioMinimoAttribute(): ?int
     {
         // En lugar de hacer la consulta a la base de datos, devolvemos un valor fijo
