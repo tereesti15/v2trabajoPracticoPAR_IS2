@@ -19,6 +19,28 @@
         </div>
 
         <div>
+            <label class="block text-gray-700 font-semibold">Cargo</label>
+            <select wire:model="id_cargo" class="w-full border border-gray-300 rounded px-3 py-2">
+                <option value="">Seleccione un cargo</option>
+                @foreach($cargos as $cargo)
+                    <option value="{{ $cargo->id_cargo }}">{{ $cargo->nombre_cargo }}</option>
+                @endforeach
+            </select>
+            @error('id_cargo') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+        </div>
+
+        <div>
+            <label class="block text-gray-700 font-semibold">Departamento</label>
+            <select wire:model="id_departamento" class="w-full border border-gray-300 rounded px-3 py-2">
+                <option value="">Seleccione un departamento</option>
+                @foreach($departamentos as $departamento)
+                    <option value="{{ $departamento->id }}">{{ $departamento->nombre_departamento }}</option>
+                @endforeach
+            </select>
+            @error('id_departamento') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+        </div>
+
+        <div>
             <label class="block text-gray-700 font-semibold">Salario Base</label>
             <input type="number" wire:model="salario_base" class="w-full border border-gray-300 rounded px-3 py-2">
             @error('salario_base') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
@@ -35,3 +57,8 @@
         </button>
     </form>
 </div>
+@if ($errors->has('general'))
+    <div class="text-red-600 text-sm mt-2">
+        {{ $errors->first('general') }}
+    </div>
+@endif
