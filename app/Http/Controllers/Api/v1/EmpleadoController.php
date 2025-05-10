@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API\v1;
 
 use OpenApi\Annotations as OA;
 use App\Http\Controllers\Controller;
-use App\Models\Empleados;
 use Illuminate\Http\Request;
 use App\Services\EmpleadoService;
+use Illuminate\Http\JsonResponse;
 
 /**
  *
@@ -77,19 +77,21 @@ final class EmpleadoController extends Controller
     }
 
     // GET /api/empleados
-    public function index()
+    public function index(EmpleadoService $service): JsonResponse
     {
-        return response()->json(Empleados::all(), 200);
+        $empleados = $service->index();
+        return response()->json($empleados, 200);
     }
 
     // GET /api/empleados/{id}
-    public function show($id)
+    public function show(int $id, EmpleadoService $service)
     {
-        $empleado = Empleados::find($id);
-        if (!$empleado) {
+        try {
+            $empleado = $service->show($id);
+            return response()->json($empleado, 200);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return response()->json(['error' => 'Empleado no encontrado'], 404);
         }
-        return response()->json($empleado, 200);
     }
 
     // POST /api/empleados
@@ -105,7 +107,7 @@ final class EmpleadoController extends Controller
         ]);
 
         try {
-            $empleado = $this->empleadoService->crearEmpleado($request->all());
+            $empleado = $this->empleadoService->store($request->all());
             return response()->json($empleado, 201);
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
@@ -133,7 +135,7 @@ final class EmpleadoController extends Controller
         //$empleado->update($validated);
         //return response()->json($empleado, 200);
         try {
-            $empleadoActualizado = $this->empleadoService->actualizarEmpleado($id, $validated);
+            $empleadoActualizado = $this->empleadoService->update($id, $validated);
             return response()->json($empleadoActualizado, 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
@@ -144,7 +146,7 @@ final class EmpleadoController extends Controller
     public function destroy($id)
     {
         try {
-            $this->empleadoService->borrarEmpleado($id);
+            $this->empleadoService->delete($id);
             return response()->json(['message' => 'Empleado eliminado correctamente.'], 200);
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
