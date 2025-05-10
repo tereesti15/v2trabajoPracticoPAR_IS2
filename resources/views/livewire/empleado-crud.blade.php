@@ -3,7 +3,7 @@
         <h3 class="text-xl font-semibold mb-4">Listado de Empleados</h3>
 
         <button wire:click="mostrarFormularioCreacion"
-            class="mb-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+            class="mb-4 px-4 py-2 bg-green-600 text-black rounded hover:bg-green-700">
             + Agregar Nuevo Empleado
         </button>
 

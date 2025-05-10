@@ -55,7 +55,7 @@ Route::prefix('v1')->group(function () {
 
 Route::prefix('v1')->group(function () {
     Route::get('/personas', [PersonasControllerV1::class, 'index']); //listar
-    Route::post('/personas', [PersonasControllerV1::class, 'store']); // agregar
+    Route::post('/personas', [PersonasControllerV1::class, 'store'])->name('api.v1.personas.store'); // agregar
     Route::delete('/personas/{id}', [PersonasControllerV1::class, 'destroy']); // Borrar
     Route::put('/personas/{id}', [PersonasControllerV1::class, 'update']); //actualizar
 });

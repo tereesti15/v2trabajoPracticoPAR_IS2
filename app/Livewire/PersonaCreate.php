@@ -4,8 +4,9 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Personas;
+use Illuminate\Support\Facades\Http;
 
-class PersonaCreate extends Component
+final class PersonaCreate extends Component
 {
     public $nombre;
     public $apellido;
@@ -29,6 +30,7 @@ class PersonaCreate extends Component
   //      'discapacitado' => 'boolean',
     ];
 
+    /*
     public function save()
     {
         logger('Antes de validar');
@@ -46,6 +48,34 @@ class PersonaCreate extends Component
         session()->flash('message', 'Persona guardada correctamente.');
 
         $this->dispatch('cambiarVista', vista: 'persona-crud');
+    }
+*/
+
+    public function save()
+    {
+
+        /* 
+        $this->validate([
+            'id_persona' => 'required|exists:personas,id',
+            'salario_base' => 'required|numeric|min:0',
+            'estado_empleado' => 'required|string'
+        ]);
+        */
+        \Log::debug("Entra save() PersonaCreate");
+        $response = Http::post(route('api.v1.personas.store'), [
+            'nombre' => $this->nombre,
+            'apellido' => $this->apellido,
+            'direccion' => $this->direccion,
+            'documento' => $this->documento,
+            'telefono' => $this->telefono,
+            'email' => $this->email,            
+        ]);
+
+        if ($response->successful()) {
+            $this->dispatch('cambiarVista', vista: 'empleado-crud');
+        } else {
+            $this->addError('api', 'Error al guardar el empleado: ' . $response->body());
+        }
     }
 
     public function render()
