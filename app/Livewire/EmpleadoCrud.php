@@ -3,8 +3,9 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\Empleados;
+//use App\Models\Empleados;
 use App\EstadoEmpleado;
+use App\Services\EmpleadoService;
 
 final class EmpleadoCrud extends Component
 {

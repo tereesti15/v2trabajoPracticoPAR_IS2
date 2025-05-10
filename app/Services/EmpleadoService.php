@@ -6,9 +6,31 @@ use App\Models\Empleados;
 use Illuminate\Support\Facades\DB;
 use Exception;
 
-class EmpleadoService
+final class EmpleadoService
 {
-    public function crearEmpleado(array $data): Empleados
+
+    public function index(): \Illuminate\Support\Collection
+    {
+        /*
+        return Empleados::with(['persona']) // si tienes relación con Persona
+            ->orderBy('id_empleado', 'desc')
+            ->get();
+        */
+        return Empleados::orderBy('id_empleado', 'desc')->get();
+    }
+
+    public function show(int $id): Empleados
+    {
+        $empleado = Empleados::find($id);
+
+        if (!$empleado) {
+            throw new \Illuminate\Database\Eloquent\ModelNotFoundException("Empleado no encontrado");
+        }
+
+        return $empleado;
+    }
+
+    public function store(array $data): Empleados
     {
         // Verificar si la persona ya está registrada como empleado
         if (Empleados::where('id_persona', $data['id_persona'])->exists()) {
@@ -21,13 +43,13 @@ class EmpleadoService
         });
     }
 
-    public function borrarEmpleado(int $id_empleado): void
+    public function delete(int $id_empleado): void
     {
         $empleado = Empleados::findOrFail($id_empleado);
         $empleado->delete();
     }
 
-    public function actualizarEmpleado(int $id_empleado, array $data): Empleados
+    public function update(int $id_empleado, array $data): Empleados
     {
         $empleado = Empleados::findOrFail($id_empleado);
 
