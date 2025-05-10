@@ -62,3 +62,6 @@
         {{ $errors->first('general') }}
     </div>
 @endif
+@if ($mensaje)
+    <x-alert :type="$tipo_alerta" :message="$mensaje" />
+@endif

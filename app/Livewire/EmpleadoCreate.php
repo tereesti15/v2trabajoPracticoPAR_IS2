@@ -22,7 +22,10 @@ final class EmpleadoCreate extends Component
     public $personas = [];
     public $cargos = [];
     public $departamentos = [];
-    
+
+    public string $mensaje = '';
+    public string $tipo_alerta = 'success';
+
     public function mount()
     {
         $this->personas = Personas::all();
@@ -52,14 +55,23 @@ final class EmpleadoCreate extends Component
                 'salario_base' => $this->salario_base,
                 'estado_empleado' => $this->estado_empleado
             ]);
+            \Log::debug("EmpleadoCreate - ANTES Mensaje para popup");
+            $this->mensaje = 'Empleado registrado correctamente';
+            $this->tipo_alerta = 'success';
+            \Log::debug("EmpleadoCreate - DESPUES Mensaje para popup");
+            //$this->dispatch('cambiarVista', vista: 'empleado-crud');
+            $this->dispatch('cambiarVista', vista: 'empleado-crud', mensaje: 'Empleado registrado correctamente', tipo: 'success');
 
-            $this->dispatch('cambiarVista', vista: 'empleado-crud');
+            \Log::debug("EmpleadoCreate - DESPUES DISPATCH");
 
         } catch (Exception $e) {
+            \Log::debug("EmpleadoCreate - Ocurrrio un error " . $e->getMessage());
+            $this->dispatch('cambiarVista', vista: 'empleado-crud', mensaje: 'No se pudo registrar al empleado', tipo: 'error');
             $this->addError('general', $e->getMessage());
+            $this->mensaje = 'Empleado registrado correctamente';
+            $this->tipo_alerta = 'success';
         }
     }
-
 
     public function render()
     {
