@@ -8,23 +8,32 @@ use Carbon\Carbon;
 
 final class Personas extends Model
 {
+    protected $table = 'personas';
     protected $fillable = [
         'nombre',
         'apellido',
         'documento', 
         'direccion', 
         'telefono',
-        'email'
+        'email',
+        'fecha_nacimiento'
     ];
 
     protected $casts = [
         'discapacitado' => 'boolean',
         'fecha_nacimiento' => 'datetime',
     ];
+
+    protected $appends = ['nombre_completo'];
     
     public function hijos(): HasMany
     {
         return $this->hasMany(Hijo::class, 'persona_id');
+    }
+
+    public function getNombreCompletoAttribute(): string
+    {
+        return "{$this->apellido}, {$this->nombre}";
     }
 
 }
