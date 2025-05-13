@@ -1,7 +1,12 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl">Dashboard</h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <livewire:dashboard />
-</x-app-layout>
+@section('content')
+<div class="d-flex">
+    <div style="width: 250px;" class="bg-light border-end">
+        @livewire('sidebar-navigation')
+    </div>
+    <div class="flex-grow-1 p-4">
+        @livewire('dashboard-content')
+    </div>
+</div>
+@endsection
