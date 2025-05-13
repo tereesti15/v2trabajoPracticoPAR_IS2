@@ -26,12 +26,38 @@
 
     {{-- Panel de contenido dinámico --}}
     <div class="w-3/4 pl-6">
-        @if($activeComponent === 'empleado-crud') <livewire:empleado-crud />
-        @elseif($activeComponent === 'persona-crud') <livewire:persona-crud />
-        @elseif($activeComponent === 'persona-create') <livewire:persona-create />
-        @elseif($activeComponent === 'hijos-crud') <livewire:hijos-crud />
-        @elseif($activeComponent === 'hijo-create') <livewire:hijo-create />
-        @elseif($activeComponent === 'reporte-panel') <livewire:reporte-panel />
+
+        {{-- ✅ Alerta global --}}
+        @if ($this->mensaje)
+            <x-alert :type="$this->tipo_alerta" :message="$this->mensaje" />
         @endif
+
+        {{-- ✅ Renderizado dinámico de componentes Livewire --}}
+        @switch($activeComponent)
+            @case('empleado-crud')
+                <livewire:empleado-crud />
+                @break
+
+            @case('persona-crud')
+                <livewire:persona-crud />
+                @break
+
+            @case('persona-create')
+                <livewire:persona-create />
+                @break
+
+            @case('hijos-crud')
+                <livewire:hijos-crud />
+                @break
+
+            @case('hijo-create')
+                <livewire:hijo-create />
+                @break
+
+            @case('reporte-panel')
+                <livewire:reporte-panel />
+                @break
+        @endswitch
+
     </div>
 </div>
