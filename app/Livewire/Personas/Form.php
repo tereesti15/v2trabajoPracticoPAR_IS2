@@ -8,7 +8,7 @@ use App\Models\Personas;
 final class Form extends Component
 {
     public $personaId;
-    public $nombre, $apellido, $ci, $fecha_nacimiento, $sexo, $direccion;
+    public $nombre, $apellido, $documento, $fecha_nacimiento, $email, $direccion, $telefono;
 
     public function mount($personaId = null)
     {
@@ -17,9 +17,9 @@ final class Form extends Component
             $this->personaId = $personaId;
             $this->nombre = $persona->nombre;
             $this->apellido = $persona->apellido;
-            $this->ci = $persona->ci;
-            $this->fecha_nacimiento = $persona->fecha_nacimiento;
-            $this->sexo = $persona->sexo;
+            $this->documento = $persona->documento;
+            $this->email = $persona->email;
+            $this->telefono = $persona->telefono;
             $this->direccion = $persona->direccion;
         }
     }
@@ -29,9 +29,9 @@ final class Form extends Component
         $data = $this->validate([
             'nombre' => 'required',
             'apellido' => 'required',
-            'ci' => 'required|unique:personas,ci,' . $this->personaId,
-            'fecha_nacimiento' => 'required|date',
-            'sexo' => 'required',
+            'documento' => 'required',
+            'email' => 'required',
+            'telefono' => 'required',
             'direccion' => 'nullable',
         ]);
 

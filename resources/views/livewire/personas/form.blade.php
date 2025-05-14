@@ -16,26 +16,23 @@
             </div>
             <div class="mb-3">
                 <label>CI</label>
-                <input type="text" class="form-control" wire:model.defer="ci">
-                @error('ci') <small class="text-danger">{{ $message }}</small> @enderror
+                <input type="text" class="form-control" wire:model.defer="documento">
+                @error('documento') <small class="text-danger">{{ $message }}</small> @enderror
             </div>
             <div class="mb-3">
-                <label>Fecha de nacimiento</label>
-                <input type="date" class="form-control" wire:model.defer="fecha_nacimiento">
-                @error('fecha_nacimiento') <small class="text-danger">{{ $message }}</small> @enderror
-            </div>
-            <div class="mb-3">
-                <label>Sexo</label>
-                <select class="form-control" wire:model.defer="sexo">
-                    <option value="">Seleccionar</option>
-                    <option value="M">Masculino</option>
-                    <option value="F">Femenino</option>
-                </select>
-                @error('sexo') <small class="text-danger">{{ $message }}</small> @enderror
+                <label>Correo</label>
+                <input type="text" class="form-control" wire:model.defer="email">
+                @error('email') <small class="text-danger">{{ $message }}</small> @enderror
             </div>
             <div class="mb-3">
                 <label>Dirección</label>
                 <input type="text" class="form-control" wire:model.defer="direccion">
+                @error('direccion') <small class="text-danger">{{ $message }}</small> @enderror
+            </div>
+            <div class="mb-3">
+                <label>Teléfono</label>
+                <input type="text" class="form-control" wire:model.defer="telefono">
+                @error('telefono') <small class="text-danger">{{ $message }}</small> @enderror
             </div>
             <button type="submit" class="btn btn-success">Guardar</button>
         </form>

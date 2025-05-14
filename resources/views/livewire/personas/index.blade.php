@@ -1,6 +1,4 @@
 <div class="container py-4">
-    <h2 class="mb-4">Personas</h2>
-
     @if ($showForm)
         @livewire('personas.form', ['personaId' => $personaIdToEdit], key($personaIdToEdit))
         <button class="btn btn-secondary mt-3" wire:click="closeForm">Volver</button>
@@ -12,7 +10,7 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Apellido</th>
-                    <th>CI</th>
+                    <th>Documento</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -21,7 +19,7 @@
                     <tr>
                         <td>{{ $persona->nombre }}</td>
                         <td>{{ $persona->apellido }}</td>
-                        <td>{{ $persona->ci }}</td>
+                        <td>{{ $persona->documento }}</td>
                         <td>
                             <button class="btn btn-sm btn-warning" wire:click="edit({{ $persona->id }})">Editar</button>
                             <button class="btn btn-sm btn-danger" wire:click="delete({{ $persona->id }})">Eliminar</button>
