@@ -7,13 +7,7 @@ use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\HijoController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Livewire\EmpleadoEdit;
-
-//TEMPORAL
-/*
-Route::get('/test-persona', function () {
-    return view('test-persona');
-});
-*/
+use App\Livewire\Personas\Index;
 
 // Redirigir raíz al login o dashboard
 Route::get('/', function () {
@@ -32,7 +26,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('empleados', EmpleadoController::class);
     Route::view('/empleados/create', 'empleados.create')->name('empleados.create');
 
-    Route::resource('personas', PersonaController::class);
+    Route::get('/personas', Index::class)->name('personas.index');
     Route::resource('hijos', HijoController::class);
 
     // Reportes

@@ -12,11 +12,30 @@
     @livewireStyles
 </head>
 <body>
-    @include('layouts.navigation') {{-- Si existe, o elimínalo si no lo necesitas --}}
-    
-    <main class="container py-4">
-        @yield('content')
-    </main>
+    @auth
+        <div class="d-flex">
+            @include('layouts.sidebar') <!-- Carga el menú lateral solo si hay usuario logueado -->
+
+            <div class="flex-grow-1 p-4">
+                @isset($header)
+                    <div class="mb-4">
+                        {{ $header }}
+                    </div>
+                @endisset
+
+                <main>
+                    @yield('content')
+                </main>
+            </div>
+        </div>
+    @endauth
+
+    @guest
+        {{-- Para páginas públicas como login, register, etc. --}}
+        <main class="py-4 container">
+            @yield('content')
+        </main>
+    @endguest
 
     @livewireScripts
 </body>
