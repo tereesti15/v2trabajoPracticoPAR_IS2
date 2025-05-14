@@ -15,7 +15,7 @@
                     👥 Empleados
                 </a>
                 <ul id="empleadosSubmenu" class="collapse ps-3">
-                    <li><a href="{{ route('personas.index') }}" class="nav-link text-white">CRUD Personas</a></li>
+                    <li><a href="{{ route('personas.index') }}" class="nav-link text-white">CRUD Personasyyyyy</a></li>
                     {{-- Puedes agregar más opciones aquí --}}
                     {{-- <li><a href="{{ route('empleados.index') }}" class="nav-link text-white">CRUD Empleados</a></li> --}}
                 </ul>

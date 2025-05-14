@@ -9,6 +9,7 @@ final class Index extends Component
 {
     public $showForm = false;
     public $personaIdToEdit = null;
+    protected string $layout = 'livewire.layouts.app';
 
     protected $listeners = ['personaUpdated' => '$refresh'];
 
@@ -38,6 +39,6 @@ final class Index extends Component
     {
         return view('livewire.personas.index', [
             'personas' => Personas::all(),
-        ]);
+        ])->layout('layouts.app');
     }
 }

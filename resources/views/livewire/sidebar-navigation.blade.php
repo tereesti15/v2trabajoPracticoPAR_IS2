@@ -4,7 +4,7 @@
             Empleados
             <ul class="ps-3">
                 <li wire:click="$emit('navigate', 'empleados')">CRUD Empleados</li>
-                <li wire:click="$emit('navigate', 'personas')">CRUD Personas</li>
+                <li wire:click="$emit('navigate', 'personas')">CRUD Personasxxxx</li>
                 <li wire:click="$emit('navigate', 'hijos')">CRUD Hijos</li>
             </ul>
         </li>
@@ -31,4 +31,3 @@
         </li>
     @endif
 </ul>
-
