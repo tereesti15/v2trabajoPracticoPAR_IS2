@@ -12,7 +12,13 @@ final class Index extends Component
     public $personas = [];
     //protected string $layout = 'livewire.layouts.app';
 
-    protected $listeners = ['personaUpdated' => '$refresh'];
+    //protected $listeners = ['personaUpdated' => '$refresh'];
+    protected $listeners = ['personaUpdated' => 'handlePersonaUpdated'];
+
+    public function handlePersonaUpdated()
+    {
+        $this->showForm = false; // Cierra el formulario
+    }
 
     public function edit($id)
     {
@@ -38,7 +44,7 @@ final class Index extends Component
 
     public function mount()
     {
-        $this->personas = Personas::all();
+        $this->personas = Personas::orderBy('id', 'desc')->get();
     }
 
     public function render()

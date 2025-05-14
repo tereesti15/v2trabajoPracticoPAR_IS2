@@ -37,7 +37,8 @@ final class Form extends Component
 
         Personas::updateOrCreate(['id' => $this->personaId], $data);
 
-        $this->dispatch('personaUpdated');
+        $this->reset(); // Limpia las propiedades públicas
+        $this->dispatch('personaUpdated'); // Notifica al padre
     }
 
     public function render()
