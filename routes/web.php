@@ -8,6 +8,7 @@ use App\Http\Controllers\HijoController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Livewire\EmpleadoEdit;
 use App\Livewire\Personas\Index;
+use App\Livewire\Empleados\Index as EmpleadosIndex;
 
 // Redirigir raíz al login o dashboard
 Route::get('/', function () {
@@ -23,10 +24,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
 
     // CRUD clásicos (puedes combinar con Livewire si no hay conflicto de rutas)
-    Route::resource('empleados', EmpleadoController::class);
-    Route::view('/empleados/create', 'empleados.create')->name('empleados.create');
+    //Route::resource('empleados', EmpleadoController::class);
+    //Route::view('/empleados/create', 'empleados.create')->name('empleados.create');
 
     Route::get('/personas', Index::class)->name('personas.index');
+    Route::get('/empleados', EmpleadosIndex::class)->name('empleados.index');
     Route::resource('hijos', HijoController::class);
 
     // Reportes
@@ -34,7 +36,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Livewire: editar empleado
     //Route::get('/empleados/{id}/edit', EmpleadoEdit::class)->name('empleados.edit');
-    Route::view('/empleados/{id}/edit', 'empleados.edit')->middleware('auth')->name('empleados.edit');
+    //Route::view('/empleados/{id}/edit', 'empleados.edit')->middleware('auth')->name('empleados.edit');
 
 
     // Perfil del usuario
