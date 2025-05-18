@@ -1,7 +1,7 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl">Dashboard</h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <livewire:dashboard />
-</x-app-layout>
+@section('content')
+    <h1 class="mb-4">Bienvenido al Sistema de Nómina</h1>
+
+    @livewire('dashboard-content') {{-- Este componente puede mostrar estadísticas, alertas, etc. --}}
+@endsection

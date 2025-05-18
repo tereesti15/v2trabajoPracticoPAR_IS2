@@ -48,6 +48,10 @@ class Empleados extends Model
         'fecha_egreso',
     ];
 
+    protected $casts = [
+        'salario_base' => 'float',
+    ];
+
     public function cargo()
     {
         return $this->belongsTo(Cargo::class, 'id_cargo', 'id_cargo');
@@ -58,7 +62,10 @@ class Empleados extends Model
         return $this->belongsTo(Personas::class, 'id_persona');
     }
 
-    protected $appends = ['cantidad_hijos_menores_18'];
+    protected $appends = ['cantidad_hijos_menores_18',
+                            'nombre_persona',
+                            'nombre_cargo',
+                            'nombre_departamento',];
 
     public function getCantidadHijosMenores18Attribute(): int
     {
@@ -72,20 +79,52 @@ class Empleados extends Model
             })->count() ?? 0;
     }
 
-    public function getSalarioBase()
-    {
-        return $this->cargo ? $this->cargo->salario_base : null;
-    }
-
-    public function getSalarioBaseAttribute()
-    {
-        return $this->attributes['salario_base'];
-    }
-
     public function nominaDetalleCuotas()
     {
         return $this->hasMany(NominaDetalleCuota::class, 'id_empleado', 'id_empleado');
     }
 
-}
+    public function getNombrePersonaAttribute(): ?string
+    {
+        // Carga la relación si no está cargada
+        if (!$this->relationLoaded('persona')) {
+            $this->load('persona');
+        }
 
+        // Retorna el nombre completo si la persona está relacionada
+        return $this->persona?->nombre_completo;
+    }
+
+    public function getNombreCargoAttribute(): ?string
+    {
+        if (!$this->relationLoaded('cargo')) {
+            $this->load('cargo');
+        }
+
+        return $this->cargo?->nombre_cargo;
+    }
+
+    public function departamento()
+    {
+        return $this->belongsTo(Departamento::class, 'id_departamento', 'id');
+    }
+
+    public function getNombreDepartamentoAttribute(): ?string
+    {
+        if (!$this->relationLoaded('departamento')) {
+            $this->load('departamento');
+        }
+
+        return $this->departamento?->nombre_departamento;
+    }
+
+    public function nominasAdicionalesFijas()
+    {
+        return $this->hasMany(NominaAdicionalFijo::class, 'id_nomina', 'id_empleado');
+    }
+
+    public function nominasPorcentualesMinimas()
+    {
+        return $this->hasMany(NominaPorcentualMinimo::class, 'id_nomina', 'id_empleado');
+    }
+}
