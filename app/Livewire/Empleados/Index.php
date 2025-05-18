@@ -61,6 +61,12 @@ final class Index extends Component
         $this->showForm = false; // Cerrar formulario si estaba abierto
     }
 
+    public function closeSalaryView()
+    {
+        $this->showSalary = false;
+        $this->empleadoIdForSalary = null;
+        $this->showSalary = false;
+    }
 
     public function render()
     {
