@@ -11,6 +11,10 @@ final class Index extends Component
     public $empleadoIdToEdit = null;
     public $empleados;
     private $empleadoService;
+
+    public $showSalary = false;
+    public $empleadoIdForSalary = null;
+
     //protected string $layout = 'livewire.layouts.app';
 
     //protected $listeners = ['personaUpdated' => '$refresh'];
@@ -50,9 +54,13 @@ final class Index extends Component
         $this->empleados = $this->empleadoService->index();
     }
 
-    public function editSalaryParameter($id) {
-
+    public function editSalaryParameter($idEmpleado)
+    {
+        $this->empleadoIdForSalary = $idEmpleado;
+        $this->showSalary = true;
+        $this->showForm = false; // Cerrar formulario si estaba abierto
     }
+
 
     public function render()
     {

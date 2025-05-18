@@ -2,6 +2,9 @@
     @if ($showForm)
         @livewire('empleados.form', ['empleadoId' => $empleadoIdToEdit], key($empleadoIdToEdit))
         <button class="btn btn-secondary mt-3" wire:click="closeForm">Volver</button>
+    @elseif ($showSalary)
+        @livewire('salario.nomina-empleado', ['empleadoId' => $empleadoIdForSalary], key('salario-'.$empleadoIdForSalary))
+        <button class="btn btn-secondary mt-3" wire:click="closeSalaryView">Volver</button>
     @else
         <button class="btn btn-primary mb-3" wire:click="create">Agregar Empleado</button>
 

@@ -10,6 +10,7 @@ use App\Models\ConceptoSalario;
 
 final class NominaEmpleado extends Component
 {
+
     public $empleadoId;
     public $empleado;
 
@@ -23,7 +24,21 @@ final class NominaEmpleado extends Component
         'monto' => '',
     ];
 
-    protected $listeners = ['mostrarModal'];
+    protected $listeners = ['mostrarModalListener' => 'mostrarModal'];
+
+    public function mostrarModal($section)
+    {
+        \Log::info("Entra mostrar modal " . $section);
+        $this->modalSection = $section;
+        $this->reset('nuevoConcepto');
+        $this->dispatch('mostrarModal');
+    }
+
+    public function closeSalaryView()
+    {
+        $this->showSalary = false;
+        $this->empleadoIdForSalary = null;
+    }
 
     public function mount($empleadoId)
     {
@@ -37,13 +52,6 @@ final class NominaEmpleado extends Component
             ->where('id_nomina', $empleadoId)->get();
 
         $this->conceptos = ConceptoSalario::all();
-    }
-
-    public function mostrarModal($section)
-    {
-        $this->modalSection = $section;
-        $this->reset('nuevoConcepto');
-        $this->dispatchBrowserEvent('mostrarModal');
     }
 
     public function agregarConcepto()
@@ -65,7 +73,19 @@ final class NominaEmpleado extends Component
         }
 
         $this->mount($this->empleadoId); // Refrescar datos
-        $this->dispatchBrowserEvent('cerrarModal');
+        $this->dispatch('cerrarModal');
+    }
+
+    public function abrirModalAgregar($tipo)
+    {
+        \Log::info("abrirModalAgregar " . $tipo);
+        $this->modalSection = $tipo;
+        $this->nuevoConcepto = [
+            'id_concepto' => '',
+            'monto' => '',
+        ];
+
+        $this->dispatch('mostrarModal');
     }
 
     public function render()

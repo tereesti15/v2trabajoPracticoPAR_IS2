@@ -39,5 +39,6 @@
     @endguest
 
     @livewireScripts
+    @stack('scripts')
 </body>
 </html>

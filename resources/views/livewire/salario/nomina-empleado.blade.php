@@ -25,8 +25,7 @@
                             </li>
                         @endforeach
                     </ul>
-
-                    <button class="btn btn-success mt-2" wire:click="$emit('mostrarModal', 'adicional')">Agregar Concepto</button>
+                    <button class="btn btn-success mt-2" wire:click="abrirModalAgregar('adicional')">Agregar Concepto</button>
                 </div>
             </div>
         </div>
@@ -54,8 +53,7 @@
                             </li>
                         @endforeach
                     </ul>
-
-                    <button class="btn btn-success mt-2" wire:click="$emit('mostrarModal', 'porcentual')">Agregar Concepto</button>
+                    <button class="btn btn-success mt-2" wire:click="abrirModalAgregar('porcentual')">Agregar Concepto</button>
                 </div>
             </div>
         </div>
@@ -67,7 +65,7 @@
             <div class="modal-content">
                 <form wire:submit.prevent="agregarConcepto">
                     <div class="modal-header">
-                        <h5 class="modal-title">Agregar Concepto @{{ $modalSection }}</h5>
+                        <h5 class="modal-title">Agregar Concepto {{ $modalSection }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
