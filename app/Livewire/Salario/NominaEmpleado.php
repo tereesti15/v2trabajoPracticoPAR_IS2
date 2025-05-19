@@ -55,7 +55,8 @@ final class NominaEmpleado extends Component
         $this->empleadoId = $empleadoId;
         $this->empleado = Empleados::findOrFail($empleadoId);
 
-        $this->porcentualesSalarioBase = NominaPorcentajeSalarioBase::all();
+        $this->porcentualesSalarioBase = $this->empleado->nomina_porcentaje_salario_base;
+        //\Log::info("$this->porcentualesSalarioBase " . $this->porcentualesSalarioBase);
 
         $this->adicionales = NominaAdicionalFijo::with('concepto')
             ->where('id_nomina', $empleadoId)->get();

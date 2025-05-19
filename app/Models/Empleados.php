@@ -127,4 +127,24 @@ class Empleados extends Model
     {
         return $this->hasMany(NominaPorcentualMinimo::class, 'id_nomina', 'id_empleado');
     }
+
+    public function nominaPorcentajeSalarioBase()
+    {
+        return $this->hasMany(NominaPorcentajeSalarioBase::class, 'id_nomina', 'id_empleado');
+    }
+
+    public function getNominaPorcentajeSalarioBaseAttribute()
+    {
+        // Obtener el primer registro relacionado con el empleado
+        $nominaPorcentajeSalarioBase = $this->nominaPorcentajeSalarioBase()->first();
+
+        // Verificamos si existe un registro y lo devolvemos como un array
+        if ($nominaPorcentajeSalarioBase) {
+            return $nominaPorcentajeSalarioBase->toArray();
+        }
+
+        // Si no existe, devolvemos un array vacío
+        return [];
+    }
+
 }

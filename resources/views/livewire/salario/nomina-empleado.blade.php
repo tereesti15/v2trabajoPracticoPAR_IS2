@@ -9,11 +9,11 @@
             {{-- Sección Porcentaje Salario Base --}}
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingAdicional">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdicional">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePorcentajeBase">
                         Conceptos en porcentaje sobre salario base
                     </button>
                 </h2>
-                <div id="collapseAdicional" class="accordion-collapse collapse show">
+                <div id="collapsePorcentajeBase" class="accordion-collapse collapse show">
                     <div class="accordion-body">
                         <p>Estos conceptos representan montos en porcentaje aplicados al SALARIO BASE del empleado.</p>
 
