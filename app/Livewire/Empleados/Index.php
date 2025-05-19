@@ -50,7 +50,7 @@ final class Index extends Component
     public function mount()
     {
         $this->empleadoService = new EmpleadoService();
-        \Log::info("Lista empleados " . $this->empleadoService->index());
+        //\Log::info("Lista empleados " . $this->empleadoService->index());
         $this->empleados = $this->empleadoService->index();
     }
 
