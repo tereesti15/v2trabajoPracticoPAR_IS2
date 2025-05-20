@@ -7,6 +7,7 @@ use App\Models\Empleados;
 use App\Models\NominaAdicionalFijo;
 use App\Models\NominaPorcentualMinimo;
 use App\Models\ConceptoSalario;
+use App\Models\NominaPorcentajeSalarioBase;
 
 final class NominaEmpleado extends Component
 {
@@ -16,6 +17,7 @@ final class NominaEmpleado extends Component
 
     public $adicionales = [];
     public $porcentuales = [];
+    public $porcentualesSalarioBase = [];
 
     public $modalSection = '';
     public $conceptos = [];
@@ -24,7 +26,15 @@ final class NominaEmpleado extends Component
         'monto' => '',
     ];
 
+    public $setFormPorcentajeSalarioBase = false;
+
     protected $listeners = ['mostrarModalListener' => 'mostrarModal'];
+
+    public function setPorcentajeSalarioBase($id) {
+        \Log::info("ENTRA FUNCION NominaEmpleado -> setPorcentajeSalarioBase " . $id);
+        $this->empleadoId = $id;
+        $this->setFormPorcentajeSalarioBase = true;
+    }
 
     public function mostrarModal($section)
     {
@@ -44,6 +54,9 @@ final class NominaEmpleado extends Component
     {
         $this->empleadoId = $empleadoId;
         $this->empleado = Empleados::findOrFail($empleadoId);
+
+        $this->porcentualesSalarioBase = $this->empleado->nomina_porcentaje_salario_base;
+        //\Log::info("$this->porcentualesSalarioBase " . $this->porcentualesSalarioBase);
 
         $this->adicionales = NominaAdicionalFijo::with('concepto')
             ->where('id_nomina', $empleadoId)->get();

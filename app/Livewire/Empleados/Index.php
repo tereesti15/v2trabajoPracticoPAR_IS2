@@ -50,7 +50,7 @@ final class Index extends Component
     public function mount()
     {
         $this->empleadoService = new EmpleadoService();
-        \Log::info("Lista empleados " . $this->empleadoService->index());
+        //\Log::info("Lista empleados " . $this->empleadoService->index());
         $this->empleados = $this->empleadoService->index();
     }
 
@@ -61,6 +61,12 @@ final class Index extends Component
         $this->showForm = false; // Cerrar formulario si estaba abierto
     }
 
+    public function closeSalaryView()
+    {
+        $this->showSalary = false;
+        $this->empleadoIdForSalary = null;
+        $this->showSalary = false;
+    }
 
     public function render()
     {
