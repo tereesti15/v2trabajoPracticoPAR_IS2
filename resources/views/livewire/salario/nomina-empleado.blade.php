@@ -8,30 +8,44 @@
         <div class="accordion my-3" id="accordionNomina">
             {{-- Sección Porcentaje Salario Base --}}
             <div class="accordion-item">
-                <h2 class="accordion-header" id="headingAdicional">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePorcentajeBase">
-                        Conceptos en porcentaje sobre salario base
-                    </button>
-                </h2>
-                <div id="collapsePorcentajeBase" class="accordion-collapse collapse show">
-                    <div class="accordion-body">
-                        <p>Estos conceptos representan montos en porcentaje aplicados al SALARIO BASE del empleado.</p>
+    <h2 class="accordion-header" id="headingAdicional">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePorcentajeBase">
+            Conceptos en porcentaje sobre salario base
+        </button>
+    </h2>
+    <div id="collapsePorcentajeBase" class="accordion-collapse collapse show">
+        <div class="accordion-body">
+            <p>Estos conceptos representan montos en porcentaje aplicados al SALARIO BASE del empleado.</p>
 
-                        <ul class="list-group">
-                            @foreach($porcentualesSalarioBase as $item)
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    {{ $item->detalle_concepto }} - {{ $item->porcentaje }}
-                                    <div>
-                                        <button class="btn btn-sm btn-warning" wire:click="">Modificar</button>
-                                        <button class="btn btn-sm btn-danger" wire:click="">Eliminar</button>
-                                    </div>
-                                </li>
-                            @endforeach
-                        </ul>
-                        <button class="btn btn-success mt-2" wire:click="setPorcentajeSalarioBase({{ $empleado->id_empleado }})">Agregar Concepto</button>
-                    </div>
-                </div>
+            <!-- Tabla para mostrar los conceptos -->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Detalle Concepto</th>
+                        <th scope="col">Porcentaje</th>
+                        <th scope="col" class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($porcentualesSalarioBase as $item)
+                        <tr>
+                            <td>{{ $item->detalle_concepto }}</td>
+                            <td>{{ $item->porcentaje }}%</td> <!-- Mostrar el porcentaje seguido de '%' -->
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-warning" wire:click="">Modificar</button>
+                                <button class="btn btn-sm btn-danger" wire:click="">Eliminar</button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+            <!-- Botón para agregar un nuevo concepto -->
+            <button class="btn btn-success mt-2" wire:click="setPorcentajeSalarioBase({{ $empleado->id_empleado }})">Agregar Concepto</button>
             </div>
+            </div>
+        </div>
+
 
             {{-- Sección Adicional Fijo --}}
             <div class="accordion-item">
