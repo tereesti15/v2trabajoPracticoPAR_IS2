@@ -120,7 +120,7 @@ class Empleados extends Model
 
     public function nominasAdicionalesFijas()
     {
-        return $this->hasMany(NominaAdicionalFijo::class, 'id_nomina', 'id_empleado');
+        return $this->hasMany(NominaAdicionalFijo::class, 'id_nomina', 'id_empleado')->get();
     }
 
     public function nominasPorcentualesMinimas()
@@ -135,8 +135,11 @@ class Empleados extends Model
 
     public function getNominaPorcentajeSalarioBaseAttribute()
     {
-        // Obtener el primer registro relacionado con el empleado
         return $this->nominaPorcentajeSalarioBase();
     }
 
+    public function getNominaFijoSalarioAttribute()
+    {
+        return $this->nominasAdicionalesFijas();
+    }
 }
