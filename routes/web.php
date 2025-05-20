@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\PersonaController;
-use App\Http\Controllers\HijoController;
+use App\Http\Controllers\Api\v1\HijoController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Livewire\EmpleadoEdit;
 use App\Livewire\Personas\Index;
@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('hijos', HijoController::class);
 
     // Reportes
-    Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
+   // Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
 
     // Livewire: editar empleado
     //Route::get('/empleados/{id}/edit', EmpleadoEdit::class)->name('empleados.edit');
@@ -44,6 +44,6 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-//
+
 // Rutas de autenticación (Laravel Breeze)
 require __DIR__.'/auth.php';
