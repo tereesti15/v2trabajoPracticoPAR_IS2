@@ -15,7 +15,7 @@ final class NominaEmpleado extends Component
     public $empleadoId;
     public $empleado;
 
-    public $adicionales = [];
+    public $conceptoSalarialesFijos = [];
     public $porcentuales = [];
     public $porcentualesSalarioBase = [];
 
@@ -27,15 +27,26 @@ final class NominaEmpleado extends Component
     ];
 
     public $setFormPorcentajeSalarioBase = false;
+    public $setSalarioFijo = false;
 
-    protected $listeners = ['mostrarModalListener' => 'mostrarModal'];
+    //protected $listeners = ['mostrarModalListener' => 'mostrarModal'];
 
-    public function setPorcentajeSalarioBase($id) {
+    public function showSalarioFijo($id)
+    {
+        \Log::info("ENTRA FUNCION NominaEmpleado -> setSalarioFijo " . $id);
+        $this->empleadoId = $id;
+        $this->setFormPorcentajeSalarioBase = false;
+        $this->setSalarioFijo = true;
+    }
+
+
+    public function showPorcentajeSalarioBase($id) {
         \Log::info("ENTRA FUNCION NominaEmpleado -> setPorcentajeSalarioBase " . $id);
         $this->empleadoId = $id;
         $this->setFormPorcentajeSalarioBase = true;
+        $this->setSalarioFijo = false;
     }
-
+/*
     public function mostrarModal($section)
     {
         \Log::info("Entra mostrar modal " . $section);
@@ -43,7 +54,7 @@ final class NominaEmpleado extends Component
         $this->reset('nuevoConcepto');
         $this->dispatch('mostrarModal');
     }
-
+*/
     public function closeSalaryView()
     {
         $this->showSalary = false;
@@ -58,15 +69,14 @@ final class NominaEmpleado extends Component
         $this->porcentualesSalarioBase = $this->empleado->nomina_porcentaje_salario_base;
         //\Log::info("$this->porcentualesSalarioBase " . $this->porcentualesSalarioBase);
 
-        $this->adicionales = NominaAdicionalFijo::with('concepto')
-            ->where('id_nomina', $empleadoId)->get();
+        $this->conceptoSalarialesFijos = $this->empleado->nomina_fijo_salario;
 
         $this->porcentuales = NominaPorcentualMinimo::with('concepto')
             ->where('id_nomina', $empleadoId)->get();
 
         $this->conceptos = ConceptoSalario::all();
     }
-
+/*
     public function agregarConcepto()
     {
         if ($this->modalSection === 'adicional') {
@@ -100,7 +110,7 @@ final class NominaEmpleado extends Component
 
         $this->dispatch('mostrarModal');
     }
-
+*/
     public function render()
     {
         return view('livewire.salario.nomina-empleado');
