@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Parametro;
 
-final class ParametroSeeder extends Seeder
+final class ParametricasSeeder extends Seeder
 {
     /**
      * Run the database seeds.

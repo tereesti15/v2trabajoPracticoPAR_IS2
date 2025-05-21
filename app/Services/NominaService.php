@@ -24,6 +24,26 @@ final class NominaService
         //\Log::info('DATOS DE PARAMETRO EN CONSTRUCTOR ' . $this->parametro->salario_minimo);
     }
 
+    public function obtenerListadoNominas(): Collection
+    {
+        return Nomina::orderBy('periodo', 'desc')->get();
+    }
+
+    public function obtenerNominasPorAnho(int $anho): Collection
+    {
+        return Nomina::whereYear('periodo', $anho)
+                    ->orderBy('periodo', 'desc')
+                    ->get();
+    }
+
+    public function obtenerNominasConfirmadas(): Collection
+    {
+        return Nomina::where('estado_nomina', \App\EstadoNomina::Confirmada->value)
+                    ->orderBy('periodo', 'desc')
+                    ->get();
+    }
+
+    
     /* Calcula el salario prorrateado de un empleado si corresponde al primer mes de ingreso.
     *
     * @param Empleados $empleado
