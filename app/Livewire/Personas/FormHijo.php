@@ -8,11 +8,12 @@ use App\Models\Hijo;
 final class FormHijo extends Component
 {
     public $hijoId, $personaId;
+    public $persona_id;
     public $nombre, $fecha_nacimiento, $documento, $discapacitado;
 
-    public function mount($hijoId = null, $id)
+    public function mount($hijoId = null, $personaId)
     {
-        $this->personaId = $id;
+        $this->personaId = $personaId;
         if ($hijoId) {
             $hijo = Hijo::findOrFail($hijoId);
             
@@ -28,14 +29,20 @@ final class FormHijo extends Component
     {
         
         $data = $this->validate([
-            'personaId' => 'required',
+            //'personaId' => 'required',
             'nombre' => 'required',
             'fecha_nacimiento' => 'required',
             'documento' => 'required',
             'discapacitado' => 'required',
         ]);
 
-        Hijo::updateOrCreate(['id' => $this->hijoId], $data);
+        Hijo::updateOrCreate(['id' => $this->hijoId], [
+        'persona_id' => $this->personaId,  // <-- Esto es importante
+        'nombre' => $data['nombre'],
+        'fecha_nacimiento' => $data['fecha_nacimiento'],
+        'documento' => $data['documento'],
+        'discapacitado' => $data['discapacitado'], // si estás usando este campo
+    ]);
         /*
         Hijo::create([
             'persona_id' => $this->personaId,
