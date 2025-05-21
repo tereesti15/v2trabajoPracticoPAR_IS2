@@ -14,20 +14,18 @@ class IndexHijos extends Component
 
     public $listaHijos = [];
 
+    public $hijoIdActualizar;
+
+    public function create()
+    {
+        $this->hijoIdActualizar = null;
+        $this->showForm = true;
+    }
+    
      public function mount($personaId = null)
     {
         \Log::info("IndexHijos -> mount " . $personaId );
-        /*
-        if ($personaId) {
-            $listaHijos = Hijo::findOrFail($personaId);
-            
-            $this->personaId = $personaId;
-            $this->nombre = $hijo->nombre;
-            $this->fecha_nacimiento = $hijo->fecha_nacimiento;
-            $this->documento = $hijo->documento;
-            $this->discapacitado = $hijo->discapacitado;
-        }
-            */
+       
         if ($personaId) {
             $this->personaId = $personaId;
             $this->listaHijos = Hijo::where('persona_id', $personaId)->get();
