@@ -12,12 +12,21 @@ final class Index extends Component
     public $personas = [];
     //protected string $layout = 'livewire.layouts.app';
 
+    public $showFormHijos = false;
+
     //protected $listeners = ['personaUpdated' => '$refresh'];
     protected $listeners = ['personaUpdated' => 'handlePersonaUpdated'];
 
     public function handlePersonaUpdated()
     {
         $this->showForm = false; // Cierra el formulario
+         $this->showFormHijos = false;
+    }
+
+    public function abrirHijos($id)
+    {
+        $this->personaIdToEdit = $id;
+        $this->showFormHijos = true;
     }
 
     public function edit($id)
@@ -35,6 +44,7 @@ final class Index extends Component
     public function closeForm()
     {
         $this->showForm = false;
+        $this->showFormHijos = false;
     }
 
     public function delete($id)

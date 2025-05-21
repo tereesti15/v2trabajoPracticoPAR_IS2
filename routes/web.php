@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/empleados', EmpleadosIndex::class)->name('empleados.index');
     Route::get('/config', SalarioConceptoIndex::class)->name('config.salario-concepto-index');
 
-    Route::resource('hijos', HijoController::class);
+    //Route::resource('hijos', HijoController::class);
 
     // Reportes
    // Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
