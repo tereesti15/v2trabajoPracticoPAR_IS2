@@ -15,5 +15,6 @@ class ConceptoSalario extends Model
     protected $fillable = [
         'nombre_concepto',
         'tipo',
+        'agrupador',
     ];
 }
