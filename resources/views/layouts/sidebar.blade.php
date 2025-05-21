@@ -29,8 +29,15 @@
         @endif
 
         {{-- Administración (Solo para administradores) --}}
-        @if(Auth::user()->role === 'administrador')
-            {{-- <li class="nav-item"><a href="#" class="nav-link text-white">Configuración</a></li> --}}
+        @if(Auth::user()->role === 'Administrador')
+            <li class="nav-item">
+                <a href="#configuracioSubmenu" class="nav-link text-white" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="configuracioSubmenu">
+                    Configuración
+                </a>
+                <ul id="configuracioSubmenu" class="collapse ps-3">
+                    <li><a href="{{ route('config.salario-concepto-index') }}" class="nav-link text-white">CRUD Concepto Salario</a></li>
+                </ul>
+            </li>
         @endif
     </ul>
 </div>
