@@ -21,7 +21,7 @@ class IndexHijos extends Component
         $this->hijoIdActualizar = null;
         $this->showForm = true;
     }
-    
+
      public function mount($personaId = null)
     {
         \Log::info("IndexHijos -> mount " . $personaId );
@@ -30,6 +30,17 @@ class IndexHijos extends Component
             $this->personaId = $personaId;
             $this->listaHijos = Hijo::where('persona_id', $personaId)->get();
         }
+    }
+
+    public function delete($id)
+    {
+        Hijo::destroy($id);
+    }
+
+    public function edit($id)
+    {
+        $this->hijoIdActualizar = $id;
+        $this->showForm = true;
     }
 
     public function render()

@@ -35,7 +35,8 @@ final class FormHijo extends Component
             'discapacitado' => 'required',
         ]);
 
-        //Hijo::updateOrCreate(['id' => $this->hijoId], $data);
+        Hijo::updateOrCreate(['id' => $this->hijoId], $data);
+        /*
         Hijo::create([
             'persona_id' => $this->personaId,
             'nombre' => $this->nombre,
@@ -43,10 +44,13 @@ final class FormHijo extends Component
             'documento' => $this->documento,
             'discapacitado' => $this->discapacitado
         ]);
+        */
 
         $this->reset(); // Limpia las propiedades públicas
         $this->dispatch('personaUpdated'); // Notifica al padre
     }
+
+    
 
     public function render()
     {
