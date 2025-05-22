@@ -29,6 +29,11 @@ final class ProcesarIndex extends Component
         $this->lista_planilla = $this->nominaService->obtenerListadoNominas();
     }
 
+    public function closeForm()
+    {
+        $this->showForm = false;
+    }
+
     public function render()
     {
         return view('livewire.salario.procesar-index')->layout('layouts.app');
