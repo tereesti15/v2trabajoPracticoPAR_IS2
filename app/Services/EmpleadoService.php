@@ -9,6 +9,9 @@ use Exception;
 final class EmpleadoService
 {
 
+    public $persona;
+    public $nombrePersona;
+
     public function index(): \Illuminate\Support\Collection
     {
         /*
@@ -21,14 +24,28 @@ final class EmpleadoService
 
     public function show(int $id): Empleados
     {
-        $empleado = Empleados::find($id);
+        // Obtener el empleado y cargar explícitamente la relación 'persona'
+        $empleado = Empleados::with('persona')->find($id);
 
         if (!$empleado) {
             throw new \Illuminate\Database\Eloquent\ModelNotFoundException("Empleado no encontrado");
         }
 
+        // Verificar si la relación persona está correctamente cargada
+        if (!$empleado->persona) {
+            throw new Exception("Este empleado no tiene una persona asociada.");
+        }
+
+        // Acceder al nombre completo de la persona
+        $nombreCompleto = $empleado->persona->nombre_completo;
+
+        // Ahora puedes trabajar con el modelo Persona de la siguiente manera:
+        // $empleado->persona->nombre, $empleado->persona->apellido, etc.
+
         return $empleado;
     }
+
+
 
     public function store(array $data): Empleados
     {

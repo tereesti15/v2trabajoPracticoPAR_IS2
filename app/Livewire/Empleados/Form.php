@@ -19,6 +19,7 @@ final class Form extends Component
     public $fecha_ingreso;
     public $salario_base;
     public $estado_empleado = "Activo";
+    public $nombre_persona;
 
     public $lista_persona = [];
     public $lista_cargo = [];
@@ -31,7 +32,10 @@ final class Form extends Component
         $this->lista_cargo = Cargo::orderBy('nombre_cargo', 'asc')->get();
         $this->lista_departamento = Departamento::orderBy('nombre_departamento', 'asc')->get();
         if ($empleadoId) {
-            $empleado = $this->empleadoService->findOrFail($empleadoId);
+            \Log::info("DATO EMPLEADO " . $empleadoId);
+            $empleado = $this->empleadoService->show($empleadoId);
+            $nombre_persona = $this->empleadoService;
+            $this->nombre_persona = $empleado->nombre_persona;
             $this->empleadoId = $empleadoId;
             $this->nombre = $empleado->nombre;
             $this->apellido = $empleado->apellido;
