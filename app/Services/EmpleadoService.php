@@ -32,6 +32,7 @@ final class EmpleadoService
 
     public function store(array $data): Empleados
     {
+        \Log::info("Entra EmpleadoService->store ");
         // Verificar si la persona ya está registrada como empleado
         if (Empleados::where('id_persona', $data['id_persona'])->exists()) {
             throw new Exception('Esta persona ya tiene un registro de empleado.');

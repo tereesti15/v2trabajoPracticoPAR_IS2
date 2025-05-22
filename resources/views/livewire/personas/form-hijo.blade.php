@@ -4,7 +4,6 @@
     </div>
     <div class="card-body">
         <form wire:submit.prevent="save">
-            <input type="hidden" class="form-control" wire:model.defer="persona_id" value={{ $persona_id }}>
             <div class="mb-3">
                 <label>Nombre</label>
                 <input type="text" class="form-control" wire:model.defer="nombre">
