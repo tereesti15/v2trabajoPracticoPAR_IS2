@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\DetalleNomina;
+use Illuminate\Support\Carbon;
+
 
 /**
  * @OA\Schema(
@@ -26,14 +29,23 @@ final class Nomina extends Model
         'id_nomina',
         'periodo',
         'fecha_proceso_liquidacion',
-        'id_empleado',
-        'id_concepto',
-        'detalle_concepto',
-        'monto_concepto'
+        'estado_nomina',
     ];
 
     protected $dates = [
         'periodo',
         'fecha_proceso_liquidacion',
     ];
+
+    // App\Models\Nomina.php
+
+    public function detalles()
+    {
+        return $this->hasMany(DetalleNomina::class, 'id_nomina', 'id_nomina');
+    }
+
+    public function getPeriodoFormateadoAttribute()
+    {
+        return Carbon::parse($this->periodo)->format('d/m/Y');
+    }
 }

@@ -10,6 +10,7 @@ use App\Models\Parametro;
 use Illuminate\Database\Eloquent\Collection;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Models\NominaAdicionalFijo;
 
 final class NominaService
 {
@@ -23,6 +24,26 @@ final class NominaService
         $this->parametro = new Parametro();
         //\Log::info('DATOS DE PARAMETRO EN CONSTRUCTOR ' . $this->parametro->salario_minimo);
     }
+
+    public function obtenerListadoNominas(): Collection
+    {
+        return Nomina::orderBy('periodo', 'desc')->get();
+    }
+
+    public function obtenerNominasPorAnho(int $anho): Collection
+    {
+        return Nomina::whereYear('periodo', $anho)
+                    ->orderBy('periodo', 'desc')
+                    ->get();
+    }
+
+    public function obtenerNominasConfirmadas(): Collection
+    {
+        return Nomina::where('estado_nomina', \App\EstadoNomina::Confirmada->value)
+                    ->orderBy('periodo', 'desc')
+                    ->get();
+    }
+
 
     /* Calcula el salario prorrateado de un empleado si corresponde al primer mes de ingreso.
     *
@@ -104,10 +125,11 @@ final class NominaService
             foreach ($allEmployees as $empleado) {
 
                 // 3. Crear un detalle de nómina por empleado
-                $this->calculoSalarioBase($empleado, $nomina);
-                $this->calculoBonificacionFamiliar($empleado, $nomina);
-                $this->calculoSeguroSocialIPS($empleado, $nomina);
-                $this->calculoNominaDetalleCuota($empleado, $nomina);
+                //$this->calculoSalarioBase($empleado, $nomina);
+                //$this->calculoBonificacionFamiliar($empleado, $nomina);
+                //$this->calculoSeguroSocialIPS($empleado, $nomina);
+                //$this->calculoNominaDetalleCuota($empleado, $nomina);
+                $this->calculoConceptoFijo($empleado, $nomina);
             }
 
             DB::commit();
@@ -118,6 +140,22 @@ final class NominaService
             DB::rollBack();
             throw $e;
         }
+    }
+
+    private function calculoConceptoFijo(Empleados $empleado, Nomina $nomina)
+    {
+        $data = NominaAdicionalFijo::findOrFail($empleado->id_empleado);
+        if(!$data)
+        {
+            return;
+        }
+        DetalleNomina::create([
+            'id_nomina' => $nomina->id_nomina,
+            'id_empleado' => $empleado->id_empleado,
+            'id_concepto' => $data->id_concepto,
+            'detalle_concepto' => $data->detalle_concepto,
+            'monto_concepto' => $data->importe,
+        ]);
     }
 
     /**

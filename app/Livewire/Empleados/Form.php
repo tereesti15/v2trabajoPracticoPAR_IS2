@@ -4,44 +4,73 @@ namespace App\Livewire\Empleados;
 
 use Livewire\Component;
 use App\Services\EmpleadoService;
+use App\Models\Cargo;
+use App\Models\Departamento;
+use App\Models\Personas;
 
 final class Form extends Component
 {
-
     private $empleadoService;
+
     public $empleadoId;
-    public $nombre, $apellido, $documento, $fecha_nacimiento, $email, $direccion, $telefono;
+    public $id_persona;
+    public $id_cargo;
+    public $id_departamento;
+    public $fecha_ingreso;
+    public $salario_base;
+    public $estado_empleado = "Activo";
+
+    public $lista_persona = [];
+    public $lista_cargo = [];
+    public $lista_departamento = [];
 
     public function mount($empleadoId = null)
     {
         $this->empleadoService = new EmpleadoService();
+        $this->lista_persona = Personas::orderBy('apellido', 'asc')->get();
+        $this->lista_cargo = Cargo::orderBy('nombre_cargo', 'asc')->get();
+        $this->lista_departamento = Departamento::orderBy('nombre_departamento', 'asc')->get();
         if ($empleadoId) {
-            $persona = Personas::findOrFail($personaId);
-            $this->personaId = $personaId;
-            $this->nombre = $persona->nombre;
-            $this->apellido = $persona->apellido;
-            $this->documento = $persona->documento;
-            $this->email = $persona->email;
-            $this->telefono = $persona->telefono;
-            $this->direccion = $persona->direccion;
+            $empleado = $this->empleadoService->findOrFail($empleadoId);
+            $this->empleadoId = $empleadoId;
+            $this->nombre = $empleado->nombre;
+            $this->apellido = $empleado->apellido;
+            $this->documento = $empleado->documento;
+            $this->email = $empleado->email;
+            $this->telefono = $empleado->telefono;
+            $this->direccion = $empleado->direccion;
         }
     }
 
     public function save()
     {
-        $data = $this->validate([
-            'nombre' => 'required',
-            'apellido' => 'required',
-            'documento' => 'required',
-            'email' => 'required',
-            'telefono' => 'required',
-            'direccion' => 'nullable',
-        ]);
-
-        Personas::updateOrCreate(['id' => $this->personaId], $data);
-
-        $this->reset(); // Limpia las propiedades públicas
-        $this->dispatch('personaUpdated'); // Notifica al padre
+        //\Log::info("Entra Form->save ANTES DE TODO PROCESO");
+        try
+        {
+            $this->empleadoService = new EmpleadoService();
+            $data = $this->validate([
+                'id_persona' => 'required',
+                'id_cargo' => 'required',
+                'id_departamento' => 'required',
+                'fecha_ingreso' => 'required',
+                'salario_base' => 'required',
+                'estado_empleado' => 'required',
+            ]);
+            //\Log::info("Entra Form->save " . $data . " empleado=>" . $this->empleadoId);
+            if($this->empleadoId)
+            {
+                $this->empleadoService->update($this->empleadoId, $data);
+            }
+            else
+            {
+                $this->empleadoService->store($data);
+            }
+            
+            $this->reset(); // Limpia las propiedades públicas
+            $this->dispatch('personaUpdated'); // Notifica al padre
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error("Error de validación: ", $e->errors());
+        }
     }
 
     public function render()
