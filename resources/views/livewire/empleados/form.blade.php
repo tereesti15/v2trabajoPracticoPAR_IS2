@@ -6,14 +6,19 @@
         <form wire:submit.prevent="save">
             <input type="hidden" class="form-control" wire:model.defer="estado_empleado" value="{{ $estado_empleado }}">
             <div class="mb-3">
-                <label for="id_persona" class="form-label">Seleccionar Persona</label>
-                <select id="id_persona" class="form-select" wire:model.defer="id_persona">
-                    <option value="">-- Selecciona una persona --</option>
-                    @foreach ($lista_persona as $persona)
-                        <option value="{{ $persona->id }}">{{ $persona->nombre_completo }}</option>
-                    @endforeach
-                </select>
-                @error('id_persona') <small class="text-danger">{{ $message }}</small> @enderror
+                @if ($empleadoId)
+                    <h3>Datos personales</h2>
+                    <h3>{{ $nombre_persona }}</h3>
+                @else
+                    <label for="id_persona" class="form-label">Seleccionar Persona</label>
+                    <select id="id_persona" class="form-select" wire:model.defer="id_persona">
+                        <option value="">-- Selecciona una persona --</option>
+                        @foreach ($lista_persona as $persona)
+                            <option value="{{ $persona->id }}">{{ $persona->nombre_completo }}</option>
+                        @endforeach
+                    </select>
+                    @error('id_persona') <small class="text-danger">{{ $message }}</small> @enderror    
+                @endif
             </div>
             <div class="mb-3">
                 <label for="id_departamento" class="form-label">Seleccionar Departamento</label>

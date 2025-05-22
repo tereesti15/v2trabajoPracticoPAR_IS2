@@ -26,7 +26,7 @@ use Carbon\Carbon;
  */
 
 
-class Empleados extends Model
+final class Empleados extends Model
 {
     use HasFactory;
 
@@ -142,4 +142,16 @@ class Empleados extends Model
     {
         return $this->nominasAdicionalesFijas();
     }
+
+    public function getPersonaCompleta()
+    {
+        // Asegúrate de que la relación 'persona' esté cargada
+        if (!$this->relationLoaded('persona')) {
+            $this->load('persona'); // Cargar la relación si no está cargada
+        }
+
+        // Retorna la relación persona, que es el modelo completo
+        return $this->persona; 
+    }
+
 }
