@@ -36,7 +36,9 @@
                 </a>
                 <ul id="salarioSubmenu" class="collapse ps-3">
                     <li><a href="{{ route('salario.index') }}" class="nav-link text-white">Generar Planilla</a></li>
-                    
+                </ul>
+                <ul id="salarioSubmenu" class="collapse ps-3">
+                    <li><a href="{{ route('reporte.planilla-index') }}" class="nav-link text-white">Imprimir Planilla</a></li>
                 </ul>
             </li>
         @endif
