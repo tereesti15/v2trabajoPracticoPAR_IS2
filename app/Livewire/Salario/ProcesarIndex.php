@@ -8,10 +8,18 @@ use App\Services\NominaService;
 final class ProcesarIndex extends Component
 {
     public $showForm;
+    public $verificarPlanilla;
     public $planilla_procesada;
     public $lista_planilla = [];
+    public $id_nomina;
     
     private $nominaService;
+
+    public function visualizar($id)
+    {
+        $this->id_nomina = $id;
+        $this->verificarPlanilla = true;
+    }
 
     public function create()
     {
@@ -26,6 +34,8 @@ final class ProcesarIndex extends Component
 
     private function fill_data()
     {
+        $this->showForm = false;
+        $this->verificarPlanilla = false;
         $this->lista_planilla = $this->nominaService->obtenerListadoNominas();
     }
 

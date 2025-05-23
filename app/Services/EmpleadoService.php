@@ -45,6 +45,14 @@ final class EmpleadoService
         return $empleado;
     }
 
+    public function empleadosActivos(): \Illuminate\Support\Collection
+    {
+        return Empleados::with('persona') // Asegura que se cargue la relación
+            ->activos()
+            ->get()
+            ->sortBy(fn($empleado) => $empleado->persona?->nombre_completo)
+            ->values(); // reindexa los resultados
+    }
 
 
     public function store(array $data): Empleados
