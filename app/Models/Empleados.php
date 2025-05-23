@@ -160,4 +160,8 @@ final class Empleados extends Model
         return $query->where('estado_empleado', '!=', EstadoEmpleado::Inactivo->value);
     }
 
+    public function detalleNomina()
+    {
+        return $this->hasMany(DetalleNomina::class, 'id_nomina', 'id_empleado');
+    }
 }
