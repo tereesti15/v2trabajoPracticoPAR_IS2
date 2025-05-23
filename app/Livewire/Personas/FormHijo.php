@@ -22,7 +22,8 @@ final class FormHijo extends Component
             
             $this->hijoId = $hijoId;
             $this->nombre = $hijo->nombre;
-            $this->fecha_nacimiento = $hijo->fecha_nacimiento;
+            //$this->fecha_nacimiento = $hijo->fecha_nacimiento;
+            $this->fecha_nacimiento = $hijo->fecha_nacimiento?->format('Y-m-d'); // Formato adecuado
             // FORMATO COMPATIBLE CON <input type="date">
             //$this->fecha_nacimiento = \Carbon\Carbon::parse($hijo->fecha_nacimiento)->format('dd-mm-yyyy');
             $this->documento = $hijo->documento;

@@ -28,7 +28,7 @@
             </div>
             <div class="mb-3">
                 <label>Fecha de Nacimiento</label>
-                <input type="text" class="form-control" wire:model.defer="fecha_nacimiento">
+                <input type="date" class="form-control" wire:model.defer="fecha_nacimiento">
                 @error('fecha_nacimiento') <small class="text-danger">{{ $message }}</small> @enderror
             </div>
             <div class="mb-3">
