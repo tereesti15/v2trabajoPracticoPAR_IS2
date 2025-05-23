@@ -3,6 +3,23 @@
         {{ $hijoId ? 'Editar Hijo' : 'Crear Hijo' }}
     </div>
     <div class="card-body">
+
+        {{--  Alerta de éxito --}}
+        @if ($successMessage)
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ $successMessage }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+        @endif
+
+        {{-- Alerta de error inesperado --}}
+        @if ($errorMessage)
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ $errorMessage }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+        @endif
+
         <form wire:submit.prevent="save">
             <div class="mb-3">
                 <label>Nombre</label>
