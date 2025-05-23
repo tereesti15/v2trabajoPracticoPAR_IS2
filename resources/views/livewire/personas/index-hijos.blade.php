@@ -22,7 +22,12 @@
                         {{-- Formatea la fecha de nacimiento al formato dd/mm/yyyy --}}
                         <td>{{ \Carbon\Carbon::parse($hijo->fecha_nacimiento)->format('d/m/Y') }}</td>
                         <td>{{ $hijo->documento }}</td>
-                        <td>{{ $hijo->discapacitado }}</td>
+                        @if ($hijo->discapacitado)
+                            <td>Si</td>
+                        @else
+                            <td>No</td>
+                        @endif
+                        {{--<td>{{ $hijo->discapacitado }}</td>--}}
                         <td>
                             <button class="btn btn-sm btn-warning" wire:click="edit({{ $hijo->id }})">Editar</button>
                             <button class="btn btn-sm btn-danger" wire:click="delete({{ $hijo->id }})">Eliminar</button>
