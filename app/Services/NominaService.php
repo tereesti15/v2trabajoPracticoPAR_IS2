@@ -199,19 +199,23 @@ final class NominaService
 
     private function calculoConceptoFijo(Empleados $empleado, Nomina $nomina)
     {
-        $data = NominaAdicionalFijo::findOrFail($empleado->id_empleado);
-        if(!$data)
-        {
+        $conceptosFijos = NominaAdicionalFijo::where('id_nomina', $empleado->id_empleado)->get();
+
+        if ($conceptosFijos->isEmpty()) {
             return;
         }
-        DetalleNomina::create([
-            'id_nomina' => $nomina->id_nomina,
-            'id_empleado' => $empleado->id_empleado,
-            'id_concepto' => $data->id_concepto,
-            'detalle_concepto' => $data->detalle_concepto,
-            'monto_concepto' => $data->importe,
-        ]);
+
+        foreach ($conceptosFijos as $concepto) {
+            DetalleNomina::create([
+                'id_nomina' => $nomina->id_nomina,
+                'id_empleado' => $empleado->id_empleado,
+                'id_concepto' => $concepto->id_concepto,
+                'detalle_concepto' => $concepto->detalle_concepto,
+                'monto_concepto' => $concepto->importe,
+            ]);
+        }
     }
+
 
     /**
      * Método que guarda los detalles de la nómina de un empleado para salario base
