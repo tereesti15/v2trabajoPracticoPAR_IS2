@@ -20,8 +20,14 @@ final class Index extends Component
     public function handlePersonaUpdated()
     {
         $this->showForm = false; // Cierra el formulario
-         $this->showFormHijos = false;
+        //$this->showFormHijos = false;
     }
+
+    /* public function handleHijoCreate()
+    {
+        //$this->showForm = false; // Cierra el formulario
+        $this->showFormHijos = false;
+    }*/
 
     public function abrirHijos($id)
     {

@@ -28,7 +28,7 @@
             </div>
             <div class="mb-3">
                 <label>Fecha de Nacimiento</label>
-                <input type="text" class="form-control" wire:model.defer="fecha_nacimiento">
+                <input type="date" class="form-control" wire:model.defer="fecha_nacimiento">
                 @error('fecha_nacimiento') <small class="text-danger">{{ $message }}</small> @enderror
             </div>
             <div class="mb-3">
@@ -36,9 +36,20 @@
                 <input type="text" class="form-control" wire:model.defer="documento">
                 @error('documento') <small class="text-danger">{{ $message }}</small> @enderror
             </div>
-            <div class="mb-3">
+            {{--<div class="mb-3">
                 <label>Discapacitado</label>
                 <input type="text" class="form-control" wire:model.defer="discapacitado">
+                @error('discapacitado') <small class="text-danger">{{ $message }}</small> @enderror
+            </div>--}}
+
+            {{-- Discapacitado --}}
+            <div class="mb-3">
+                <label for="discapacitado" class="form-label">Discapacitado</label>
+                <select id="discapacitado" wire:model.defer="discapacitado" class="form-control">
+                    <option value="">Seleccione</option>
+                    <option value="1">Sí</option>
+                    <option value="0">No</option>
+                </select>
                 @error('discapacitado') <small class="text-danger">{{ $message }}</small> @enderror
             </div>
         
