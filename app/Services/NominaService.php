@@ -25,6 +25,61 @@ final class NominaService
         //\Log::info('DATOS DE PARAMETRO EN CONSTRUCTOR ' . $this->parametro->salario_minimo);
     }
 
+    public function show($id)
+    {
+        return Nomina::find($id)->get();
+    }
+
+    /**
+     * Obtiene los detalles de la nómina agrupados por empleado, incluyendo el nombre.
+     *
+     * @param int $idNomina
+     * @return array
+     */
+    public function obtenerDetallesAgrupadosPorEmpleado(int $idNomina): array
+    {
+        // Cargamos los detalles con su concepto
+        $detalles = DetalleNomina::with('concepto')->where('id_nomina', $idNomina)->get();
+
+        // Agrupar por empleado
+        $agrupado = $detalles->groupBy('id_empleado')->map(function ($items, $idEmpleado) {
+            // Obtener nombre del empleado
+            $empleado = Empleados::with('persona')->find($idEmpleado);
+            $nombre = $empleado && $empleado->persona ? $empleado->persona->nombre_completo : 'Desconocido';
+
+            // Cálculo de totales
+            $totalAcreditacion = 0;
+            $totalDescuento = 0;
+
+            $detallesMapeados = $items->map(function ($detalle) use (&$totalAcreditacion, &$totalDescuento) {
+                $tipo = optional($detalle->concepto)->tipo;
+
+                if ($tipo === 'acreditacion') {
+                    $totalAcreditacion += $detalle->monto_concepto;
+                } elseif ($tipo === 'descuento') {
+                    $totalDescuento += $detalle->monto_concepto;
+                }
+
+                return [
+                    'id_detalle_nomina' => $detalle->id_detalle_nomina,
+                    'id_concepto' => $detalle->id_concepto,
+                    'detalle_concepto' => $detalle->detalle_concepto,
+                    'monto_concepto' => $detalle->monto_concepto,
+                ];
+            });
+
+            return [
+                'id_empleado' => $idEmpleado,
+                'nombre' => $nombre,
+                'total_acreditacion' => round($totalAcreditacion, 2),
+                'total_descuento' => round($totalDescuento, 2),
+                'detalles' => $detallesMapeados->values(),
+            ];
+        });
+
+        return $agrupado->values()->toArray();
+    }
+
     public function obtenerListadoNominas(): Collection
     {
         return Nomina::orderBy('periodo', 'desc')->get();
@@ -52,12 +107,12 @@ final class NominaService
     * @return float
     */
     /**
- * Calcula el salario prorrateado de un empleado si corresponde al primer mes de ingreso.
- *
- * @param Empleados $empleado
- * @param Carbon $periodoNomina - Último día del mes de la nómina (ej: 2025-05-31)
- * @return float
- */
+     * Calcula el salario prorrateado de un empleado si corresponde al primer mes de ingreso.
+     *
+     * @param Empleados $empleado
+     * @param Carbon $periodoNomina - Último día del mes de la nómina (ej: 2025-05-31)
+     * @return float
+     */
     private function calcularSalarioProrrateado(Empleados $empleado, Carbon $periodoNomina): float
     {
         $salarioBaseCompleto = $empleado->salario_base;

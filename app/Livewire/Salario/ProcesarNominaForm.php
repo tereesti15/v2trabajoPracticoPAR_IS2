@@ -31,11 +31,11 @@ final class ProcesarNominaForm extends Component
 
     public function save()
     {
-        $data = $this->validated([
+        $data = $this->validate([
             'anho' => 'required',
             'mes' => 'required'
         ]);
-
+        $this->nominaService = new NominaService();
         $this->nominaService->procesarPlanilla($data['mes'], $data['anho']);
     }
 

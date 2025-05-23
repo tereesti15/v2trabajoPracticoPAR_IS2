@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use OpenApi\Annotations as OA;
 use Carbon\Carbon;
+use App\EstadoEmpleado;
 
 /**
  * @OA\Schema(
@@ -152,6 +153,11 @@ final class Empleados extends Model
 
         // Retorna la relación persona, que es el modelo completo
         return $this->persona; 
+    }
+
+    public function scopeActivos($query)
+    {
+        return $query->where('estado_empleado', '!=', EstadoEmpleado::Inactivo->value);
     }
 
 }

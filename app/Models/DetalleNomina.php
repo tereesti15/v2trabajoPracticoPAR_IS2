@@ -40,4 +40,10 @@ final class DetalleNomina extends Model
         'detalle_concepto',
         'monto_concepto'
     ];
+
+    public function concepto()
+    {
+        return $this->belongsTo(ConceptoSalario::class, 'id_concepto');
+    }
+
 }
