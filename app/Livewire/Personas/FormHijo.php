@@ -14,7 +14,6 @@ final class FormHijo extends Component
     public $errorMessage = null;
 
 
-
     public function mount($hijoId = null, $personaId)
     {
         $this->personaId = $personaId;
@@ -62,7 +61,7 @@ final class FormHijo extends Component
             $this->reset(['nombre', 'fecha_nacimiento', 'documento', 'discapacitado', 'hijoId']); // Limpia las propiedades públicas
             $this->successMessage = 'Hijo guardado exitosamente.';
             $this->errorMessage = null;
-            $this->dispatch('personaUpdated'); // Notifica al padre
+            $this->dispatch('hijoCreate'); // Notifica al padre
         
         } catch (\Exception $e) {
         $this->errorMessage = 'Ocurrió un error inesperado al guardar el hijo.';

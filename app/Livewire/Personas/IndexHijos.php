@@ -15,6 +15,20 @@ class IndexHijos extends Component
     public $listaHijos = [];
 
     public $hijoIdActualizar;
+    protected $listeners = ['hijoCreate' => 'closeForm'];
+
+    public function closeForm()
+    {
+        $this->showForm = false;
+        $this->reset(['hijoIdActualizar']);
+        $this->loadHijos(); // Si tienes un método que vuelve a cargar la lista actualizada
+    }
+
+    public function loadHijos()
+    {
+        $this->listaHijos = Hijo::where('persona_id', $this->personaId)->get();
+    }
+
 
     public function create()
     {
@@ -28,13 +42,15 @@ class IndexHijos extends Component
        
         if ($personaId) {
             $this->personaId = $personaId;
-            $this->listaHijos = Hijo::where('persona_id', $personaId)->get();
+            //$this->listaHijos = Hijo::where('persona_id', $personaId)->get();
+            $this->loadHijos();
         }
     }
 
     public function delete($id)
     {
         Hijo::destroy($id);
+        $this->loadHijos();
     }
 
     public function edit($id)

@@ -33,3 +33,15 @@
         </table>
     @endif
 </div>
+
+<script>
+    Livewire.on('personaUpdated', () => {
+        setTimeout(() => {
+            const tabla = document.querySelector('table');
+            if (tabla) {
+                tabla.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 300); // Esperamos un poco para que se renderice
+    });
+</script>
+
