@@ -19,7 +19,8 @@
                 @foreach ($listaHijos as $hijo)
                     <tr>
                         <td>{{ $hijo->nombre }}</td>
-                        <td>{{ $hijo->fecha_nacimiento }}</td>
+                        {{-- Formatea la fecha de nacimiento al formato dd/mm/yyyy --}}
+                        <td>{{ \Carbon\Carbon::parse($hijo->fecha_nacimiento)->format('d/m/Y') }}</td>
                         <td>{{ $hijo->documento }}</td>
                         <td>{{ $hijo->discapacitado }}</td>
                         <td>
