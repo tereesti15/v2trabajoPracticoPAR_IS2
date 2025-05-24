@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Empleados;
 use App\Models\ConceptoSalario;
+use App\TipoConceptoNomina;
 
 class ResumenNominaService
 {
@@ -12,8 +13,11 @@ class ResumenNominaService
      */
     public function obtenerResumen(int $id_nomina): array
     {
-        // Obtener todos los conceptos salariales ordenados por nombre (opcional)
-        $conceptos = ConceptoSalario::orderBy('nombre_concepto')->get();
+        // Obtener todos los conceptos salariales ordenados por tipo y nombre
+        $conceptos = ConceptoSalario::orderBy('tipo')->orderBy('nombre_concepto')->get();
+
+        // Agrupar los conceptos por tipo
+        $conceptosAgrupados = $conceptos->groupBy('tipo');
 
         // Obtener todos los empleados con sus relaciones necesarias
         $empleados = Empleados::with([
@@ -31,16 +35,35 @@ class ResumenNominaService
                 'cargo' => $empleado->nombre_cargo,
             ];
 
-            foreach ($conceptos as $concepto) {
-                // Buscar el detalle asociado al empleado, al concepto y a la nómina actual
-                \Log::info("Ciclo concepto " . $concepto);
-                $detalle = $empleado->detalleNomina
-                    ->where('id_nomina', $id_nomina)
-                    ->where('id_concepto', $concepto->id_concepto)
-                    ->first();
-                \Log::info("RESUMEN SERVICE data detalle " . $detalle);
-                $fila[$concepto->nombre_concepto] = $detalle?->monto_concepto ?? 0.00;
+            $totalNeto = 0.00;
+
+            foreach ($conceptosAgrupados as $tipo => $conceptosDelTipo) {
+                $fila[$tipo] = [];
+                $totalPorTipo = 0.00;
+
+                foreach ($conceptosDelTipo as $concepto) {
+                    $detalle = $empleado->detalleNomina
+                        ->where('id_nomina', $id_nomina)
+                        ->where('id_concepto', $concepto->id_concepto)
+                        ->first();
+
+                    $monto = $detalle?->monto_concepto ?? 0.00;
+
+                    $fila[$tipo][$concepto->nombre_concepto] = $monto;
+                    $totalPorTipo += $monto;
+                }
+
+                $fila[$tipo]['total'] = $totalPorTipo;
+
+                // Ajustar el total neto según el tipo
+                if ($tipo === TipoConceptoNomina::ACREDITACION->value) {
+                    $totalNeto += $totalPorTipo;
+                } elseif ($tipo === TipoConceptoNomina::DESCUENTO->value) {
+                    $totalNeto -= $totalPorTipo;
+                }
             }
+
+            $fila['total_neto'] = $totalNeto;
 
             $resumen[] = $fila;
         }

@@ -10,18 +10,22 @@ final class PlanillaIndex extends Component
 {
 
     public $resumen;
-
- // Obtiene el resumen de nómina
-    //$resumen = $service->obtenerResumen($id_nomina);
-    // Obtiene los conceptos para usarlos en la vista
     public $conceptos;
-    
+    public $conceptosAgrupados;
 
     public function mount()
     {
         $resumenService = new ResumenNominaService();
-        $this->resumen = $resumenService->obtenerResumen(7);
+        $this->resumen = $resumenService->obtenerResumen(7); // ID de prueba
+
         $this->conceptos = ConceptoSalario::orderBy('nombre_concepto')->get();
+
+        // Agrupar por tipo para usar en la tabla
+        $this->conceptosAgrupados = $this->conceptos
+            ->groupBy('tipo')
+            ->map(fn ($group) => $group->values()->all())
+            ->toArray();
+
     }
 
     public function render()
