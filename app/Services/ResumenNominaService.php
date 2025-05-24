@@ -19,7 +19,7 @@ class ResumenNominaService
         $empleados = Empleados::with([
             'persona',
             'cargo',
-            'detalleNomina.id_concepto',
+            'detalleNomina.concepto',
         ])->get();
 
         $resumen = [];
