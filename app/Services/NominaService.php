@@ -370,4 +370,23 @@ final class NominaService
             ]);
         }
     }
+
+    public function borrarPlanilla($mes, $anho)
+    {
+        // Validar si existe una nómina con el mismo periodo
+        $ultimoDiaDelMes = Carbon::createFromDate($anho, $mes, 1)->endOfMonth();
+        $nomina = Nomina::where('periodo', $ultimoDiaDelMes)->first();
+
+        if (!$nomina) {
+            return response()->json(['error' => 'No se encontró una nómina para este periodo'], 404);
+        }
+
+        // Eliminar los registros relacionados en DetalleNomina
+        DetalleNomina::where('id_nomina', $nomina->id_nomina)->delete();
+
+        // Eliminar la nómina
+        $nomina->delete();
+
+        return response()->json(['message' => 'Nómina eliminada correctamente'], 200);
+    }
 }
