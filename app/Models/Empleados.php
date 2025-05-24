@@ -162,6 +162,6 @@ final class Empleados extends Model
 
     public function detalleNomina()
     {
-        return $this->hasMany(DetalleNomina::class, 'id_nomina', 'id_empleado');
+        return $this->hasMany(DetalleNomina::class, 'id_empleado', 'id_empleado');
     }
 }
