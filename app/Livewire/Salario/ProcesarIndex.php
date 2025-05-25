@@ -26,8 +26,15 @@ final class ProcesarIndex extends Component
     {
         $this->nominaService = new NominaService();
         $this->nominaService->borrarPlanillaPorId($id);
+        $this->recargaVista();
     }
 
+    private function recargaVista()
+    {
+        $this->nominaService = new NominaService();
+        $this->fill_data();
+    }
+    
     public function create()
     {
         $this->showForm = true;
@@ -35,8 +42,7 @@ final class ProcesarIndex extends Component
 
     public function mount()
     {
-        $this->nominaService = new NominaService();
-        $this->fill_data();
+        $this->recargaVista();
     }
 
     private function fill_data()
