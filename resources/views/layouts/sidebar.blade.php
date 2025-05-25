@@ -53,6 +53,9 @@
                 <ul id="configuracioSubmenu" class="collapse ps-3">
                     <li><a href="{{ route('config.salario-concepto-index') }}" class="nav-link text-white">CRUD Concepto Salario</a></li>
                 </ul>
+                <ul id="configuracioSubmenu" class="collapse ps-3">
+                    <li><a href="{{ route('config.parametro') }}" class="nav-link text-white">Parametro</a></li>
+                </ul>
             </li>
         @endif
     </ul>

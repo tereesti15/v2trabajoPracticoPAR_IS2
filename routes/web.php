@@ -12,6 +12,7 @@ use App\Livewire\Empleados\Index as EmpleadosIndex;
 use App\Livewire\Config\SalarioConceptoIndex;
 use App\Livewire\Salario\ProcesarIndex;
 use App\Livewire\Reporte\PlanillaIndex;
+use App\Livewire\Config\Parametro;
 
 // Redirigir raíz al login o dashboard
 Route::get('/', function () {
@@ -33,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/personas', Index::class)->name('personas.index');
     Route::get('/empleados', EmpleadosIndex::class)->name('empleados.index');
     Route::get('/config', SalarioConceptoIndex::class)->name('config.salario-concepto-index');
+    Route::get('/parametro', Parametro::class)->name('config.parametro');
     Route::get('/salario', ProcesarIndex::class)->name('salario.index');
     Route::get('/reporte', PlanillaIndex::class)->name('reporte.planilla-index');
     
