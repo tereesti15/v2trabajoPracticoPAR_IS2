@@ -162,6 +162,14 @@
                     onmouseout="this.style.color='#ffd700';">
                     CRUD Concepto Salario</a></li>
                 </ul>
+                <ul id="configuracioSubmenu" class="collapse ps-3">
+                    <li><a href="{{ route('config.parametro') }}" 
+                    class="nav-link" 
+                    style="color: #ffd700;"
+                    onmouseover="this.style.color='#fffacd';"
+                    onmouseout="this.style.color='#ffd700';">
+                    Parametro</a></li>
+                </ul>
             </li>
         @endif
     </ul>
