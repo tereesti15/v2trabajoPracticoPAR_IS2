@@ -94,7 +94,7 @@ final class NominaService
 
     public function obtenerNominasConfirmadas(): Collection
     {
-        return Nomina::where('estado_nomina', \App\EstadoNomina::Confirmada->value)
+        return Nomina::where('estado_nomina', \App\EstadoNomina::Confirmado->value)
                     ->orderBy('periodo', 'desc')
                     ->get();
     }
@@ -388,5 +388,17 @@ final class NominaService
         $nomina->delete();
 
         return response()->json(['message' => 'Nómina eliminada correctamente'], 200);
+    }
+
+    public function borrarPlanillaPorId ($id_nomina)
+    {
+        $nomina = Nomina::find($id_nomina);
+        // Obtener el mes (número)
+        $mes = $nomina->mes_periodo;
+        // Obtener el año
+        $anho = $nomina->anho_periodo;
+
+        $this->borrarPlanilla($mes, $anho);
+
     }
 }

@@ -39,6 +39,12 @@ final class ProcesarNominaForm extends Component
         $this->nominaService->procesarPlanilla($data['mes'], $data['anho']);
     }
 
+    public function delete($mes, $anho)
+    { 
+        $this->nominaService = new NominaService();
+        $this->nominaService->borrarPlanilla($mes, $anho);
+    }
+
     public function mount()
     {
         $this->nominaService = new NominaService();
