@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ConceptoSalario extends Model
+final class ConceptoSalario extends Model
 {
     use HasFactory;
 
@@ -16,5 +16,6 @@ class ConceptoSalario extends Model
         'nombre_concepto',
         'tipo',
         'agrupador',
+        'nro_orden',
     ];
 }
