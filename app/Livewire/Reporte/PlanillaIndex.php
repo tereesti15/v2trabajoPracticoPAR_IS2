@@ -5,6 +5,7 @@ namespace App\Livewire\Reporte;
 use Livewire\Component;
 use App\Services\ResumenNominaService;
 use App\Models\ConceptoSalario;
+use App\Models\Parametro;
 
 final class PlanillaIndex extends Component
 {
@@ -12,6 +13,10 @@ final class PlanillaIndex extends Component
     public $resumen;
     public $conceptos;
     public $conceptosAgrupados;
+    public $ruc;
+    public $empresa;
+    public $mes;
+    public $anho;
 
     public function mount()
     {
@@ -25,7 +30,12 @@ final class PlanillaIndex extends Component
             ->groupBy('tipo')
             ->map(fn ($group) => $group->values()->all())
             ->toArray();
-
+        $this->mes = 5;
+        $this->anho = 2025;
+        $parametro = Parametro::find(1);
+        \Log::info("Obtiene datos parametros " . $parametro);
+        $this->ruc = $parametro->ruc;
+        $this->empresa = $parametro->nombre_empresa;
     }
 
     public function render()

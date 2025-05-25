@@ -1,8 +1,28 @@
 <div class="py-4">
-    <div class="mb-3">
-        <h4 class="fw-bold">Resumen de Nómina</h4>
+    <div class="row mb-3">
+        <div class="col text-center">
+            <h4 class="fw-bold">Planilla de Pago de Nómina</h4>
+        </div>
+    </div>
+    <!-- Fila 1 de información adicional -->
+    <div class="row mb-2">
+        <div class="col-6 text-start">
+            <strong>Razón Social del Empleador:</strong> {{ $empresa }}
+        </div>
+        <div class="col-6 text-end">
+            <strong>Mes:</strong> {{ $mes }}
+        </div>
     </div>
 
+    <!-- Fila 2 de información adicional -->
+    <div class="row mb-3">
+        <div class="col-6 text-start">
+            <strong>RUC:</strong> {{ $ruc }}
+        </div>
+        <div class="col-6 text-end">
+            <strong>Año:</strong> {{ $anho }}
+        </div>
+    </div>
     <div class="table-responsive">
         <table class="table table-bordered table-striped align-middle text-center">
             <thead>
