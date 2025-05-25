@@ -1,2 +1,13 @@
 
 @import 'bootstrap/dist/css/bootstrap.min.css';
+
+.custom-sidebar-tere {
+    background-color: #1e1e2f !important; /* Azul oscuro personalizado */
+    color: #f8f9fa !important; /* Texto claro */
+}
+.custom-sidebar-tere a.nav-link {
+    color: #f8f9fa !important;
+}
+.custom-sidebar-tere a.nav-link:hover {
+    color: #ffc107 !important; /* Amarillo al pasar el mouse */
+}
