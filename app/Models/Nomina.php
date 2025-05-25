@@ -48,4 +48,14 @@ final class Nomina extends Model
     {
         return Carbon::parse($this->periodo)->format('d/m/Y');
     }
+
+    public function getMesPeriodoAttribute(): int
+    {
+        return Carbon::parse($this->attributes['periodo'])->month;
+    }
+
+    public function getAnhoPeriodoAttribute(): int
+    {
+        return Carbon::parse($this->attributes['periodo'])->year;
+    }
 }

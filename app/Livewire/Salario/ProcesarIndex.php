@@ -13,6 +13,7 @@ final class ProcesarIndex extends Component
     public $lista_planilla = [];
     public $id_nomina;
     
+    
     private $nominaService;
 
     public function visualizar($id)
@@ -20,7 +21,20 @@ final class ProcesarIndex extends Component
         $this->id_nomina = $id;
         $this->verificarPlanilla = true;
     }
+    
+    public function delete($id)
+    {
+        $this->nominaService = new NominaService();
+        $this->nominaService->borrarPlanillaPorId($id);
+        $this->recargaVista();
+    }
 
+    private function recargaVista()
+    {
+        $this->nominaService = new NominaService();
+        $this->fill_data();
+    }
+    
     public function create()
     {
         $this->showForm = true;
@@ -28,8 +42,7 @@ final class ProcesarIndex extends Component
 
     public function mount()
     {
-        $this->nominaService = new NominaService();
-        $this->fill_data();
+        $this->recargaVista();
     }
 
     private function fill_data()

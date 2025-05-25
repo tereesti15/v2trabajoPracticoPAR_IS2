@@ -94,7 +94,7 @@ final class NominaService
 
     public function obtenerNominasConfirmadas(): Collection
     {
-        return Nomina::where('estado_nomina', \App\EstadoNomina::Confirmada->value)
+        return Nomina::where('estado_nomina', \App\EstadoNomina::Confirmado->value)
                     ->orderBy('periodo', 'desc')
                     ->get();
     }
@@ -369,5 +369,36 @@ final class NominaService
                 'monto_concepto' => $importe_concepto,
             ]);
         }
+    }
+
+    public function borrarPlanilla($mes, $anho)
+    {
+        // Validar si existe una nómina con el mismo periodo
+        $ultimoDiaDelMes = Carbon::createFromDate($anho, $mes, 1)->endOfMonth();
+        $nomina = Nomina::where('periodo', $ultimoDiaDelMes)->first();
+
+        if (!$nomina) {
+            return response()->json(['error' => 'No se encontró una nómina para este periodo'], 404);
+        }
+
+        // Eliminar los registros relacionados en DetalleNomina
+        DetalleNomina::where('id_nomina', $nomina->id_nomina)->delete();
+
+        // Eliminar la nómina
+        $nomina->delete();
+
+        return response()->json(['message' => 'Nómina eliminada correctamente'], 200);
+    }
+
+    public function borrarPlanillaPorId ($id_nomina)
+    {
+        $nomina = Nomina::find($id_nomina);
+        // Obtener el mes (número)
+        $mes = $nomina->mes_periodo;
+        // Obtener el año
+        $anho = $nomina->anho_periodo;
+
+        $this->borrarPlanilla($mes, $anho);
+
     }
 }

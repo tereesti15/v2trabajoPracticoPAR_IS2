@@ -16,7 +16,7 @@ final class PlanillaIndex extends Component
     public function mount()
     {
         $resumenService = new ResumenNominaService();
-        $this->resumen = $resumenService->obtenerResumen(7); // ID de prueba
+        $this->resumen = $resumenService->obtenerResumen(17); // ID de prueba
 
         $this->conceptos = ConceptoSalario::orderBy('nombre_concepto')->get();
 

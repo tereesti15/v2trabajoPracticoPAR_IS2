@@ -137,20 +137,12 @@ final class ProcesoNominaController extends Controller
 
     public function destroy($mes, $anho)
     {
-        // Validar si existe una nómina con el mismo periodo
-        $ultimoDiaDelMes = Carbon::createFromDate($anho, $mes, 1)->endOfMonth();
-        $nomina = Nomina::where('periodo', $ultimoDiaDelMes)->first();
-
-        if (!$nomina) {
-            return response()->json(['error' => 'No se encontró una nómina para este periodo'], 404);
+        try {
+            $nomina = $this->nominaService->borrarPlanilla($mes,$anho);
+            return response()->json(['message' => 'Nómina borrada correctamente'], 200);
+        } catch (\Exception $e) {
+            \Log::error("CONTROLLER Error al borrar la planilla: " . $mes . " " . $anho . " " . $e->getMessage());
+            return response()->json(['error' => 'No se pudo borrar la planilla.'], 500);
         }
-
-        // Eliminar los registros relacionados en DetalleNomina
-        DetalleNomina::where('id_nomina', $nomina->id_nomina)->delete();
-
-        // Eliminar la nómina
-        $nomina->delete();
-
-        return response()->json(['message' => 'Nómina eliminada correctamente'], 200);
     }
 }
