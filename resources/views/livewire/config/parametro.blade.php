@@ -7,12 +7,12 @@
             <div class="mb-3">
                 <label>Nombre Empresa</label>
                 <input type="text" class="form-control" wire:model.defer="nombre_empresa">
-                @error('nombre') <small class="text-danger">{{ $message }}</small> @enderror
+                @error('nombre_empresa') <small class="text-danger">{{ $message }}</small> @enderror
             </div>
             <div class="mb-3">
                 <label>RUC</label>
                 <input type="text" class="form-control" wire:model.defer="ruc">
-                @error('apellido') <small class="text-danger">{{ $message }}</small> @enderror
+                @error('ruc') <small class="text-danger">{{ $message }}</small> @enderror
             </div>
             <div class="mb-3">
                 <label>Salario minimo</label>

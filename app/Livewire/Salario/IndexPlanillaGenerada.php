@@ -25,7 +25,8 @@ final class IndexPlanillaGenerada extends Component
         if ($id_nomina)
         {
             //$this->lista_empleados = $this->nominaService->empleadosActivos();
-            $this->periodo = '31/01/2024';//$this->nominaService->show($id_nomina)->periodo;
+            $data = $this->nominaService->show($id_nomina);
+            $this->periodo = $data->periodo_formateado;
             $this->empleadosNomina = $this->nominaService->obtenerDetallesAgrupadosPorEmpleado($id_nomina);
         }
     }

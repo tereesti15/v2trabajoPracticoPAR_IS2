@@ -27,7 +27,7 @@ final class NominaService
 
     public function show($id)
     {
-        return Nomina::find($id)->get();
+        return Nomina::find($id);
     }
 
     /**
@@ -59,10 +59,12 @@ final class NominaService
                 } elseif ($tipo === 'descuento') {
                     $totalDescuento += $detalle->monto_concepto;
                 }
-
+                \Log::info("DETALLE A PROCESAR " . $detalle);
                 return [
                     'id_detalle_nomina' => $detalle->id_detalle_nomina,
                     'id_concepto' => $detalle->id_concepto,
+                    'nombre_concepto' => $detalle->concepto->nombre_concepto,
+                    'tipo' => $tipo,
                     'detalle_concepto' => $detalle->detalle_concepto,
                     'monto_concepto' => $detalle->monto_concepto,
                 ];
@@ -78,6 +80,16 @@ final class NominaService
         });
 
         return $agrupado->values()->toArray();
+    }
+
+    public function actualizaNominaGenerada($id_detalle_nomina, $detalle_concepto, $importe_concepto): DetalleNomina
+    {
+        $detalle = DetalleNomina::findOrFail($id_detalle_nomina);
+        $detalle->update([
+            'detalle_concepto' => $detalle_concepto,
+            'monto_concepto' => $importe_concepto,
+        ]);
+        return $detalle;
     }
 
     public function obtenerListadoNominas(): Collection

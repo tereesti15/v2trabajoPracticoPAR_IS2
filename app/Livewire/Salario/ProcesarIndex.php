@@ -13,7 +13,6 @@ final class ProcesarIndex extends Component
     public $lista_planilla = [];
     public $id_nomina;
     
-    
     private $nominaService;
 
     public function visualizar($id)
@@ -55,6 +54,7 @@ final class ProcesarIndex extends Component
     public function closeForm()
     {
         $this->showForm = false;
+        $this->verificarPlanilla = false;
     }
 
     public function render()
