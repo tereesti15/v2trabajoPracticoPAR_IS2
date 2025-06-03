@@ -21,7 +21,7 @@ final class NominaService
     {
         // Instanciamos la clase Parametro en el constructor
         //\Log::info('Entra constructor NominaService');
-        $this->parametro = new Parametro();
+        $this->parametro = Parametro::find(1);
         //\Log::info('DATOS DE PARAMETRO EN CONSTRUCTOR ' . $this->parametro->salario_minimo);
     }
 
@@ -192,7 +192,7 @@ final class NominaService
             foreach ($allEmployees as $empleado) {
 
                 // 3. Crear un detalle de nómina por empleado
-                //$this->calculoSalarioBase($empleado, $nomina);
+                $this->calculoSalarioBase($empleado, $nomina);
                 //$this->calculoBonificacionFamiliar($empleado, $nomina);
                 //$this->calculoSeguroSocialIPS($empleado, $nomina);
                 //$this->calculoNominaDetalleCuota($empleado, $nomina);
@@ -228,7 +228,6 @@ final class NominaService
         }
     }
 
-
     /**
      * Método que guarda los detalles de la nómina de un empleado para salario base
      *
@@ -259,11 +258,13 @@ final class NominaService
 
         // Guardamos el valor para que otros métodos como IPS lo usen
         $empleado->salario_base_calculado = $salarioBase;
+        $codigo = $this->parametro->id_salario_base;
+        \Log::info("proceso de nomina " . $codigo);
 
         DetalleNomina::create([
             'id_nomina' => $nomina->id_nomina,
             'id_empleado' => $empleado->id_empleado,
-            'id_concepto' => 1,
+            'id_concepto' => $codigo,
             'detalle_concepto' => 'Salario base',
             'monto_concepto' => $salarioBase,
         ]);
