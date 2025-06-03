@@ -15,6 +15,9 @@ final class Parametro extends Model
         'bonificacion_familiar_porcentaje',
         'nombre_empresa',
         'ruc',
+        'id_salario_base',
+        'id_bonificacion_familiar',
+        'id_ips',
     ];
 
     protected $appends = [];
