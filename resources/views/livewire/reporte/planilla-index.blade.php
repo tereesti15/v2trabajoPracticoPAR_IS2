@@ -24,10 +24,12 @@
         </div>
     </div>
     <div class="table-responsive">
+        
+
         <table class="table table-bordered table-striped align-middle text-center">
             <thead>
                 <tr>
-                    <th rowspan="2">Nombre</th>
+                    <th rowspan="2">Apellido, Nombre</th>
                     <th rowspan="2">Documento</th>
                     <th rowspan="2">Cargo</th>
 
