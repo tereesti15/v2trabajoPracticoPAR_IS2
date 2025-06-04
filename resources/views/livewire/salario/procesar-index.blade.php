@@ -26,7 +26,7 @@
                                 <p>PROCESADA</p>
                             @else
                                 @if (Auth::user()->role === 'Administrador')
-                                    <button class="btn btn-sm btn-danger" wire:click="confirma({{ $planilla->id_nomina }})">Confirmar</button>
+                                    <button class="btn btn-sm btn-success" wire:click="confirma({{ $planilla->id_nomina }})">Confirmar</button>
                                 @endif
                             @endif
                             <button class="btn btn-sm btn-secondary" wire:click="visualizar({{ $planilla->id_nomina }})">Visualizar</button>
