@@ -194,7 +194,7 @@ final class NominaService
                 // 3. Crear un detalle de nómina por empleado
                 $this->calculoSalarioBase($empleado, $nomina);
                 //$this->calculoBonificacionFamiliar($empleado, $nomina);
-                //$this->calculoSeguroSocialIPS($empleado, $nomina);
+                $this->calculoSeguroSocialIPS($empleado, $nomina);
                 //$this->calculoNominaDetalleCuota($empleado, $nomina);
                 $this->calculoConceptoFijo($empleado, $nomina);
             }
@@ -270,7 +270,6 @@ final class NominaService
         ]);
     }
 
-
     /**
      * Método que guarda los detalles de la nómina de un empleado para bonificación familiar.
      *
@@ -315,41 +314,21 @@ final class NominaService
      * @param Empleados $empleado
      * @param Nomina $nomina
      */
-
-    /*private function calculoSeguroSocialIPS(Empleados $empleado, Nomina $nomina)
-    {
-        // Puedes agregar la lógica de cálculos adicionales aquí, como bonificaciones, descuentos, etc.
-        $salario_base = $empleado->salario_base;
-        $porcentaje_seguro_IPS = 0.09;
-        $seguroIPS = $salario_base * $porcentaje_seguro_IPS;
-        $seguroIPS = round($seguroIPS);
-        $concepto = "Seguro I.P.S.";
-        //echo "Empleado " . $empleado->id_persona . " SALARIO BASE " . $salarioBase . " SALARIO MINIMO " . $salarioMinimo . " HIJOS " . $cantHijosMenores . "\n";
-        // Crear detalle de nómina
-        DetalleNomina::create([
-            'id_nomina' => $nomina->id_nomina,
-            'id_empleado' => $empleado->id_empleado,
-            'id_concepto' => 3,
-            'detalle_concepto' => $concepto,
-            'monto_concepto' => $seguroIPS,
-        ]);
-    }*/
-
     private function calculoSeguroSocialIPS(Empleados $empleado, Nomina $nomina)
     {
-        $salario_base = $empleado->salario_base_calculado ?? $empleado->salario_base;
+        $salario_base = $this->calcularSalarioProrrateado($empleado, Carbon::parse($nomina->periodo));
         $porcentaje_seguro_IPS = 0.09;
         $seguroIPS = round($salario_base * $porcentaje_seguro_IPS);
-
+        $codigo = $this->parametro->id_ips;
+        \Log::info("calculo seguro IPS " . $empleado->id_empleado . " " . $codigo . " " . $seguroIPS);
         DetalleNomina::create([
             'id_nomina' => $nomina->id_nomina,
             'id_empleado' => $empleado->id_empleado,
-            'id_concepto' => 3,
+            'id_concepto' => $codigo,
             'detalle_concepto' => 'Seguro I.P.S.',
             'monto_concepto' => $seguroIPS,
         ]);
     }
-
 
     /**
      * Método que guarda los detalles de cuotas de un empleado.
