@@ -14,12 +14,15 @@ class ResumenNominaService
     public function obtenerResumen(int $id_nomina): array
     {
         // Obtener todos los conceptos salariales ordenados por tipo y nombre
-        $conceptos = ConceptoSalario::orderBy('tipo')->orderBy('nombre_concepto')->get();
+        $conceptos = ConceptoSalario::orderBy('tipo')->orderBy('nro_orden', 'desc')->get();
 
         // Agrupar los conceptos por tipo
-        $conceptosAgrupados = $conceptos->groupBy('tipo');
-
-        // Obtener todos los empleados con sus relaciones necesarias
+        $conceptosAgrupados = $conceptos
+            ->groupBy('tipo')
+            ->map(function ($grupo) {
+                return $grupo->sortByDesc('nro_orden')->values();
+            });
+            \Log::info("PROCESA 1 " . $conceptosAgrupados);
         $empleados = Empleados::with([
             'persona',
             'cargo',
@@ -52,9 +55,7 @@ class ResumenNominaService
                     $fila[$tipo][$concepto->nombre_concepto] = $monto;
                     $totalPorTipo += $monto;
                 }
-
                 $fila[$tipo]['total'] = $totalPorTipo;
-
                 // Ajustar el total neto según el tipo
                 if ($tipo === TipoConceptoNomina::ACREDITACION->value) {
                     $totalNeto += $totalPorTipo;
@@ -67,7 +68,7 @@ class ResumenNominaService
 
             $resumen[] = $fila;
         }
-
+        \Log::info("PLANILLA FINAL ", $resumen);
         return $resumen;
     }
 }

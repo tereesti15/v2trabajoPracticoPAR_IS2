@@ -47,7 +47,7 @@
             </div>
             <div class="mb-3">
                 <label>Fecha Ingreso</label>
-                <input type="text" class="form-control" wire:model.defer="fecha_ingreso">
+                <input type="date" class="form-control" wire:model.defer="fecha_ingreso">
                 @error('fecha_ingreso') <small class="text-danger">{{ $message }}</small> @enderror
             </div>
             <button type="submit" class="btn btn-success">Guardar</button>

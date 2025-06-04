@@ -23,7 +23,7 @@ final class PlanillaIndex extends Component
         $resumenService = new ResumenNominaService();
         $this->resumen = $resumenService->obtenerResumen(17); // ID de prueba
 
-        $this->conceptos = ConceptoSalario::orderBy('nombre_concepto')->get();
+        $this->conceptos = ConceptoSalario::orderBy('nro_orden', 'desc')->get();
 
         // Agrupar por tipo para usar en la tabla
         $this->conceptosAgrupados = $this->conceptos
