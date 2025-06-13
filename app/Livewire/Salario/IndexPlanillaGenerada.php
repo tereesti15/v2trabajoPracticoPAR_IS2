@@ -17,9 +17,24 @@ final class IndexPlanillaGenerada extends Component
     public $lista_empleados = [];
     public $lista_nomina = [];
     public $empleadosNomina;
+    public $actualiza_detalle_salario;
+    public $id_detalle_nomina;
+    public $showForm = false;
+
+    public function closeForm()
+    {
+        $this->actualiza_detalle_salario = false;
+    }
+
+    public function edit($id)
+    {
+        $this->actualiza_detalle_salario = true;
+        $this->id_detalle_nomina = $id;
+    }
 
     public function mount($id_nomina)
     {
+        $this->actualiza_detalle_salario = false;
         $this->nominaService = new NominaService();
         $this->empleadoService = new EmpleadoService();
         if ($id_nomina)
