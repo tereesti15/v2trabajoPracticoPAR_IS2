@@ -21,7 +21,7 @@
 
     {{-- Mostrar roles --}}
     <div style="color: #ffd700;">
-        {{ Auth::user()->getRoleNames() }}
+        {{ Auth::user()->role }}
     </div>
 
     <ul class="nav flex-column">
