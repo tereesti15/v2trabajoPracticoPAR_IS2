@@ -16,6 +16,7 @@ final class Personas extends Model
         'direccion', 
         'telefono',
         'email',
+        'sexo',
         'fecha_nacimiento'
     ];
 
