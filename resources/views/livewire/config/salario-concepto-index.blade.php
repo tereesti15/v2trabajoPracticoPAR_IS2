@@ -11,6 +11,7 @@
                     <th>Descripcion</th>
                     <th>Tipo</th>
                     <th>Agrupador</th>
+                    <th>Orden</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -20,6 +21,7 @@
                         <td>{{ $concepto->nombre_concepto }}</td>
                         <td>{{ $concepto->tipo }}</td>
                         <td>{{ $concepto->agrupador }}</td>
+                        <td>{{ $concepto->nro_orden }}</td>
                         <td>
                             <button class="btn btn-sm btn-warning" wire:click="edit({{ $concepto->id_concepto }})">Editar</button>
                             <button class="btn btn-sm btn-danger" wire:click="delete({{ $concepto->id_concepto }})">Eliminar</button>

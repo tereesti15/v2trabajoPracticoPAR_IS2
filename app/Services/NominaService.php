@@ -82,6 +82,12 @@ final class NominaService
         return $agrupado->values()->toArray();
     }
 
+    public function obtenerDetalleNominaGeneradaPor($id): DetalleNomina
+    {
+        $detalle = DetalleNomina::findOrFail($id);
+        return $detalle;
+    }
+
     public function actualizaNominaGenerada($id_detalle_nomina, $detalle_concepto, $importe_concepto): DetalleNomina
     {
         $detalle = DetalleNomina::findOrFail($id_detalle_nomina);
