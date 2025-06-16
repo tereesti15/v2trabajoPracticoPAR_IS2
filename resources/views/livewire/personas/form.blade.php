@@ -20,6 +20,16 @@
                 @error('documento') <small class="text-danger">{{ $message }}</small> @enderror
             </div>
             <div class="mb-3">
+                <label for="sexo" class="form-label">Sexo</label>
+                <select class="form-select" id="sexo" wire:model="sexo">
+                    <option value="">-- Seleccione un sexo --</option>
+                    @foreach($lista_sexo as $concepto)
+                        <option value="{{ $concepto }}">{{ $concepto }}</option>
+                    @endforeach
+                </select>
+                @error('sexo') <span class="text-danger">{{ $message }}</span> @enderror
+            </div>
+            <div class="mb-3">
                 <label>Correo</label>
                 <input type="text" class="form-control" wire:model.defer="email">
                 @error('email') <small class="text-danger">{{ $message }}</small> @enderror

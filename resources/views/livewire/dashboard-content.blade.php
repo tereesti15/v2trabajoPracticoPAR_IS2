@@ -18,5 +18,7 @@
             @livewire('auditorias') @break
         @default
             <h4>Bienvenido al sistema</h4>
+            @livewire('grafico-pie') @break
     @endswitch
+    
 </div>

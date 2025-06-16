@@ -14,6 +14,7 @@
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Documento</th>
+                    <th>Sexo</th>
                     <th>Dirección</th>
                     <th>Teléfono</th>
                     <th>Email</th>
@@ -26,6 +27,7 @@
                         <td>{{ $persona->nombre }}</td>
                         <td>{{ $persona->apellido }}</td>
                         <td>{{ $persona->documento }}</td>
+                        <td>{{ $persona->sexo }}</td>
                         <td>{{ $persona->direccion }}</td>
                         <td>{{ $persona->telefono }}</td>
                         <td>{{ $persona->email }}</td>

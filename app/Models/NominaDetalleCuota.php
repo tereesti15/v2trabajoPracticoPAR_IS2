@@ -43,6 +43,7 @@ final class NominaDetalleCuota extends Model
     use HasFactory;
 
     protected $table = 'nomina_detalle_cuotas';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'id_concepto',
@@ -58,7 +59,6 @@ final class NominaDetalleCuota extends Model
     {
         return $this->belongsTo(ConceptoSalario::class, 'id_concepto', 'id_concepto');
     }
-
 
     public function empleado()
     {
