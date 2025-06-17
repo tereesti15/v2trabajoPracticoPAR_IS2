@@ -31,10 +31,10 @@
                 <input type="number" class="form-control" id="cant_cuota" wire:model="cant_cuota">
                 @error('cant_cuota') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
-
             <div class="col-md-4 mb-3">
                 <label for="nro_cuota" class="form-label">Número Cuota</label>
-                <input type="number" class="form-control" id="nro_cuota" wire:model="nro_cuota">
+                <input type="number" class="form-control" id="nro_cuota" wire:model="nro_cuota" value="0" 
+                @if(!$id_registro) readonly @endif >
                 @error('nro_cuota') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
 

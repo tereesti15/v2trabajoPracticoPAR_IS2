@@ -32,7 +32,23 @@ final class NominaEmpleado extends Component
     public $setSalarioFijo = false;
     public $setSalarioCuota = false;
 
+    public $idSalarioCuota;
+
     //protected $listeners = ['mostrarModalListener' => 'mostrarModal'];
+
+    public function borrarSalarioCuota($id)
+    {
+        NominaDetalleCuota::destroy($id);
+        $this->actualizaGrilla();
+    }
+
+    public function editSalarioCuota($id)
+    {
+        $this->idSalarioCuota = $id;
+        $this->setFormPorcentajeSalarioBase = false;
+        $this->setSalarioFijo = false;
+        $this->setSalarioCuota = true;
+    }
 
     public function showSalarioFijo($id)
     {
@@ -76,18 +92,23 @@ final class NominaEmpleado extends Component
     {
         $this->empleadoId = $empleadoId;
         $this->empleado = Empleados::findOrFail($empleadoId);
+        $this->actualizaGrilla();
+    }
 
+    private function actualizaGrilla()
+    {
+        
         $this->porcentualesSalarioBase = $this->empleado->nomina_porcentaje_salario_base;
         //\Log::info("$this->porcentualesSalarioBase " . $this->porcentualesSalarioBase);
 
         $this->conceptoSalarialesFijos = $this->empleado->nomina_fijo_salario;
 
         $this->porcentuales = NominaPorcentualMinimo::with('concepto')
-            ->where('id_nomina', $empleadoId)->get();
+            ->where('id_nomina', $this->empleadoId)->get();
 
         $this->conceptos = ConceptoSalario::all();
         $this->salarioCuota = NominaDetalleCuota::with('concepto')
-            ->where('id_empleado', $empleadoId)->get();
+            ->where('id_empleado', $this->empleadoId)->get();
     }
 /*
     public function agregarConcepto()
