@@ -2,7 +2,8 @@
     <div class="row">
         {{-- Primer gráfico --}}
         <div class="col-md-6 text-start">
-            <h5>Gráfico de conceptos 1</h5>
+            <h5>Distribuci&oacute;n por sexo</h5>
+            <p><strong>Total empleados:</strong> {{ $totalSexo }}</p>
             <canvas id="graficoTorta1" width="300" height="300"></canvas>
 
             {{-- Etiquetas con porcentaje --}}
@@ -17,12 +18,12 @@
         </div>
 
         {{-- Segundo gráfico --}}
-        <div class="col-md-6 text-center">
-            <h5>Gráfico de conceptos 2</h5>
+        <div class="col-md-6 text-start">
+            <h5>Distribuci&oacute;n de costo por departamento</h5>
             <canvas id="graficoTorta2" width="300" height="300"></canvas>
 
             {{-- Etiquetas con porcentaje --}}
-            <ul class="mt-3 list-unstyled">
+            <ul class="mt-3 list-unstyled text-start">
                 @foreach ($categorias2 as $i => $cat)
                     <li>
                         <span style="display:inline-block; width:12px; height:12px; background-color: {{ ['#4bc0c0','#ff6384','#ffce56','#9966ff','#36a2eb'][$i] ?? '#000' }}; margin-right:8px;"></span>
@@ -74,7 +75,6 @@
                             },
                             title: {
                                 display: true,
-                                text: `Resumen de ${canvasId}`
                             }
                         }
                     }
