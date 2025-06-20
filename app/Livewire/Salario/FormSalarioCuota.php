@@ -22,9 +22,23 @@ final class FormSalarioCuota extends Component
     public $cant_cuota;
     public $nro_cuota = 0;
     public $monto_concepto;
-    public $tipo = 'descuento';
+    public $tipo = 'Descuento';
 
     private $empleado_detalle;
+
+    public function editar()
+    {
+        $data = $this->validate([
+            'id_concepto' => 'required|exists:concepto_salario,id_concepto',
+            'detalle_concepto' => 'required',
+            'cant_cuota' => 'required|numeric|min:1|max:100',
+            'monto_concepto' => 'required|numeric|min:1|max:100000000',
+            'nro_cuota' => 'required|numeric|min:0|max:100',
+        ]);
+
+        NominaDetalleCuota::updateOrCreate(['id' => $this->id_registro], $data, );
+        session()->flash('message', 'Datos de concepto modificado correctamente.');
+    }
 
     public function grabar()
     {
@@ -40,7 +54,7 @@ final class FormSalarioCuota extends Component
         // ...
 
         NominaDetalleCuota::create([
-            'id_nomina' => $this->id_empleado, 
+            'id_empleado' => $this->id_empleado, 
             'id_concepto' => $data['id_concepto'],
             'detalle_concepto' => $data['detalle_concepto'],
             'cant_cuota' => $data['cant_cuota'],
@@ -51,18 +65,24 @@ final class FormSalarioCuota extends Component
         session()->flash('message', 'Concepto agregado correctamente.');
     }
 
-    public function editar()
-    {
-
-    }
-
-    public function mount($id_empleado)
+    public function mount($id_empleado, $id_registro = null)
     {
         $this->id_empleado = $id_empleado;
         $this->empleado_detalle = Empleados::findOrFail($this->id_empleado);
         $this->nombre_empleado = $this->empleado_detalle->nombre_persona;
         $this->lista_conceptos = ConceptoSalario::conceptosDisponiblesParaSelect();
         $this->lista_tipos = collect(TipoConceptoNomina::cases());
+        if($id_registro)
+        {
+            $registro = NominaDetalleCuota::findOrFail($id_registro);
+            $this->id_registro = $id_registro;
+            $this->id_concepto = $registro->id_concepto;
+            $this->detalle_concepto = $registro->detalle_concepto;
+            $this->cant_cuota = $registro->cant_cuota;
+            $this->nro_cuota = $registro->nro_cuota;
+            $this->monto_concepto = $registro->monto_concepto;
+            $this->tipo = $registro->tipo;
+        }
     }
 
     public function render()

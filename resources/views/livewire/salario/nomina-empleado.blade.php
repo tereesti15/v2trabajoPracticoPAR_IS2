@@ -5,7 +5,7 @@
     @elseif ($setSalarioFijo)
         @livewire('salario.form-nomina-salario-fijo', ['id_empleado' => $empleadoId], key($empleadoId))
     @elseif ($setSalarioCuota)
-        @livewire('salario.form-salario-cuota', ['id_empleado' => $empleadoId], key($empleadoId))
+        @livewire('salario.form-salario-cuota', ['id_empleado' => $empleadoId, 'id_registro' => $idSalarioCuota], key($empleadoId))
     @else
         <h3>Gestión de Nómina para: {{ $empleado->nombre_persona }}</h3>
 
@@ -144,8 +144,8 @@
                                         <td>{{ $item->nro_cuota }}/{{ $item->cant_cuota }}</td>
                                         <td>Gs. {{ number_format($item->monto_concepto, 0, ',', '.' ) }}</td>
                                         <td class="text-center">
-                                            <button class="btn btn-sm btn-warning" wire:click="">Modificar</button>
-                                            <button class="btn btn-sm btn-danger" wire:click="">Eliminar</button>
+                                            <button class="btn btn-sm btn-warning" wire:click="editSalarioCuota({{ $item->id }})">Modificar</button>
+                                            <button class="btn btn-sm btn-danger" wire:click="borrarSalarioCuota({{ $item->id }})">Eliminar</button>
                                         </td>
                                     </tr>
                                 @endforeach
