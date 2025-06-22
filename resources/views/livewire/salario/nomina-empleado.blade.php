@@ -1,8 +1,6 @@
 <div class="container my-4">
     
-    @if ($setFormPorcentajeSalarioBase)
-        @livewire('salario.form-porcentaje-salario-base', ['id_empleado' => $empleadoId], key($empleadoId))
-    @elseif ($setSalarioFijo)
+    @if ($setSalarioFijo)
         @livewire('salario.form-nomina-salario-fijo', ['id_empleado' => $empleadoId, 'id_registro' => $id_registro_fijo], key($empleadoId))
     @elseif ($setSalarioCuota)
         @livewire('salario.form-salario-cuota', ['id_empleado' => $empleadoId, 'id_registro' => $idSalarioCuota], key($empleadoId))
@@ -35,10 +33,10 @@
                                 @foreach($conceptoSalarialesFijos as $item)
                                     <tr>
                                         <td>{{ $item->detalle_concepto }}</td>
-                                        <td>{{ number_format($item->importe, 0, ',', '.') }}</td> <!-- Mostrar el porcentaje seguido de '%' -->
+                                        <td>{{ number_format($item->importe, 0, ',', '.') }}</td>
                                         <td class="text-center">
                                             <button class="btn btn-sm btn-warning" wire:click="actualizarRegistro({{ $item->id }})">Modificar</button>
-                                            <button class="btn btn-sm btn-danger" wire:click="">Eliminar</button>
+                                            <button class="btn btn-sm btn-danger" wire:click="eliminarRegistroFijo({{ $item->id }})">Eliminar</button>
                                         </td>
                                     </tr>
                                 @endforeach

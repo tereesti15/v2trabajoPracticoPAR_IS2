@@ -37,6 +37,12 @@ final class NominaEmpleado extends Component
 
     //protected $listeners = ['mostrarModalListener' => 'mostrarModal'];
 
+    public function eliminarRegistroFijo($id)
+    {
+        NominaAdicionalFijo::destroy($id);
+        $this->actualizaGrilla();
+    }
+
     public function borrarSalarioCuota($id)
     {
         NominaDetalleCuota::destroy($id);
@@ -99,7 +105,7 @@ final class NominaEmpleado extends Component
     public function actualizarRegistro($id)
     {
         \Log::info("ENTRA FUNCION actualizarRegistro " . $id);
-        $this->empleadoId = $id;
+        //$this->empleadoId = $id;
         $this->id_registro_fijo = $id;
         $this->setFormPorcentajeSalarioBase = false;
         $this->setSalarioFijo = true;
