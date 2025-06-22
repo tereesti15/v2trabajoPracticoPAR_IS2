@@ -26,7 +26,7 @@
                         <td>{{ $empleado->nombre_departamento }}</td>
                         <td>{{ $empleado->nombre_cargo }}</td>
                         <td>
-                            <button class="btn btn-sm btn-info" wire:click="editSalaryParameter({{ $empleado->id_empleado }})">Salario</button>
+                            <button class="btn btn-sm btn-info" wire:click="editSalaryParameter({{ $empleado->id_empleado }})">Ingresos/Descuentos</button>
                             <button class="btn btn-sm btn-warning" wire:click="edit({{ $empleado->id_empleado }})">Editar</button>
                             <button class="btn btn-sm btn-danger" wire:click="delete({{ $empleado->id_empleado }})">Eliminar</button>                            
                         </td>
