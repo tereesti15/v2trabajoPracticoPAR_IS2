@@ -4,6 +4,7 @@ namespace App\Livewire\Salario;
 
 use Livewire\Component;
 use App\Services\NominaService;
+use App\EstadoNomina;
 
 final class ProcesarIndex extends Component
 {
@@ -14,6 +15,13 @@ final class ProcesarIndex extends Component
     public $id_nomina;
     
     private $nominaService;
+
+    public function confirma($id)
+    {
+        $this->nominaService = new NominaService();
+        $this->nominaService->confirmaPlanilla($id);
+        $this->recargaVista();
+    }
 
     public function visualizar($id)
     {
@@ -42,6 +50,7 @@ final class ProcesarIndex extends Component
     public function mount()
     {
         $this->recargaVista();
+        $this->planilla_procesada = EstadoNomina::Confirmado->value;
     }
 
     private function fill_data()

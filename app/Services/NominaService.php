@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Models\NominaAdicionalFijo;
+use App\EstadoNomina;
 
 final class NominaService
 {
@@ -28,6 +29,16 @@ final class NominaService
     public function show($id)
     {
         return Nomina::find($id);
+    }
+
+    public function confirmaPlanilla($id)
+    {
+        $nomina = Nomina::find($id);
+        if($nomina)
+        {
+            $nomina->estado_nomina = EstadoNomina::Confirmado->value;
+            $nomina->save();
+        }
     }
 
     /**

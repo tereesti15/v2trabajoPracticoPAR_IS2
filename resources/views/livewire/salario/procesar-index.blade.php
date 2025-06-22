@@ -22,15 +22,16 @@
                         <td>{{ $planilla->periodo_formateado }}</td>
                         <td>{{ $planilla->estado_nomina }}</td>
                         <td>
-                            @if ($planilla_procesada)
+                            @if ($planilla->estado_nomina == $planilla_procesada)
                                 <p>PROCESADA</p>
                             @else
                                 @if (Auth::user()->role === 'Administrador')
                                     <button class="btn btn-sm btn-success" wire:click="confirma({{ $planilla->id_nomina }})">Confirmar</button>
                                 @endif
+                                <button class="btn btn-sm btn-secondary" wire:click="visualizar({{ $planilla->id_nomina }})">Visualizar</button>
+                                <button class="btn btn-sm btn-danger" wire:click="delete({{ $planilla->id_nomina }})">Eliminar</button>
                             @endif
-                            <button class="btn btn-sm btn-secondary" wire:click="visualizar({{ $planilla->id_nomina }})">Visualizar</button>
-                            <button class="btn btn-sm btn-danger" wire:click="delete({{ $planilla->id_nomina }})">Eliminar</button>
+                            
                         </td>
                     </tr>
                 @endforeach
