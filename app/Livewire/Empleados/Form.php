@@ -71,7 +71,7 @@ final class Form extends Component
             }
             
             $this->reset(); // Limpia las propiedades públicas
-            $this->dispatch('personaUpdated'); // Notifica al padre
+            $this->dispatch('empleadoUpdated'); // Notifica al padre
         } catch (\Illuminate\Validation\ValidationException $e) {
             \Log::error("Error de validación: ", $e->errors());
         }
