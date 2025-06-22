@@ -51,9 +51,8 @@ final class SalarioConceptoForm extends Component
             'nro_orden' => 'required|integer|min:0|max:100',
         ]);
         ConceptoSalario::updateOrCreate(['id_concepto' => $this->id_concepto], $data);
-
         $this->reset(); // Limpia las propiedades públicas
-        $this->dispatch('conceptoSalarioUpdated'); // Notifica al padre
+        $this->dispatch('cerrarFormulario'); // Notifica al padre
     }
 
     public function render()
