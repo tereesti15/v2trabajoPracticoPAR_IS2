@@ -9,7 +9,7 @@ final class Index extends Component
 {
     public $showForm = false;
     public $empleadoIdToEdit = null;
-    public $empleados;
+    public $empleados = [];
     private $empleadoService;
 
     public $showSalary = false;
@@ -23,6 +23,7 @@ final class Index extends Component
     public function handleEmpleadoUpdated()
     {
         $this->showForm = false; // Cierra el formulario
+        $this->reloadEmpleado();
     }
 
     public function edit($id)
@@ -40,18 +41,25 @@ final class Index extends Component
     public function closeForm()
     {
         $this->showForm = false;
+        $this->reloadEmpleado();
     }
 
     public function delete($id)
     {
-        EmpleadoService::delete($id);
+        $this->empleadoService = new EmpleadoService();
+        $this->empleadoService->delete($id);
+        $this->reloadEmpleado();
+    }
+
+    public function reloadEmpleado()
+    {
+        $this->empleadoService = new EmpleadoService();
+        $this->empleados = $this->empleadoService->index();
     }
 
     public function mount()
     {
-        $this->empleadoService = new EmpleadoService();
-        //\Log::info("Lista empleados " . $this->empleadoService->index());
-        $this->empleados = $this->empleadoService->index();
+        $this->reloadEmpleado();
     }
 
     public function editSalaryParameter($idEmpleado)
