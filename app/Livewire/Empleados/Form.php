@@ -32,17 +32,16 @@ final class Form extends Component
         $this->lista_cargo = Cargo::orderBy('nombre_cargo', 'asc')->get();
         $this->lista_departamento = Departamento::orderBy('nombre_departamento', 'asc')->get();
         if ($empleadoId) {
-            \Log::info("DATO EMPLEADO " . $empleadoId);
             $empleado = $this->empleadoService->show($empleadoId);
+            \Log::info("DATO EMPLEADO " . $empleado);
             $nombre_persona = $this->empleadoService;
             $this->nombre_persona = $empleado->nombre_persona;
+            $this->id_persona = $empleado->id_persona;
             $this->empleadoId = $empleadoId;
-            $this->nombre = $empleado->nombre;
-            $this->apellido = $empleado->apellido;
-            $this->documento = $empleado->documento;
-            $this->email = $empleado->email;
-            $this->telefono = $empleado->telefono;
-            $this->direccion = $empleado->direccion;
+            $this->id_cargo = $empleado->id_cargo;
+            $this->id_departamento = $empleado->id_departamento;
+            $this->fecha_ingreso = $empleado->fecha_ingreso->format('Y-m-d');
+            $this->salario_base = $empleado->salario_base;
         }
     }
 

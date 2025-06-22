@@ -51,6 +51,8 @@ final class Empleados extends Model
 
     protected $casts = [
         'salario_base' => 'float',
+        'fecha_ingreso' => 'date:Y-m-d',
+        'fecha_egreso' => 'date:Y-m-d',
     ];
 
     public function cargo()
@@ -70,10 +72,7 @@ final class Empleados extends Model
 
     public function getCantidadHijosMenores18Attribute(): int
     {
-        if (!$this->relationLoaded('persona')) {
-            $this->load('persona.hijos');
-        }
-
+        $this->loadMissing('persona.hijos');
         return $this->persona?->hijos
             ->filter(function ($hijo) {
                 return $hijo->discapacitado || Carbon::parse($hijo->fecha_nacimiento)->age < 18;
