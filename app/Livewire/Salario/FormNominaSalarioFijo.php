@@ -14,11 +14,7 @@ final class FormNominaSalarioFijo extends Component
     public $importe;
     public $concepto;
     public $conceptos = [];
-
-    public function update()
-    {
-
-    }
+    public $id_registro;
 
     public function save()
     {
@@ -31,8 +27,9 @@ final class FormNominaSalarioFijo extends Component
         // Guardar el concepto asignado al empleado, por ejemplo
         // ...
 
-        NominaAdicionalFijo::create([
-            'id_nomina' => $this->id_empleado, 
+        NominaAdicionalFijo::updateOrCreate(['id' => $this->id_registro],
+        [
+            'id_nomina' => $this->id_empleado,
             'id_concepto' => $data['id_concepto'],
             'detalle_concepto' => $data['concepto'],
             'importe' => $data['importe'],
@@ -41,10 +38,18 @@ final class FormNominaSalarioFijo extends Component
         session()->flash('message', 'Concepto agregado correctamente.');
     }
 
-    public function mount($id_empleado = null)
+    public function mount($id_empleado = null, $id_registro = null)
     {
         $this->id_empleado = $id_empleado;
-        $this->conceptos = ConceptoSalario::orderBy('nombre_concepto', 'desc')->get();
+        $this->conceptos = ConceptoSalario::conceptosDisponiblesParaSelect();
+        if($id_registro)
+        {
+            $dato = NominaAdicionalFijo::findOrFail($id_registro);
+            $this->id_registro = $id_registro;
+            $this->id_concepto = $dato->id_concepto;
+            $this->concepto = $dato->detalle_concepto;
+            $this->importe = $dato->importe;
+        }
         \Log::info("FormPorcentajeSalarioBase -> mount " . $this->id_empleado . " " . $this->conceptos);
     }
 
