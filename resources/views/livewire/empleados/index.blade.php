@@ -8,7 +8,7 @@
     @else
         <button class="btn btn-primary mb-3" wire:click="create">Agregar Empleado</button>
 
-        <table class="table table-bordered">
+        <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>Nombre</th>
