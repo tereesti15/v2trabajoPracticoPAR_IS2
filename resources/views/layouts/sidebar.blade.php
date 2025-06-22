@@ -105,7 +105,8 @@
                 aria-controls="salarioSubmenu"
                 onmouseover="this.style.color='#fffacd';"
                 onmouseout="this.style.color='#ffd700';">
-                    Procesos Mensuales
+                    {{-- Procesos Mensuales --}}
+                    Gestión de Nómina
                 </a>
                 <ul id="salarioSubmenu" class="collapse ps-3">
                     <li><a href="{{ route('salario.index') }}" 
