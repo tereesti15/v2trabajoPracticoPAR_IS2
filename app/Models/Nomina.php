@@ -58,4 +58,9 @@ final class Nomina extends Model
     {
         return Carbon::parse($this->attributes['periodo'])->year;
     }
+
+    public function scopeConfirmadas($query)
+    {
+        return $query->where('estado_nomina', 'Confirmado');
+    }
 }

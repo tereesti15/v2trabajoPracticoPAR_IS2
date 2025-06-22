@@ -88,7 +88,7 @@
                     <li><a href="{{ route('salario.index') }}" class="nav-link text-white">Generar Planilla</a></li>
                 </ul>
                 <ul id="salarioSubmenu" class="collapse ps-3">
-                    <li><a href="{{ route('reporte.planilla-index') }}" class="nav-link text-white">Imprimir Planilla</a></li>
+                    <li><a href="{{ route('reporte.lista-planilla-index') }}" class="nav-link text-white">Imprimir Planilla</a></li>
                 </ul>
             </li>
         @endif --}}
@@ -115,7 +115,7 @@
                     onmouseover="this.style.color='#fffacd';"
                     onmouseout="this.style.color='#ffd700';">
                     Generar Planilla</a></li>
-                    <li><a href="{{ route('reporte.planilla-index') }}" 
+                    <li><a href="{{ route('reporte.lista-planilla-index') }}" 
                     class="nav-link" 
                     style="color: #ffd700;"
                     onmouseover="this.style.color='#fffacd';"
