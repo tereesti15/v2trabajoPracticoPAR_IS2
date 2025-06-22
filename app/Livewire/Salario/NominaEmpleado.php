@@ -15,6 +15,7 @@ final class NominaEmpleado extends Component
 
     public $empleadoId;
     public $empleado;
+    public $id_registro_fijo;
 
     public $conceptoSalarialesFijos = [];
     public $porcentuales = [];
@@ -93,6 +94,16 @@ final class NominaEmpleado extends Component
         $this->empleadoId = $empleadoId;
         $this->empleado = Empleados::findOrFail($empleadoId);
         $this->actualizaGrilla();
+    }
+
+    public function actualizarRegistro($id)
+    {
+        \Log::info("ENTRA FUNCION actualizarRegistro " . $id);
+        $this->empleadoId = $id;
+        $this->id_registro_fijo = $id;
+        $this->setFormPorcentajeSalarioBase = false;
+        $this->setSalarioFijo = true;
+        $this->setSalarioCuota = false;
     }
 
     private function actualizaGrilla()

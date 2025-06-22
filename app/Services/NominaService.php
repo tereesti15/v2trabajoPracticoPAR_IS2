@@ -201,7 +201,7 @@ final class NominaService
                 $this->calculoSalarioBase($empleado, $nomina);
                 //$this->calculoBonificacionFamiliar($empleado, $nomina);
                 $this->calculoSeguroSocialIPS($empleado, $nomina);
-                //$this->calculoNominaDetalleCuota($empleado, $nomina);
+                $this->calculoNominaDetalleCuota($empleado, $nomina);
                 $this->calculoConceptoFijo($empleado, $nomina);
             }
 

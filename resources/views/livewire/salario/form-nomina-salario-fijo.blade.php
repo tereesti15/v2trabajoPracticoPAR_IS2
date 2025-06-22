@@ -3,7 +3,7 @@
         Conceptos fijos
     </div>
     <small class="text-muted d-block mt-2">
-        Estos conceptos son fijos, que el trabajador cobrará cada mes, ejemplo 
+        Estos conceptos son fijos, que el trabajador cobrará o se le descontar&aacute; cada mes 
     </small>
     <div class="card-body">
         <form wire:submit.prevent="save">
