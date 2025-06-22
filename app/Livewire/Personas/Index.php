@@ -20,6 +20,7 @@ final class Index extends Component
     public function handlePersonaUpdated()
     {
         $this->showForm = false; // Cierra el formulario
+        $this->reloadPersonas();
         //$this->showFormHijos = false;
     }
 
@@ -56,11 +57,17 @@ final class Index extends Component
     public function delete($id)
     {
         Personas::destroy($id);
+        $this->reloadPersonas();
+    }
+
+    public function reloadPersonas()
+    {
+        $this->personas = Personas::orderBy('id', 'desc')->get();
     }
 
     public function mount()
     {
-        $this->personas = Personas::orderBy('id', 'desc')->get();
+        $this->reloadPersonas();
     }
 
     public function render()
