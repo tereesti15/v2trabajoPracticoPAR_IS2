@@ -17,24 +17,25 @@ final class IndexPlanillaGenerada extends Component
     public $lista_empleados = [];
     public $lista_nomina = [];
     public $empleadosNomina;
-    public $actualiza_detalle_salario;
     public $id_detalle_nomina;
     public $showForm = false;
 
     public function closeForm()
     {
-        $this->actualiza_detalle_salario = false;
+        $this->showForm = false;
+        $this->recargaDatos($this->id_nomina);
     }
 
     public function edit($id)
     {
-        $this->actualiza_detalle_salario = true;
+        \Log::info('ID NOMINA GENERADA A EDITAR ' . $id);
         $this->id_detalle_nomina = $id;
+        $this->showForm = true;
     }
 
-    public function mount($id_nomina)
+    private function recargaDatos($id_nomina)
     {
-        $this->actualiza_detalle_salario = false;
+        $this->showForm = false;
         $this->nominaService = new NominaService();
         $this->empleadoService = new EmpleadoService();
         if ($id_nomina)
@@ -44,6 +45,12 @@ final class IndexPlanillaGenerada extends Component
             $this->periodo = $data->periodo_formateado;
             $this->empleadosNomina = $this->nominaService->obtenerDetallesAgrupadosPorEmpleado($id_nomina);
         }
+    }
+
+    public function mount($id_nomina)
+    {
+        $this->id_nomina = $id_nomina;
+        $this->recargaDatos($this->id_nomina);
     }
 
     public function render()
