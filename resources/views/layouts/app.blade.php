@@ -25,7 +25,6 @@
 
                 <main>
                     {{ $slot ?? '' }}
-                    @yield('content')
                 </main>
             </div>
         </div>
