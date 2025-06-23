@@ -14,7 +14,6 @@ final class FormActualizaDetalleNominaGenerada extends Component
     public $detalle_concepto;
     public $importe;
     public $tipo_concepto;
-    
     private $nominaService;
 
     public function mount($id_detalle_nomina)
@@ -25,6 +24,7 @@ final class FormActualizaDetalleNominaGenerada extends Component
             $this->id_detalle_nomina = $id_detalle_nomina;
             $this->detalle_nomina = $this->nominaService->obtenerDetalleNominaGeneradaPor($id_detalle_nomina);
             $this->nombre_concepto = $this->detalle_nomina;
+            $this->importe = $this->detalle_nomina->monto_concepto;
         }
     }
 

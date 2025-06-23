@@ -210,7 +210,7 @@ final class NominaService
 
                 // 3. Crear un detalle de nómina por empleado
                 $this->calculoSalarioBase($empleado, $nomina);
-                //$this->calculoBonificacionFamiliar($empleado, $nomina);
+                $this->calculoBonificacionFamiliar($empleado, $nomina);
                 $this->calculoSeguroSocialIPS($empleado, $nomina);
                 $this->calculoNominaDetalleCuota($empleado, $nomina);
                 $this->calculoConceptoFijo($empleado, $nomina);
@@ -300,8 +300,9 @@ final class NominaService
         $salarioMinimo = $this->parametro->salario_minimo;
         $max_salario_minimo = $this->parametro->bonificacion_familiar_max_salario_minimo;
         $porcentaje_bonificacion_familiar = $this->parametro->bonificacion_familiar_porcentaje;
-        //echo "Empleado " . $empleado->id_persona . " SALARIO BASE " . $salarioBase . " SALARIO MINIMO " . $salarioMinimo . " HIJOS " . $cantHijosMenores . "\n";
-
+        $id_concepto = $this->parametro->id_bonificacion_familiar;
+        \Log::info("Empleado " . $empleado->id_persona . " SALARIO BASE " . $salarioBase . " SALARIO MINIMO " . $salarioMinimo . " HIJOS " . $cantHijosMenores . "\n");
+        \Log::info("max_salario_minimo " . $max_salario_minimo . " porcentaje_bonificacion_familiar " . $porcentaje_bonificacion_familiar . " id_concepto " . $id_concepto . " HIJOS " . $cantHijosMenores . "\n");
         if((($salarioMinimo * $max_salario_minimo) >= $salarioBase) && ($cantHijosMenores > 0)) {
             $importeBonificacion = $salarioMinimo * $porcentaje_bonificacion_familiar * $cantHijosMenores;
             $importeBonificacion = round($importeBonificacion);
@@ -310,17 +311,9 @@ final class NominaService
             DetalleNomina::create([
                 'id_nomina' => $nomina->id_nomina,
                 'id_empleado' => $empleado->id_empleado,
-                'id_concepto' => 2,
+                'id_concepto' => $id_concepto,
                 'detalle_concepto' => $concepto,
                 'monto_concepto' => $importeBonificacion,
-            ]);
-        } else {
-            DetalleNomina::create([
-                'id_nomina' => $nomina->id_nomina,
-                'id_empleado' => $empleado->id_empleado,
-                'id_concepto' => 2,
-                'detalle_concepto' => 'Bonificacion familiar',
-                'monto_concepto' => 0,
             ]);
         }
     }
@@ -361,6 +354,7 @@ final class NominaService
         //echo "0\n";
         foreach($detalle_cuotas as $cuota) {
             //echo "PROCESO\n" . $cuota . "\n";
+            $cuota->avanzarCuota();
             $concepto = $cuota->conceptoCuotaDescripcion;
             //echo "concepto " . $concepto . "\n";
             $importe_concepto = $cuota->importeConcepto;

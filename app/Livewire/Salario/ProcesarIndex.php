@@ -16,6 +16,8 @@ final class ProcesarIndex extends Component
     
     private $nominaService;
 
+    protected $listeners = ['planillaCreate' => 'closeForm'];
+
     public function confirma($id)
     {
         $this->nominaService = new NominaService();
@@ -64,6 +66,7 @@ final class ProcesarIndex extends Component
     {
         $this->showForm = false;
         $this->verificarPlanilla = false;
+        $this->recargaVista();
     }
 
     public function render()

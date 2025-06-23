@@ -31,7 +31,6 @@
                                 <button class="btn btn-sm btn-secondary" wire:click="visualizar({{ $planilla->id_nomina }})">Visualizar</button>
                                 <button class="btn btn-sm btn-danger" wire:click="delete({{ $planilla->id_nomina }})">Eliminar</button>
                             @endif
-                            
                         </td>
                     </tr>
                 @endforeach

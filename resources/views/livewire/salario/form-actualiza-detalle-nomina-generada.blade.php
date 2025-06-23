@@ -11,7 +11,7 @@
                 <label>{{ $detalle_concepto }}</label>
             </div>
             <div class="mb-3">
-                <label>{{ $tipo }}</label>
+                <label>{{ $tipo_concepto }}</label>
             </div>
             <div class="mb-3">
                 <label>Importe</label>

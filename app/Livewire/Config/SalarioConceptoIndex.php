@@ -19,6 +19,7 @@ final class SalarioConceptoIndex extends Component
     public function closeForm()
     {
         $this->showForm = false;
+        $this->cargarConceptos();
         session()->flash('message', 'Concepto agregado correctamente.');
     }
 
