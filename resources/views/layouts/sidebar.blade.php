@@ -36,19 +36,6 @@
         </li>
 
         {{-- Empleados --}}
-        {{--@if(in_array(Auth::user()->role, ['Administrador', 'Gerente', 'Encargado_rrhh']))
-            <li class="nav-item">
-                <a href="#empleadosSubmenu" class="nav-link text-white" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="empleadosSubmenu">
-                    👥 Empleados
-                </a>
-                <ul id="empleadosSubmenu" class="collapse ps-3">
-                    <li><a href="{{ route('personas.index') }}" class="nav-link text-white">CRUD Personas</a></li>
-                    <li><a href="{{ route('empleados.index') }}" class="nav-link text-white">CRUD Empleados</a></li>
-                </ul>
-            </li>
-        @endif--}}
-
-        {{-- Empleados --}}
         @if(in_array(Auth::user()->role, ['Administrador', 'Gerente', 'Encargado_rrhh']))
             <li class="nav-item">
                 <a href="#empleadosSubmenu" class="nav-link" 

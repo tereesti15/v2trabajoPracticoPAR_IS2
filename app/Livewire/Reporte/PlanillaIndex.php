@@ -7,6 +7,7 @@ use App\Services\ResumenNominaService;
 use App\Models\ConceptoSalario;
 use App\Models\Parametro;
 use App\Models\Nomina;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 final class PlanillaIndex extends Component
 {
@@ -53,6 +54,20 @@ final class PlanillaIndex extends Component
         \Log::info("Obtiene datos parametros " . $parametro);
         $this->ruc = $parametro->ruc;
         $this->empresa = $parametro->nombre_empresa;
+    }
+
+    public function exportarPdf()
+    {
+        $pdf = Pdf::loadView('pdf.planilla_nomina', [
+            'resumen' => $this->resumen,
+            'conceptosAgrupados' => $this->conceptosAgrupados,
+            'empresa' => $this->empresa,
+            'ruc' => $this->ruc,
+            'mes' => $this->mes,
+            'anho' => $this->anho,
+        ])->setPaper([0, 0, 842, 895], 'landscape');
+
+        return response()->streamDownload(fn() => print($pdf->output()), "planilla_nomina_{$this->id_nomina}.pdf");
     }
 
     public function render()

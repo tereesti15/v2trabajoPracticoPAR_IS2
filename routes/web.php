@@ -14,6 +14,7 @@ use App\Livewire\Salario\ProcesarIndex;
 use App\Livewire\Reporte\PlanillaIndex;
 use App\Livewire\Config\Parametro;
 use App\Livewire\Reporte\ListaPlanillaIndex;
+use App\Livewire\Dashboard;
 
 // Redirigir raíz al login o dashboard
 Route::get('/', function () {
@@ -26,7 +27,7 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
 
     // Dashboard
-    Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
     // CRUD clásicos (puedes combinar con Livewire si no hay conflicto de rutas)
     //Route::resource('empleados', EmpleadoController::class);
