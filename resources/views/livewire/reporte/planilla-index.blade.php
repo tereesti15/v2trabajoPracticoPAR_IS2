@@ -75,4 +75,8 @@
             </tbody>
         </table>
     </div>
+    <div class="mb-3">
+        <button wire:click="exportarPdf" class="btn btn-danger">Exportar a PDF</button>
+    </div>
+
 </div>
