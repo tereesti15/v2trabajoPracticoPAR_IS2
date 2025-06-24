@@ -1,66 +1,154 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 💼 Sistema de Nómina
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistema web para la gestión de nómina de empleados, desarrollado con Laravel 12, Livewire y Bootstrap. Permite administrar empleados, conceptos salariales, generar nóminas, emitir reportes y gestionar usuarios con distintos roles. La aplicación responde con JSON y cuenta con documentación integrada usando Swagger.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Tecnologías utilizadas
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Laravel 12+
+- Livewire
+- Bootstrap 5+
+- MariaDB 10+
+- Swagger (L5-Swagger)
+- Composer
+- NPM / Vite
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Requisitos
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP 8+
+- Composer 2+
+- Node.js 22+
+- NPM 10+
+- MariaDB 10+
+- Laravel CLI
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Instalación
 
-## Laravel Sponsors
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/tereesti15/v2trabajoPracticoPAR_IS2.git
+   cd Sistema-de-Nomina
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2. Instala las dependencias de PHP:
+   ```bash
+   composer install
+   ```
 
-### Premium Partners
+3. Copia el archivo de entorno y configura tu base de datos:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+4. Instala dependencias frontend y compila assets:
+   ```bash
+   npm install
+   npm run dev
+   ```
 
-## Contributing
+5. Ejecuta migraciones y seeders:
+   ```bash
+   php artisan migrate --seed
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+6. Inicia el servidor:
+   ```bash
+   php artisan serve
+   ```
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Documentación API (Swagger)
 
-## Security Vulnerabilities
+La documentación Swagger está disponible en:  
+👉 [http://localhost:8000/api/documentation](http://localhost:8000/api/documentation)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## Roles y accesos
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Rol             | Acceso | Usuario de prueba                  | Contraseña     |
+|------------------|--------|--------------------------------------|----------------|
+| Administrador    | Acceso total                               | admin@example.com     | password123     |
+| Gerente          | Consulta de empleados y reportes           | gerente@example.com   | password123     |
+| Asistente RRHH   | Gestión de empleados y liquidaciones       | asistente@example.com | password123     |
+| Empleado         | Solo lectura de sus datos y recibos        | empleado@example.com  | password123     |
+
+---
+
+##  Funcionalidades
+
+###  1. Inicio de Sesión
+Formulario de autenticación por rol.  
+Pasos:
+1. Ingresar al sistema vía navegador.
+2. Introducir credenciales.
+3. Presionar "Iniciar sesión".
+
+---
+
+###  2. Dashboard Principal
+Disponible para el Administrador, con datos como:
+- Total de empleados distribuidos por sexo.
+- Distribución de costos por departamento.
+
+---
+
+###  3. Gestión de Personas y Empleados
+
+#### 3.1. CRUD Personas
+- Registro de datos personales (nombre, documento, nacimiento, etc.).
+- Administración de hijos.
+
+#### 3.2. CRUD Hijos
+- Asociado a cada persona.
+- Campos: nombre, documento, fecha de nacimiento.
+
+#### 3.3. CRUD Empleados
+- Asignación de salario base.
+- Acciones: editar, eliminar, asignar ingresos/egresos.
+
+---
+
+###  4. Gestión de Nómina
+
+#### 4.1. Generar planilla
+- Selección de año y mes.
+- Generación y confirmación de nómina.
+
+#### 4.2. Visualizar planilla
+- Vista detallada y opción de exportación a PDF.
+
+---
+
+###  5. Configuración
+
+#### 5.1. Conceptos Salariales
+- Acreditaciones (suman al salario).
+- Descuentos (restan del salario).
+- CRUD completo.
+
+#### 5.2. Parámetros del sistema
+- Nombre y RUC de la empresa.
+- Salario mínimo y porcentajes de bonificación.
+- Códigos para salario base, IPS, bonificación familiar.
+
+---
+
+
+##  Contacto
+
+Desarrollado por: **Jorge Bello y Teresa Estigarribia**  
+📧 Email: [jorgebell@gmail.com/tere_esti@gmail.com]
+
+---
+
+## 🪪 Licencia
+
+Este proyecto está licenciado bajo la Licencia MIT.
