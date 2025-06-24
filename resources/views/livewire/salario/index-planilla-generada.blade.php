@@ -20,7 +20,7 @@
                                 </div>
                                 <div class="text-end">
                                     <span class="badge {{ $claseTotal }} fw-bold">
-                                        Total a cobrar Gs. {{ number_format($total, 0, '.', ',') }}
+                                        Total a cobrar Gs. {{ number_format($total, 0, ',', '.') }}
                                     </span>
                                 </div>
                             </div>
@@ -34,9 +34,9 @@
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             {{ $detalle['nombre_concepto'] }} - {{ $detalle['detalle_concepto'] }}
                                             @if ($detalle['tipo'] == 'acreditacion')
-                                                <span class="badge bg-primary bg-success fw-bold">Gs. {{ number_format($detalle['monto_concepto'], 0, '.', ',') }}</span>
+                                                <span class="badge bg-primary bg-success fw-bold">Gs. {{ number_format($detalle['monto_concepto'], 0, ',', '.') }}</span>
                                             @else
-                                                <span class="badge bg-primary bg-danger fw-bold">Gs. {{ number_format($detalle['monto_concepto'], 0, '.', ',') }}</span>
+                                                <span class="badge bg-primary bg-danger fw-bold">Gs. {{ number_format($detalle['monto_concepto'], 0, ',', '.') }}</span>
                                             @endif
                                             <button class="btn btn-sm btn-warning" wire:click="edit({{ $detalle['id_detalle_nomina'] }})">Editar</button>
                                         </li>

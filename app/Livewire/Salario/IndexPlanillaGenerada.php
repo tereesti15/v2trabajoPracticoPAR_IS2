@@ -20,6 +20,8 @@ final class IndexPlanillaGenerada extends Component
     public $id_detalle_nomina;
     public $showForm = false;
 
+    protected $listeners = ['cerrarFormulario' => 'closeForm'];
+
     public function closeForm()
     {
         $this->showForm = false;
