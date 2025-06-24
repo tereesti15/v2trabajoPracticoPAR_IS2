@@ -355,6 +355,10 @@ final class NominaService
         foreach($detalle_cuotas as $cuota) {
             //echo "PROCESO\n" . $cuota . "\n";
             $cuota->avanzarCuota();
+            if($cuota->cant_cuota > $cuota->nro_cuota)
+            {
+                return;
+            }
             $concepto = $cuota->conceptoCuotaDescripcion;
             //echo "concepto " . $concepto . "\n";
             $importe_concepto = $cuota->importeConcepto;
