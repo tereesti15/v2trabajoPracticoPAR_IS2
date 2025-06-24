@@ -30,10 +30,10 @@
         <h4 style="text-align: center; font-weight: bold;">Planilla de Pago de Nómina</h4>
         <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
             <div><strong>Razón Social del Empleador:</strong> {{ $empresa }}</div>
-            <div><strong>Mes:</strong> {{ $mes }}</div>
+            <div><strong>RUC:</strong> {{ $ruc }}</div>
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-            <div><strong>RUC:</strong> {{ $ruc }}</div>
+            <div><strong>Mes:</strong> {{ $mes }}</div>
             <div><strong>Año:</strong> {{ $anho }}</div>
         </div>
     </div>
