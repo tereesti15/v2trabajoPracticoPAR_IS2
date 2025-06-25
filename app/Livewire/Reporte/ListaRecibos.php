@@ -5,6 +5,7 @@ namespace App\Livewire\Reporte;
 use Livewire\Component;
 use App\Models\Nomina;
 use App\Models\Parametro;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ListaRecibos extends Component
 {
@@ -29,8 +30,17 @@ class ListaRecibos extends Component
             $this->nombre_empresa = $parametro->nombre_empresa;
             $this->ruc_empresa = $parametro->ruc;
         }
-        //dd($this->nomina->detalles->first()->concepto);
+    }
 
+    public function exportarPdf()
+    {
+        $pdf = Pdf::loadView('pdf.recibos', [
+            'nomina' => $this->nomina,
+            'nombre_empresa' => $this->nombre_empresa,
+            'ruc_empresa' => $this->ruc_empresa,
+        ])->setPaper('A4');
+
+        return response()->streamDownload(fn() => print($pdf->output()), "recibos_nomina_{$this->nombre_empresa}.pdf");
     }
 
     public function render()

@@ -1,4 +1,7 @@
 <div class="container my-4">
+    <div class="mb-3">
+        <button wire:click="exportarPdf" class="btn btn-danger">Exportar a PDF</button>
+    </div>
     <h2 class="mb-4">
         Recibos Salariales
     </h2>
