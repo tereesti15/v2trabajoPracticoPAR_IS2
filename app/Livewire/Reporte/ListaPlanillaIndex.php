@@ -14,6 +14,12 @@ class ListaPlanillaIndex extends Component
 
     public $lista_planilla = [];
 
+    public function recibos($id)
+    {
+        $this->id_planilla_procesada = $id;
+        $this->showRecibo = true;
+    }
+
     private function refrescaDatos()
     {
         $this->lista_planilla = Nomina::confirmadas()

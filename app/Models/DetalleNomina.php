@@ -46,4 +46,15 @@ final class DetalleNomina extends Model
         return $this->belongsTo(ConceptoSalario::class, 'id_concepto');
     }
 
+    public function empleado()
+    {
+        return $this->belongsTo(Empleados::class, 'id_empleado', 'id_empleado');
+    }
+
+    public function getMontoAjustadoAttribute(): float
+    {
+        return ($this->concepto?->tipo === 'acreditacion')
+            ? $this->monto_concepto
+            : -1 * $this->monto_concepto;
+    }
 }
