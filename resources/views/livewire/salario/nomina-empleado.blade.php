@@ -4,11 +4,60 @@
         @livewire('salario.form-nomina-salario-fijo', ['id_empleado' => $empleadoId, 'id_registro' => $id_registro_fijo], key($empleadoId))
     @elseif ($setSalarioCuota)
         @livewire('salario.form-salario-cuota', ['id_empleado' => $empleadoId, 'id_registro' => $idSalarioCuota], key($empleadoId))
+    @elseif ($setSalarioTemporal)
+        @livewire('salario.crud-nomina-temporal', ['id_empleado' => $empleadoId, 'id_registro' => $id_salario_temporal], key($empleadoId))
     @else
         <h3>Gestión de Nómina para: {{ $empleado->nombre_persona }}</h3>
 
         <div class="accordion my-3" id="accordionNomina">
             
+            {{-- Sección Adicional Fijo --}}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingSalarioTemporal">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdicional">
+                        Conceptos Adicionales Fijos
+                    </button>
+                </h2>
+                <div id="collapseAdicional" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        <p>Estos conceptos representan montos temporales aplicados al salario del empleado.</p>
+                        <button class="btn btn-success mt-2" wire:click="showSalarioTemporal({{ $empleado->id_empleado }})">Agregar Concepto</button>
+                        <!-- Tabla para mostrar los conceptos -->
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Concepto</th>
+                                    <th scope="col">Detalle</th>
+                                    <th scope="col">Periodo</th>
+                                    <th scope="col">Importe</th>
+                                    <th scope="col">Procesado</th>
+                                    <th scope="col" class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($lista_conceptos_mensuales_temporales as $item)
+                                    <tr>
+                                        <td>{{ $item->concepto->nombre_concepto }}({{ $item->concepto->tipo }})</td>
+                                        <td>{{ $item->detalle_concepto }}</td>
+                                        <td>{{ $item->mes_proceso }}/{{ $item->anho_proceso }}</td>
+                                        <td>@if($item->procesado == 0) No @else Si @endif</td>
+                                        <td>{{ number_format($item->monto_concepto, 0, ',', '.') }}</td>
+                                        <td>
+                                            @if(!$item->procesado)
+                                                <button class="btn btn-sm btn-warning" wire:click="editConceptoTemporal({{ $item->id }})">Editar</button>
+                                                <button class="btn btn-sm btn-danger" wire:click="deleteConceptoTemporal({{ $item->id }})">Eliminar</button>
+                                            @else
+                                                Registro procesado
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>                        
+                    </div>
+                </div>
+            </div>
+
             {{-- Sección Adicional Fijo --}}
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingSalarioFijo">
