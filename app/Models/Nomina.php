@@ -37,6 +37,12 @@ final class Nomina extends Model
         'fecha_proceso_liquidacion',
     ];
 
+    protected $casts = [
+        'periodo' => 'date:Y-m-d',
+        'fecha_proceso_liquidacion' => 'date:Y-m-d',
+    ];
+
+
     // App\Models\Nomina.php
 
     public function detalles()
