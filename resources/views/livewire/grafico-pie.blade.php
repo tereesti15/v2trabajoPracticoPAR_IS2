@@ -19,10 +19,10 @@
 
         {{-- Segundo gráfico --}}
         <div class="col-md-6 text-start">
-            <h5>Distribuci&oacute;n de costo por departamento</h5>
+            <h5>{{ $tituloGrafico2 }}</h5>
+            <p><strong>Total nómina:</strong> ${{ number_format($totalNomina, 2) }}</p>
             <canvas id="graficoTorta2" width="300" height="300"></canvas>
 
-            {{-- Etiquetas con porcentaje --}}
             <ul class="mt-3 list-unstyled text-start">
                 @foreach ($categorias2 as $i => $cat)
                     <li>
@@ -32,6 +32,7 @@
                 @endforeach
             </ul>
         </div>
+
     </div>
 </div>
 
