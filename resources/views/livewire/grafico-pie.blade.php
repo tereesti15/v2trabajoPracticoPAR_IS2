@@ -20,7 +20,7 @@
         {{-- Segundo gráfico --}}
         <div class="col-md-6 text-start">
             <h5>{{ $tituloGrafico2 }}</h5>
-            <p><strong>Total nómina:</strong> ${{ number_format($totalNomina, 2) }}</p>
+            <p><strong>Total nómina del mes:</strong> Gs. {{ number_format($totalNomina, 0, ',', '.') }}</p>
             <canvas id="graficoTorta2" width="300" height="300"></canvas>
 
             <ul class="mt-3 list-unstyled text-start">

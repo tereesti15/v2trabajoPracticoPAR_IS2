@@ -83,6 +83,18 @@ final class GraficoPie extends Component
         $total1 = array_sum($valores1);
         $porcentajes1 = array_map(fn($valor) => round($valor * 100 / max($total1, 1), 1), $valores1);
 
+        $meses = [
+            1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo',
+            4 => 'Abril', 5 => 'Mayo', 6 => 'Junio',
+            7 => 'Julio', 8 => 'Agosto', 9 => 'Septiembre',
+            10 => 'Octubre', 11 => 'Noviembre', 12 => 'Diciembre',
+        ];
+
+        // Aseguramos que el periodo es un Carbon
+        $periodo = \Carbon\Carbon::parse($ultimaNomina->periodo);
+
+        $tituloGrafico2 = 'Distribución de costos - ' . $meses[$periodo->month] . ' ' . $periodo->year;
+
         return view('livewire.grafico-pie', [
             'categorias1' => $categorias1,
             'valores1' => $valores1,
@@ -92,7 +104,7 @@ final class GraficoPie extends Component
             'categorias2' => $categorias2,
             'valores2' => $valores2,
             'porcentajes2' => $porcentajes2,
-            'tituloGrafico2' => 'Distribución de costos - ' . $ultimaNomina->periodo->format('F Y'),
+            'tituloGrafico2' => $tituloGrafico2,
             'totalNomina' => $totalNomina
         ]);
     }
