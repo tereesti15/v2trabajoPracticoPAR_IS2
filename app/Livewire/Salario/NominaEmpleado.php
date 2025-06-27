@@ -9,6 +9,7 @@ use App\Models\NominaPorcentualMinimo;
 use App\Models\ConceptoSalario;
 use App\Models\NominaPorcentajeSalarioBase;
 use App\Models\NominaDetalleCuota;
+use App\Models\NominaMensualTemporal;
 
 final class NominaEmpleado extends Component
 {
@@ -21,6 +22,7 @@ final class NominaEmpleado extends Component
     public $porcentuales = [];
     public $porcentualesSalarioBase = [];
     public $salarioCuota = [];
+    public $lista_conceptos_mensuales_temporales = [];
 
     public $modalSection = '';
     public $conceptos = [];
@@ -32,10 +34,38 @@ final class NominaEmpleado extends Component
     public $setFormPorcentajeSalarioBase = false;
     public $setSalarioFijo = false;
     public $setSalarioCuota = false;
+    public $setSalarioTemporal = false;
 
     public $idSalarioCuota;
+    public $id_salario_temporal;
 
-    //protected $listeners = ['mostrarModalListener' => 'mostrarModal'];
+    protected $listeners = ['closeForm' => 'closeForm'];
+
+    public function closeForm()
+    {
+        $this->setFormPorcentajeSalarioBase = false;
+        $this->setSalarioFijo = false;
+        $this->setSalarioCuota = false;
+        $this->setSalarioTemporal = false;
+        $this->actualizaGrilla();
+    }
+
+    public function showSalarioTemporal($id)
+    {
+        $this->setSalarioTemporal = true;
+    }
+
+    public function editConceptoTemporal($id)
+    {
+        $this->id_salario_temporal = $id;
+        $this->setSalarioTemporal = true;
+    }
+
+    public function deleteConceptoTemporal($id)
+    {
+        NominaMensualTemporal::destroy($id);
+        $this->actualizaGrilla();
+    }
 
     public function eliminarRegistroFijo($id)
     {
@@ -55,6 +85,7 @@ final class NominaEmpleado extends Component
         $this->setFormPorcentajeSalarioBase = false;
         $this->setSalarioFijo = false;
         $this->setSalarioCuota = true;
+        $this->setSalarioTemporal = false;
     }
 
     public function showSalarioFijo($id)
@@ -64,6 +95,7 @@ final class NominaEmpleado extends Component
         $this->setFormPorcentajeSalarioBase = false;
         $this->setSalarioFijo = true;
         $this->setSalarioCuota = false;
+        $this->setSalarioTemporal = false;
     }
 
     public function showPorcentajeSalarioBase($id) {
@@ -72,6 +104,7 @@ final class NominaEmpleado extends Component
         $this->setFormPorcentajeSalarioBase = true;
         $this->setSalarioFijo = false;
         $this->setSalarioCuota = false;
+        $this->setSalarioTemporal = false;
     }
 
     public function showSalarioCuota($id) {
@@ -79,6 +112,7 @@ final class NominaEmpleado extends Component
         $this->setFormPorcentajeSalarioBase = false;
         $this->setSalarioFijo = false;
         $this->setSalarioCuota = true;
+        $this->setSalarioTemporal = false;
     }
 /*
     public function mostrarModal($section)
@@ -110,6 +144,7 @@ final class NominaEmpleado extends Component
         $this->setFormPorcentajeSalarioBase = false;
         $this->setSalarioFijo = true;
         $this->setSalarioCuota = false;
+        $this->setSalarioTemporal = false;
     }
 
     private function actualizaGrilla()
@@ -120,6 +155,8 @@ final class NominaEmpleado extends Component
 
         $this->conceptoSalarialesFijos = $this->empleado->nomina_fijo_salario;
 
+        $this->lista_conceptos_mensuales_temporales = NominaMensualTemporal::with('concepto')
+            ->where('id_empleado', $this->empleadoId)->get();
         $this->porcentuales = NominaPorcentualMinimo::with('concepto')
             ->where('id_nomina', $this->empleadoId)->get();
 
