@@ -34,4 +34,12 @@ final class NominaMensualTemporal extends Model
     {
         return $this->belongsTo(Empleado::class, 'id_empleado');
     }
+
+    public function scopePorEmpleadoYPeriodo($query, $idEmpleado, $mes, $anho)
+    {
+        return $query->where('id_empleado', $idEmpleado)
+                     ->where('mes_proceso', $mes)
+                     ->where('anho_proceso', $anho)
+                     ->where('procesado', false);
+    }
 }

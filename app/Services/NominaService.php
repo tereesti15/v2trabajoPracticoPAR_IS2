@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Models\NominaAdicionalFijo;
 use App\EstadoNomina;
+use App\Models\NominaMensualTemporal;
 
 final class NominaService
 {
@@ -214,6 +215,7 @@ final class NominaService
                 $this->calculoSeguroSocialIPS($empleado, $nomina);
                 $this->calculoNominaDetalleCuota($empleado, $nomina);
                 $this->calculoConceptoFijo($empleado, $nomina);
+                $this->calculoConceptoTemporal($empleado, $nomina, $mes, $anho);
             }
 
             DB::commit();
@@ -223,6 +225,27 @@ final class NominaService
             \Log::error('Error al procesar la planilla: ' . $mes . ' ' . $anho . ' ' . $e->getMessage());
             DB::rollBack();
             throw $e;
+        }
+    }
+
+    private function calculoConceptoTemporal($empleado, $nomina, $mes_proceso, $anho_proceso)
+    {
+        $conceptos_temporales = NominaMensualTemporal::porEmpleadoYPeriodo($empleado->id_empleado, $mes_proceso, $anho_proceso)->get();
+        if($conceptos_temporales->isEmpty())
+        {
+            return;
+        }
+        foreach ($conceptos_temporales as $concepto) {
+            $detalle_concepto = $concepto->detalle_concepto . ' ' . ' PERIODO: ' . $concepto->mes_proceso . '/' . $concepto->anho_proceso;
+            DetalleNomina::create([
+                'id_nomina' => $nomina->id_nomina,
+                'id_empleado' => $empleado->id_empleado,
+                'id_concepto' => $concepto->id_concepto,
+                'detalle_concepto' => $detalle_concepto,
+                'monto_concepto' => $concepto->monto_concepto,
+            ]);
+            $concepto->procesado = true;
+            $concepto->save();
         }
     }
 
