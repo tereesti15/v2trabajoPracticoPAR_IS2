@@ -3,7 +3,7 @@
         @livewire('salario.form-actualiza_detalle_nomina_generada', ['id_detalle_nomina' => $id_detalle_nomina], key($id_detalle_nomina))
         <button class="btn btn-secondary mt-3" wire:click="closeForm">Volver</button>
     @else
-        <h3>Detalle de nomina para el periodo: {{ $periodo }}</h3>
+        <h3>Detalle de nómina para el periodo: {{ $periodo }}</h3>
         <div class="accordion" id="accordionNomina">
             @foreach($empleadosNomina as $index => $empleado)
                 <div class="accordion-item">
@@ -31,14 +31,29 @@
                             @if(count($empleado['detalles']) > 0)
                                 <ul class="list-group">
                                     @foreach($empleado['detalles'] as $detalle)
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            {{ $detalle['nombre_concepto'] }} - {{ $detalle['detalle_concepto'] }}
-                                            @if ($detalle['tipo'] == 'acreditacion')
-                                                <span class="badge bg-primary bg-success fw-bold">Gs. {{ number_format($detalle['monto_concepto'], 0, ',', '.') }}</span>
-                                            @else
-                                                <span class="badge bg-primary bg-danger fw-bold">Gs. {{ number_format($detalle['monto_concepto'], 0, ',', '.') }}</span>
-                                            @endif
-                                            <button class="btn btn-sm btn-warning" wire:click="edit({{ $detalle['id_detalle_nomina'] }})">Editar</button>
+                                        <li class="list-group-item">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-grow-1">
+                                                    <strong>{{ $detalle['nombre_concepto'] }}</strong>
+                                                    <small class="text-muted"> - {{ $detalle['detalle_concepto'] }}</small>
+                                                </div>
+                                                <div class="text-end" style="width: 180px;">
+                                                    @if ($detalle['tipo'] == 'acreditacion')
+                                                        <span class="badge bg-success fw-bold">
+                                                            Gs. {{ number_format($detalle['monto_concepto'], 0, ',', '.') }}
+                                                        </span>
+                                                    @else
+                                                        <span class="badge bg-danger fw-bold">
+                                                            Gs. {{ number_format($detalle['monto_concepto'], 0, ',', '.') }}
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                                <div class="ms-3">
+                                                    <button class="btn btn-sm btn-warning" wire:click="edit({{ $detalle['id_detalle_nomina'] }})">
+                                                        Editar
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -52,39 +67,3 @@
         </div>
     @endif
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
